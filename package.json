@@ -1,6 +1,9 @@
 {
   "private": true,
   "main": "firebaseFunctions.js",
+  "engines": {
+    "node": "12"
+  },
   "scripts": {
     "dev": "next src/",
     "build": "next build src/",
