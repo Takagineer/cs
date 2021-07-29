@@ -2,33 +2,50 @@ import React from 'react'
 import Link from 'next/link'
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
+import styled from 'styled-components'
 
 const Header = ({ pathname }) => (
   <header>
-    <Link href="/">
-      <a className={pathname === '/' ? 'is-active' : ''}>Home</a>
-    </Link>{' '}
 
-    <Link href="/individual-pages/Company">
-      <a>企業用様ページへ</a>
-    </Link>{' '}
-
-    <Link href="/individual-pages/Student">
-      <a>学生用様ページへ</a>
-    </Link>{' '}
-
-    <AppBar position="static">
+    <APpBar position="static">
       <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" >
-          C×S
-        </Typography>
-        <Button color="inherit" textAlign="right">ログイン</Button>
+        <div>
+          <Link href="/">
+            <Typography variant="h6" >
+              C×S
+            </Typography>
+          </Link>
+        </div>
+
+        <HEaderRight>
+          <Link href="/individual-pages/Company">
+            <BUtton color="inherit">企業用ページ</BUtton>
+          </Link>{''}
+
+          <Link href="/individual-pages/Student">
+            <BUtton color="inherit">学生用ページ</BUtton>
+          </Link>{''}
+        </HEaderRight>
+        {/* <Button color="inherit">ログイン</Button> */}
       </Toolbar>
-    </AppBar>
+    </APpBar>
   </header>
 )
 
 export default Header
+
+
+const APpBar = styled(AppBar)`
+border-radius:10px;
+`
+
+const HEaderRight = styled.div`
+margin:0 0 0 auto ;
+`
+
+
+const BUtton = styled(Button)`
+background:(0.00,0.00%,61.96%);
+font-size:18px;
+justify-content:right;
+`
