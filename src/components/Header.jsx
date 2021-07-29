@@ -5,17 +5,15 @@ import MenuIcon from '@material-ui/icons/Menu';
 import styled from 'styled-components'
 
 const Header = ({ pathname }) => (
-  <header>
+  <HEader>
 
     <APpBar position="static">
       <Toolbar>
-        <div>
-          <Link href="/">
-            <Typography variant="h6" >
-              C×S
-            </Typography>
-          </Link>
-        </div>
+        <Link href="/">
+          <Typography variant="h6" >
+            C×S
+          </Typography>
+        </Link>
 
         <HEaderRight>
           <Link href="/individual-pages/Company">
@@ -29,11 +27,18 @@ const Header = ({ pathname }) => (
         {/* <Button color="inherit">ログイン</Button> */}
       </Toolbar>
     </APpBar>
-  </header>
+
+  </HEader>
 )
 
 export default Header
 
+
+const HEader = styled.header`
+position:fixed;
+width:100%;
+opacity:0.8;
+`
 
 const APpBar = styled(AppBar)`
 border-radius:10px;
