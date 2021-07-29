@@ -1,13 +1,19 @@
 import React from 'react'
 import Header from './Header'
 import Footer from './Footer'
+import styled from 'styled-components'
 
 const App = ({ children }) => (
-  <main>
+  <MAin>
     <Header />
     {children}
     <Footer />
-  </main>
+  </MAin>
 )
 
 export default App
+
+
+const MAin = styled.main`
+background-color:#d6e9ca;
+`
