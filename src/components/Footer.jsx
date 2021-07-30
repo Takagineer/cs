@@ -30,7 +30,6 @@ const FOoter = styled.footer`
 position:fixed;
 bottom:0;
 width:100%;
-opacity:0.8;
 `
 
 const APpBar = styled(AppBar)`

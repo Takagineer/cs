@@ -13,5 +13,6 @@ export default function RankingBusiness() {
 
 const COntainer = styled.div`
 background-color:#e4dc8a;
-height:300px
+height:300px;
+padding:100px 0 0 40px;
 `
