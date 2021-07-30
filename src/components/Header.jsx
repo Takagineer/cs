@@ -3,10 +3,11 @@ import Link from 'next/link'
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
 import styled from 'styled-components'
+import PrivateRoute from './auth/PrivateRoute';
+import index from '../pages/index'
 
 const Header = ({ pathname }) => (
   <HEader>
-
     <APpBar position="static">
       <Toolbar>
         <Link href="/">
@@ -15,19 +16,23 @@ const Header = ({ pathname }) => (
           </Typography>
         </Link>
 
+        {/* headerの右部分 */}
         <HEaderRight>
-          <Link href="/individual-pages/Company">
-            <BUtton color="inherit">企業用ページ</BUtton>
-          </Link>{''}
+
+          <PrivateRoute exact path="/" component={index}>
+            <Link href="/individual-pages/Company">
+              <BUtton color="inherit">企業用ページ</BUtton>
+            </Link>{''}
+          </PrivateRoute>
 
           <Link href="/individual-pages/Student">
             <BUtton color="inherit">学生用ページ</BUtton>
           </Link>{''}
+
         </HEaderRight>
         {/* <Button color="inherit">ログイン</Button> */}
       </Toolbar>
     </APpBar>
-
   </HEader>
 )
 
