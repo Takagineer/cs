@@ -15,4 +15,5 @@ export default function NewBusinesses() {
 const COntainer = styled.div`
 background-color:#ebf6f7;
 height:300px;
+padding:100px 0 0 40px;
 `

@@ -37,7 +37,6 @@ export default Header
 const HEader = styled.header`
 position:fixed;
 width:100%;
-opacity:0.8;
 `
 
 const APpBar = styled(AppBar)`
