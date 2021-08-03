@@ -39,8 +39,9 @@ export default function Student() {
           </tbody>
         </table>
 
-        <p>検索機能の実装</p>
+        <p>検索機能の実装（タグで実装？）<br />これで表示させて応募もできる</p>
         <p>生徒情報編集機能の実装</p>
+
       </COntainer>
     </App>
   )

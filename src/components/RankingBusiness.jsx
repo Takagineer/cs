@@ -6,6 +6,17 @@ export default function RankingBusiness() {
     <>
       <COntainer>
         <p>保有しているステータスによって振り分け流機能。ボタンを押すと表示内容が変わる。</p>
+        <div>いいね数の数に応じてランキングを作成する</div>
+        <table>
+          <tr>
+            <thead>順位</thead>
+            <thead>いいね数</thead>
+            <thead>いいね数</thead>
+          </tr>
+          <tr>
+            <tbody></tbody>
+          </tr>
+        </table>
       </COntainer>
     </>
   )

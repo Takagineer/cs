@@ -16,6 +16,11 @@ const Header = ({ pathname }) => (
         </Link>
 
         <HEaderRight>
+
+          <Link href="/individual-pages/Guide">
+            <BUtton color="inherit">使い方ページへ</BUtton>
+          </Link>{''}
+
           <Link href="/individual-pages/Company">
             <BUtton color="inherit">企業用ページ</BUtton>
           </Link>{''}
