@@ -12,7 +12,6 @@ var firebaseConfig={
   appId: process.env.NEXT_APP_FIREBASE_APP_ID
 }
 
-console.log(process.env.FUGA)
 if(firebase.apps.length === 0){
 firebase.initializeApp(firebaseConfig);
 }
