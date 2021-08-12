@@ -1,6 +1,8 @@
 import React from 'react'
 import App from '../../components/App'
 import styled from 'styled-components'
+import {signOut} from '../../firebase'
+import Link from 'next/link'
 
 export default function Student() {
   return (
@@ -41,6 +43,10 @@ export default function Student() {
 
         <p>検索機能の実装（タグで実装？）<br />これで表示させて応募もできる</p>
         <p>生徒情報編集機能の実装</p>
+
+        <Link href="/">
+          <button onClick={signOut}>ログアウト</button>
+        </Link>
 
       </COntainer>
     </App>

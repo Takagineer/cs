@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
 import styled from 'styled-components'
-// import PrivateRoute from './auth/PrivateRoute';
+import {auth} from '../firebase'
 
 const Header = ({ pathname }) => (
   <HEader>
@@ -22,15 +22,30 @@ const Header = ({ pathname }) => (
             <BUtton color="inherit">使い方ページへ</BUtton>
           </Link>{''}
 
-        {/* <PrivateRoute> */}
+          {/* 企業用のログインページへのリンク */}
+          {auth.currentUser === null ? 
+          <Link href="/auth/SignIn">
+            <BUtton color="inherit">ログインページへ</BUtton>
+          </Link>
+          : 
           <Link href="/individual-pages/Company">
             <BUtton color="inherit">企業用ページ</BUtton>
-          </Link>{''}
-          {/* </PrivateRoute> */}
+          </Link>
+          }
+          {/* 企業用のログインページへの記述 */}
 
+          {/* 学生用のログインページへの記述 */}
+          {auth.currentUser === null? 
+          <Link href="/auth/SignIn">
+            <BUtton color="inherit">ログインページへ</BUtton>
+          </Link>
+          :
           <Link href="/individual-pages/Student">
             <BUtton color="inherit">学生用ページ</BUtton>
-          </Link>{''}
+          </Link>
+          }
+          {/* 学生用のログインページへの記述 */}
+
         </HEaderRight>
         {/* <Button color="inherit">ログイン</Button> */}
       </Toolbar>

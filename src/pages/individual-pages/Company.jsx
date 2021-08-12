@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import App from '../../components/App'
 import styled from 'styled-components'
+import { signOut } from '../../firebase'
 
 export default function Company() {
   return (
@@ -141,6 +142,9 @@ export default function Company() {
         <br />
         <br />
         <br />
+        <Link href="/">
+          <button onClick={signOut}>ログアウト</button>
+        </Link>
       </COntainer>
     </App>
   )
