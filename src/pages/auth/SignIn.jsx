@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React, { useState } from 'react'
 import {signUpWithEmailAndPassword} from '../../firebase'
 
@@ -23,7 +24,6 @@ const[password,setPassword]=useState('')
     <>
       <h1>情報登録</h1>
       <h2>新規登録</h2>
-      <form onSubmit={signUp}>
         <label>
           Email
           <input value={email} placeholder="Email" onChange={emailValue}/>
@@ -34,7 +34,28 @@ const[password,setPassword]=useState('')
           <input type="password" value={password}  placeholder="Password" onChange={passwordValue}/>
         </label>
         <button type="submit" onClick={signUp}>登録</button>
-      </form>
+      <Link href="/">
+        <button>トップページへ</button>
+      </Link>
+
+      <h2>ログイン</h2>
+        <label>
+          Email
+          <input value={email} placeholder="Email" onChange={emailValue}/>
+        </label>
+
+        <label>
+          Password
+          <input type="password" value={password}  placeholder="Password" onChange={passwordValue}/>
+        </label>
+        <button type="submit" onClick={signUp}>登録</button>
+      <Link href="/">
+        <button>トップページへ</button>
+      </Link>
+
+      <h2>ログアウト</h2>
+      
+
     </>
   )
 }
