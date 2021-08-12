@@ -33,6 +33,20 @@ export const signUpWithEmailAndPassword = async (email, password) => {
 // 新規登録の実装
 
 //ログイン機能の実装
+export const signInWithEmailAndPassword = async (email, password) => {
+  try {
+    const user = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
+    await firebase.auth().currentUser.sendEmailVerification;
+
+    alert("サインイン成功");
+    return user;
+  } catch (error) {
+    alert("サインイン失敗");
+    console.log(error);
+  }
+};
 //ログイン機能の実装
 
 // ログアウト機能の実装

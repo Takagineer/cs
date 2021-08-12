@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
+import App from '../../components/App'
 import {signUpWithEmailAndPassword,signOut} from '../../firebase'
+import {auth} from '../../firebase'
 
 
 export default function Login() {
@@ -23,40 +25,28 @@ const[password,setPassword]=useState('')
 
   return (
     <>
+    <App>
       <h1>情報登録</h1>
       <h2>新規登録</h2>
-        <label>
-          Email
-          <input value={email} placeholder="Email" onChange={emailValue}/>
-        </label>
+        <input value={email} placeholder="Email" onChange={emailValue}/>
 
-        <label>
-          Password
-          <input type="password" value={password}  placeholder="Password" onChange={passwordValue}/>
-        </label>
+        <input type="password" value={password}  placeholder="Password" onChange={passwordValue}/>
         <button type="submit" onClick={signUp}>登録</button>
-      <Link href="/">
-        <button>トップページへ</button>
-      </Link>
 
       <h2>ログイン</h2>
-        <label>
-          Email
-          <input value={email} placeholder="Email" onChange={emailValue}/>
-        </label>
+        <input value={email} placeholder="Email" onChange={emailValue}/>
 
-        <label>
-          Password
-          <input type="password" value={password}  placeholder="Password" onChange={passwordValue}/>
-        </label>
-        <button type="submit" onClick={signUp}>登録</button>
+        <input type="password" value={password}  placeholder="Password" onChange={passwordValue}/>
+        <button type="submit" onClick={signUp}>ログイン</button>
+
+        <br />
+      <button onClick={signOut}>ログアウト</button>
+
       <Link href="/">
         <button>トップページへ</button>
       </Link>
-        <br />
-      <button onClick={signOut}>ログアウト</button>
-      
 
+    </App>
     </>
   )
 }
