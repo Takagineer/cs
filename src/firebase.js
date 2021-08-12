@@ -16,6 +16,7 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
 
+// 新規登録の実装
 export const signUpWithEmailAndPassword = async (email, password) => {
   try {
     const user = firebase
@@ -29,6 +30,22 @@ export const signUpWithEmailAndPassword = async (email, password) => {
     console.log(error);
   }
 };
+// 新規登録の実装
+
+//ログイン機能の実装
+//ログイン機能の実装
+
+// ログアウト機能の実装
+export const signOut = async () => {
+  const user1 = await firebase.auth().currentUser;
+  console.log("サインアウト前:", user1);
+
+  await firebase.auth().signOut();
+
+  const user2 = await firebase.auth().currentUser;
+  console.log("サインアウト後:", user2);
+};
+// ログアウト機能の実装
 
 export const auth = firebase.auth();
 // export const db = firebase.firestore();

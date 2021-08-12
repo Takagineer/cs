@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
-import {signUpWithEmailAndPassword} from '../../firebase'
+import {signUpWithEmailAndPassword,signOut} from '../../firebase'
+
 
 export default function Login() {
 const[email,setEmail]=useState('')
@@ -52,8 +53,8 @@ const[password,setPassword]=useState('')
       <Link href="/">
         <button>トップページへ</button>
       </Link>
-
-      <h2>ログアウト</h2>
+        <br />
+      <button onClick={signOut}>ログアウト</button>
       
 
     </>
