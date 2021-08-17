@@ -61,6 +61,8 @@ export const signOut = async () => {
 };
 // ログアウト機能の実装
 
+//ドキュメントの取得
+
 export const auth = firebase.auth();
 export const db = firebase.firestore();
 export default firebase;
