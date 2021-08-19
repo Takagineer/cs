@@ -1,23 +1,18 @@
 import { Grid } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import BusinessCard from "./BusinessCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/swiper.min.css";
-import "swiper/components/effect-fade/effect-fade.min.css";
 import "swiper/components/navigation/navigation.min.css";
-import "swiper/components/pagination/pagination.min.css";
+import "swiper/components/thumbs/thumbs.min.css";
 
-import SwiperCore, {
-  EffectFade,
-  Navigation,
-  Pagination,
-  Autoplay,
-} from "swiper/core";
+import SwiperCore, { Navigation, Thumbs } from "swiper/core";
 
-SwiperCore.use([EffectFade, Navigation, Pagination, Autoplay]);
+SwiperCore.use([Navigation, Thumbs]);
 
 export default function Content() {
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const cardContents = [
     {
       companyName: "東京エネルギー株式会社",
@@ -39,16 +34,15 @@ export default function Content() {
   return (
     <>
       <Swiper
-        spaceBetween={30}
-        effect={"fade"}
+        style={{
+          "--swiper-navigation-color": "#fff",
+          "--swiper-pagination-color": "#fff",
+        }}
+        loop={true}
+        spaceBetween={10}
         navigation={true}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-        }}
+        thumbs={{ swiper: thumbsSwiper }}
+        className="mySwiper2"
       >
         <Grid container spacing={2}>
           <SwiperSlide>
