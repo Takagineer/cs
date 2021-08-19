@@ -1,8 +1,21 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import BusinessCard from "./BusinessCard";
-import { Swiper, SwiperSlide, Autoplay } from "swiper/react";
-import "swiper/swiper-bundle.min.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/swiper.min.css";
+import "swiper/components/effect-fade/effect-fade.min.css";
+import "swiper/components/navigation/navigation.min.css";
+import "swiper/components/pagination/pagination.min.css";
+
+import SwiperCore, {
+  EffectFade,
+  Navigation,
+  Pagination,
+  Autoplay,
+} from "swiper/core";
+
+SwiperCore.use([EffectFade, Navigation, Pagination, Autoplay]);
 
 export default function Content() {
   const cardContents = [
@@ -22,12 +35,24 @@ export default function Content() {
       text: "業務詳細を記入してください。",
     },
   ];
+
   return (
     <>
-      <Grid container spacing={2}>
-        <Swiper slidesPerView={1}>
+      <Swiper
+        spaceBetween={30}
+        effect={"fade"}
+        navigation={true}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+      >
+        <Grid container spacing={2}>
           <SwiperSlide>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
               <BusinessCard
                 companyName={cardContents[0].companyName}
                 image={"https://picsum.photos/150"}
@@ -35,8 +60,9 @@ export default function Content() {
               />
             </Grid>
           </SwiperSlide>
+
           <SwiperSlide>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
               <BusinessCard
                 companyName={cardContents[1].companyName}
                 image={"https://picsum.photos/200"}
@@ -44,8 +70,9 @@ export default function Content() {
               />
             </Grid>
           </SwiperSlide>
+
           <SwiperSlide>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
               <BusinessCard
                 companyName={cardContents[2].companyName}
                 image={"https://picsum.photos/300"}
@@ -53,8 +80,8 @@ export default function Content() {
               />
             </Grid>
           </SwiperSlide>
-        </Swiper>
-      </Grid>
+        </Grid>
+      </Swiper>
 
       <br />
       <br />
