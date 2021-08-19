@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-// import "firebase/firestore";
+import "firebase/firestore";
 import "firebase/auth";
 
 var firebaseConfig = {
@@ -62,5 +62,5 @@ export const signOut = async () => {
 // ログアウト機能の実装
 
 export const auth = firebase.auth();
-// export const db = firebase.firestore();
+export const db = firebase.firestore();
 export default firebase;

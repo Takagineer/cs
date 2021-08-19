@@ -142,6 +142,10 @@ export default function Company() {
         <br />
         <br />
         <br />
+        <Link href="/individual-pages/CompanyBusinesses">
+          <button>業務募集ページへ</button>
+        </Link>
+        <br />
         <Link href="/">
           <button onClick={signOut}>ログアウト</button>
         </Link>
