@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   AppBar,
   Button,
   IconButton,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
 } from "@material-ui/core";
@@ -12,6 +14,22 @@ import styled from "styled-components";
 import { auth } from "../firebase";
 
 export default function Header({ pathname }) {
+  const [anchorElCompany, setAnchorElCompany] = useState(null);
+  const [anchorElStudent, setAnchorElStudent] = useState(null);
+
+  const handleClickCompany = (event) => {
+    setAnchorElCompany(event.currentTarget);
+  };
+  const handleClickStudent = (event) => {
+    setAnchorElStudent(event.currentTarget);
+  };
+
+  const handleCloseCompany = () => {
+    setAnchorElCompany(null);
+  };
+  const handleCloseStudent = () => {
+    setAnchorElStudent(null);
+  };
   return (
     <HEader>
       <APpBar position="static">
@@ -25,29 +43,62 @@ export default function Header({ pathname }) {
               <BUtton color="inherit">使い方ページへ</BUtton>
             </Link>
             {""}
-
             {/* 企業用のログインページへのリンク */}
-            {auth.currentUser === null ? (
-              <Link href="/auth/SignIn">
-                <BUtton color="inherit">ログインページへ</BUtton>
-              </Link>
-            ) : (
-              <Link href="/individual-pages/Company">
-                <BUtton color="inherit">企業用ページ</BUtton>
-              </Link>
-            )}
+            <BUtton color="inherit" onClick={handleClickCompany}>
+              企業用ページ
+            </BUtton>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorElCompany}
+              keepMounted
+              open={Boolean(anchorElCompany)}
+              onClose={handleCloseCompany}
+            >
+              {auth.currentUser === null ? (
+                <>
+                  <Link href="/auth/SignIn">
+                    <MenuItem onClick={handleCloseCompany}>ログイン</MenuItem>
+                  </Link>
+                  <Link href="/auth/SignIn">
+                    <MenuItem onClick={handleCloseCompany}>新規登録</MenuItem>
+                  </Link>
+                </>
+              ) : (
+                <Link href="/individual-pages/Company">
+                  <MenuItem onClick={handleCloseCompany}>
+                    企業様マイページへ
+                  </MenuItem>
+                </Link>
+              )}
+            </Menu>
             {/* 企業用のログインページへの記述 */}
 
             {/* 学生用のログインページへの記述 */}
-            {auth.currentUser === null ? (
-              <Link href="/auth/SignIn">
-                <BUtton color="inherit">ログインページへ</BUtton>
-              </Link>
-            ) : (
-              <Link href="/individual-pages/Student">
-                <BUtton color="inherit">学生用ページ</BUtton>
-              </Link>
-            )}
+            <BUtton color="inherit" onClick={handleClickStudent}>
+              学生用ページへ
+            </BUtton>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorElStudent}
+              keepMounted
+              open={Boolean(anchorElStudent)}
+              onClose={handleCloseStudent}
+            >
+              {auth.currentUser === null ? (
+                <>
+                  <Link href="/auth/SignIn">
+                    <MenuItem onClick={handleCloseStudent}>ログイン</MenuItem>
+                  </Link>
+                  <Link href="/auth/SignIn">
+                    <MenuItem onClick={handleCloseStudent}>新規登録</MenuItem>
+                  </Link>
+                </>
+              ) : (
+                <MenuItem onClick={handleCloseStudent}>
+                  学生用マイページ
+                </MenuItem>
+              )}
+            </Menu>
             {/* 学生用のログインページへの記述 */}
           </HEaderRight>
           {/* <Button color="inherit">ログイン</Button> */}
