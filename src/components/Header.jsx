@@ -59,7 +59,7 @@ export default function Header({ pathname }) {
                   <Link href="/auth/SignIn">
                     <MenuItem onClick={handleCloseCompany}>ログイン</MenuItem>
                   </Link>
-                  <Link href="/auth/SignIn">
+                  <Link href="/auth/SignUp">
                     <MenuItem onClick={handleCloseCompany}>新規登録</MenuItem>
                   </Link>
                 </>
@@ -89,7 +89,7 @@ export default function Header({ pathname }) {
                   <Link href="/auth/SignIn">
                     <MenuItem onClick={handleCloseStudent}>ログイン</MenuItem>
                   </Link>
-                  <Link href="/auth/SignIn">
+                  <Link href="/auth/SignUp">
                     <MenuItem onClick={handleCloseStudent}>新規登録</MenuItem>
                   </Link>
                 </>
