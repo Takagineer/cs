@@ -48,7 +48,6 @@ export default function Login() {
       <App>
         <h1>情報登録</h1>
         <Container component="main" maxWidth="xs">
-          <AUth></AUth>
           <div>
             <Typography component="h1" variant="h5">
               新規登録
@@ -144,7 +143,3 @@ export default function Login() {
     </>
   );
 }
-
-const AUth = styled.div`
-  display: flex;
-`;
