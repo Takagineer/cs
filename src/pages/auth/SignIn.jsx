@@ -20,27 +20,21 @@ import {
 import styled from "styled-components";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const signUp = async (e) => {
-    const user = await signUpWithEmailAndPassword(email, password);
-    setEmail("");
-    setPassword("");
-  };
+  const [signInEmail, setSignInEmail] = useState("");
+  const [signInPassword, setSignInPassword] = useState("");
 
   const signIn = async (e) => {
-    const user = await signInWithEmailAndPassword(email, password);
+    const user = await signInWithEmailAndPassword(signInEmail, signInPassword);
     setEmail("");
     setPassword("");
   };
 
-  const emailValue = (e) => {
-    setEmail(e.target.value);
+  const signInEmailValue = (e) => {
+    setSignInEmail(e.target.value);
   };
 
-  const passwordValue = (e) => {
-    setPassword(e.target.value);
+  const signInPasswordValue = (e) => {
+    setSignInPassword(e.target.value);
   };
 
   return (
@@ -63,8 +57,8 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
-              value={email}
-              onChange={emailValue}
+              value={SignInEmail}
+              onChange={signInEmailValue}
             />
             <TextField
               variant="outlined"
@@ -76,8 +70,8 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={password}
-              onChange={passwordValue}
+              value={signInPassword}
+              onChange={signInPasswordValue}
             />
             <Button
               type="submit"

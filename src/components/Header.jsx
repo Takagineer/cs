@@ -94,9 +94,11 @@ export default function Header({ pathname }) {
                   </Link>
                 </>
               ) : (
-                <MenuItem onClick={handleCloseStudent}>
-                  学生用マイページ
-                </MenuItem>
+                <Link href="/individual-pages/Student">
+                  <MenuItem onClick={handleCloseStudent}>
+                    学生用マイページ
+                  </MenuItem>
+                </Link>
               )}
             </Menu>
             {/* 学生用のログインページへの記述 */}

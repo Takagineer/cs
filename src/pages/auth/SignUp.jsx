@@ -5,21 +5,21 @@ import App from "../../components/App";
 import { signOut, signUpWithEmailAndPassword } from "../../firebase";
 
 export default function SignUp() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [signUpEmail, setSignUpEmail] = useState("");
+  const [signUpPassword, setSignUpPassword] = useState("");
 
-  const emailValue = (e) => {
-    setEmail(e.target.value);
+  const signUpEmailValue = (e) => {
+    setSignUpEmail(e.target.value);
   };
 
-  const passwordValue = (e) => {
-    setPassword(e.target.value);
+  const signUpPasswordValue = (e) => {
+    setSignUpPassword(e.target.value);
   };
 
   const signUp = async (e) => {
-    const user = await signUpWithEmailAndPassword(email, password);
-    setEmail("");
-    setPassword("");
+    const user = await signUpWithEmailAndPassword(signUpEmail, signUpPassword);
+    setSignUpEmail("");
+    setSignUpPassword("");
   };
   return (
     <>
@@ -40,8 +40,8 @@ export default function SignUp() {
               name="email"
               autoComplete="email"
               autoFocus
-              value={email}
-              onChange={emailValue}
+              value={signUpEmail}
+              onChange={signUpEmailValue}
             />
             <TextField
               variant="outlined"
@@ -53,8 +53,8 @@ export default function SignUp() {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={password}
-              onChange={passwordValue}
+              value={signUpPassword}
+              onChange={signUpPasswordValue}
             />
             <Button
               type="submit"
@@ -63,7 +63,7 @@ export default function SignUp() {
               color="primary"
               onClick={signUp}
             >
-              Sign In
+              Sign Up
             </Button>
           </div>
         </Container>
