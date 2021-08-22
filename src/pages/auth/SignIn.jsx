@@ -57,7 +57,7 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
-              value={SignInEmail}
+              value={signInEmail}
               onChange={signInEmailValue}
             />
             <TextField
