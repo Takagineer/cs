@@ -25,8 +25,8 @@ export default function Login() {
 
   const signIn = async (e) => {
     const user = await signInWithEmailAndPassword(signInEmail, signInPassword);
-    setEmail("");
-    setPassword("");
+    setSignInEmail("");
+    setSignInPassword("");
   };
 
   const signInEmailValue = (e) => {
