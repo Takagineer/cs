@@ -23,8 +23,18 @@ export default function CompanyBusinesses() {
   const [message, setMessage] = useState("");
 
   const addBusinessData = async () => {
-    // documentの取得;
-    console.log("保存します");
+    if (
+      !business ||
+      !detail ||
+      !reward ||
+      !number ||
+      !location ||
+      !skill ||
+      !message
+    ) {
+      alert("空欄を埋めてください");
+      return;
+    }
     await db.collection("Businesses").add({
       business: business,
       detail: detail,
@@ -34,7 +44,7 @@ export default function CompanyBusinesses() {
       skill: skill,
       message: message,
     });
-    console.log("保存しました");
+    alert("募集しました");
     setBusiness("");
     setDetail("");
     setReward("");
