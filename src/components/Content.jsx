@@ -35,8 +35,8 @@ export default function Content() {
     <>
       <Swiper
         style={{
-          "--swiper-navigation-color": "#fff",
-          "--swiper-pagination-color": "#fff",
+          "--swiper-navigation-color": "#2ca9e1",
+          "--swiper-pagination-color": "#2ca9e1",
         }}
         loop={true}
         spaceBetween={10}
