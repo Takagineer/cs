@@ -28,13 +28,13 @@ export default function RankingBusiness() {
           {businessData.map((business) => {
             return (
               <li key={business.businessId}>
-                {business.business}
+                業務：{business.business}
                 <br />
-                {business.location}
+                勤務場所：{business.location}
                 <br />
-                {business.reward}
+                想定報酬額：{business.reward}
                 <br />
-                {"星の数"}
+                いいね数：{"星の数"}
                 <hr />
               </li>
             );
@@ -52,7 +52,6 @@ const COntainer = styled.div`
 `;
 
 const UL = styled.ul`
-  background-color: white;
   list-style: none;
   border-radius: 20px;
 `;
