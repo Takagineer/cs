@@ -27,7 +27,7 @@ export default function RankingBusiness() {
         <UL>
           {businessData.map((business) => {
             return (
-              <li key={business.businessId}>
+              <LI key={business.businessId}>
                 業務：{business.business}
                 <br />
                 勤務場所：{business.location}
@@ -36,7 +36,7 @@ export default function RankingBusiness() {
                 <br />
                 いいね数：{"星の数"}
                 <hr />
-              </li>
+              </LI>
             );
           })}
         </UL>
@@ -53,5 +53,10 @@ const COntainer = styled.div`
 
 const UL = styled.ul`
   list-style: none;
-  border-radius: 20px;
+`;
+
+const LI = styled.li`
+  padding-left: 20px;
+  margin: 20px;
+  border: solid 10px green;
 `;
