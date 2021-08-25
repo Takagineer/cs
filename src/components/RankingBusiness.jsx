@@ -40,14 +40,16 @@ export default function RankingBusiness() {
           })}
         </UL>
         <br />
+        <br />
+        <br />
+        <br />
       </COntainer>
     </>
   );
 }
 
 const COntainer = styled.div`
-  height: 300px;
-  padding: 100px 0 0 40px;
+  padding: 200px 0 0 40px;
 `;
 
 const UL = styled.ul`
