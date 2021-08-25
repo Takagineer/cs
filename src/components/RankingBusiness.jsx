@@ -7,17 +7,6 @@ export default function RankingBusiness() {
   const [businessData, setBusinessData] = useState([]);
 
   useEffect(() => {
-    // const getBusinessData = async () => {
-    //   const getBusinessDataCollection = await db.collection("Businesses").get();
-    //   const _businessData = [];
-    //   getBusinessDataCollection.forEach((businessData) => {
-    //     _businessData.push({
-    //       businessId: businessData.id,
-    //       ...businessData.data(),
-    //     });
-    //     setBusinessData(_businessData);
-    //   });
-    // };
     const getBusinessData = db
       .collection("Businesses")
       .onSnapshot((querySnapshot) => {
@@ -35,11 +24,6 @@ export default function RankingBusiness() {
     <>
       <COntainer>
         <br />
-        <r />
-        <br />
-        <br />
-        <br />
-        <br />
         <UL>
           {businessData.map((business) => {
             return (
@@ -56,10 +40,6 @@ export default function RankingBusiness() {
             );
           })}
         </UL>
-        <br />
-        <br />
-        <br />
-        <br />
         <br />
       </COntainer>
     </>
