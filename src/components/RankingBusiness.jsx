@@ -58,5 +58,5 @@ const UL = styled.ul`
 const LI = styled.li`
   padding-left: 20px;
   margin: 20px;
-  border: solid 10px green;
+  border: solid 5px #59b9c6;
 `;
