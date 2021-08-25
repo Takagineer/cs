@@ -35,7 +35,6 @@ export default function RankingBusiness() {
                 想定報酬額：{business.reward}
                 <br />
                 いいね数：{"星の数"}
-                <hr />
               </LI>
             );
           })}
@@ -56,7 +55,8 @@ const UL = styled.ul`
 `;
 
 const LI = styled.li`
-  padding-left: 20px;
-  margin: 20px;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 20px;
   border: solid 5px #59b9c6;
 `;
