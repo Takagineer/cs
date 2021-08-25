@@ -46,7 +46,7 @@ export default function BusinessCard(props) {
           <Typography color="textSecondary" gutterBottom>
             {companyName}
           </Typography>
-          <CardMedia style={{ height: "300px" }} image={image} />
+          <CardMedia style={{ height: "250px" }} image={image} />
           <br />
           <Typography variant="body2" component="p">
             {text}
@@ -60,19 +60,7 @@ export default function BusinessCard(props) {
             <FavoriteTwoToneIcon color="secondary" />
           )}
           {likeCount}
-          {/* <Stack spacing={1}>
-            <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-            <Rating
-              name="half-rating-read"
-              defaultValue={2.5}
-              precision={0.5}
-              readOnly
-            />
-          </Stack> */}
         </IconButton>
-        {/* <CardActions>
-          <Button size="small">詳細ページへ</Button>
-        </CardActions> */}
       </Card>
     </>
   );
