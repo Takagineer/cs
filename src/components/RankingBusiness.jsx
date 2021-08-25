@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { db } from "../firebase";
+import Filter from "./Filetr";
 
 export default function RankingBusiness() {
   const [businessData, setBusinessData] = useState([]);
@@ -23,6 +24,7 @@ export default function RankingBusiness() {
   return (
     <>
       <COntainer>
+        <Filter />
         <br />
         <UL>
           {businessData.map((business) => {
