@@ -112,6 +112,7 @@ export default function Header({ pathname }) {
 
 const HEader = styled.header`
   position: fixed;
+  top: 0px;
   width: 100%;
 `;
 
