@@ -6,7 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import RankingBusiness from "./NewBusiness";
+import NewBusiness from "./NewBusiness";
 import RankingFav from "./RankingFav";
 import RankingBusinessPopular from "./RankingPopulat";
 import RankingBusinessReward from "./RankingReward";
@@ -79,7 +79,7 @@ export default function Filter() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <RankingBusiness />
+        <NewBusiness />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <RankingFav />
