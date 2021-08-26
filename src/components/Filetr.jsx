@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import NewBusiness from "./NewBusiness";
 import RankingFav from "./RankingFav";
-import RankingBusinessPopular from "./RankingPopulat";
+import RankingBusinessPopular from "./RankingPopular";
 import RankingBusinessReward from "./RankingReward";
 
 function TabPanel(props) {
