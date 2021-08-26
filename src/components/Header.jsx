@@ -32,7 +32,7 @@ export default function Header({ pathname }) {
   };
   return (
     <HEader>
-      <APpBar position="static">
+      <AppBar position="static">
         <Toolbar>
           <Link href="/">
             <Typography variant="h6">C×S</Typography>
@@ -105,7 +105,7 @@ export default function Header({ pathname }) {
           </HEaderRight>
           {/* <Button color="inherit">ログイン</Button> */}
         </Toolbar>
-      </APpBar>
+      </AppBar>
     </HEader>
   );
 }
@@ -113,11 +113,9 @@ export default function Header({ pathname }) {
 const HEader = styled.header`
   position: fixed;
   top: 0px;
+  left: 0px;
+  right: 0px;
   width: 100%;
-`;
-
-const APpBar = styled(AppBar)`
-  border-radius: 10px;
 `;
 
 const HEaderRight = styled.div`

@@ -13,4 +13,6 @@ const App = ({ children }) => (
 
 export default App;
 
-const MAin = styled.main``;
+const MAin = styled.main`
+  overflow-y: scroll;
+`;
