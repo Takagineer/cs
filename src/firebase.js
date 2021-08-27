@@ -22,11 +22,9 @@ export const signUpWithEmailAndPassword = async (email, password) => {
     const user = firebase
       .auth()
       .createUserWithEmailAndPassword(email, password);
-    alert("登録成功");
     return user;
-    console.log(user);
   } catch (error) {
-    alert("errorですよ");
+    alert("errorです");
     console.log(error);
   }
 };
