@@ -55,14 +55,14 @@ export default function Header({ pathname }) {
               onClose={handleCloseCompany}
             >
               {auth.currentUser === null ? (
-                <>
+                <div>
                   <Link href="/auth/SignIn">
                     <MenuItem onClick={handleCloseCompany}>ログイン</MenuItem>
                   </Link>
                   <Link href="/auth/SignUp">
                     <MenuItem onClick={handleCloseCompany}>新規登録</MenuItem>
                   </Link>
-                </>
+                </div>
               ) : (
                 <Link href="/individual-pages/Company">
                   <MenuItem onClick={handleCloseCompany}>
@@ -85,14 +85,14 @@ export default function Header({ pathname }) {
               onClose={handleCloseStudent}
             >
               {auth.currentUser === null ? (
-                <>
+                <div>
                   <Link href="/auth/SignIn">
                     <MenuItem onClick={handleCloseStudent}>ログイン</MenuItem>
                   </Link>
                   <Link href="/auth/SignUp">
                     <MenuItem onClick={handleCloseStudent}>新規登録</MenuItem>
                   </Link>
-                </>
+                </div>
               ) : (
                 <Link href="/individual-pages/Student">
                   <MenuItem onClick={handleCloseStudent}>
