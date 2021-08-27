@@ -18,6 +18,7 @@ import {
   auth,
 } from "../../firebase";
 import styled from "styled-components";
+import Student from "../individual-pages/Student";
 
 export default function Login() {
   const [signInEmail, setSignInEmail] = useState("");
@@ -40,50 +41,54 @@ export default function Login() {
   return (
     <>
       <App>
-        <h1>情報登録</h1>
-        <Container component="main" maxWidth="xs">
-          <div></div>
-          <div>
-            <Typography component="h1" variant="h5">
-              ログイン
-            </Typography>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={signInEmail}
-              onChange={signInEmailValue}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={signInPassword}
-              onChange={signInPasswordValue}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={signIn}
-            >
-              Sign In
-            </Button>
-          </div>
-        </Container>
+        {auth.currentUser === null ? (
+          <Container component="main" maxWidth="xs">
+            <h1>情報登録</h1>
+            <div></div>
+            <div>
+              <Typography component="h1" variant="h5">
+                ログイン
+              </Typography>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={signInEmail}
+                onChange={signInEmailValue}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={signInPassword}
+                onChange={signInPasswordValue}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={signIn}
+              >
+                Sign In
+              </Button>
+            </div>
+          </Container>
+        ) : (
+          <Student />
+        )}
 
         <Button variant="contained" color="primary" onClick={signOut}>
           ログアウト
