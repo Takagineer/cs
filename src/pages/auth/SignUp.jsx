@@ -160,24 +160,6 @@ export default function SignUp() {
               value={studentSignUpYear}
               onChange={studentSignUpYearValue}
             />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="スキル/資格"
-              autoFocus
-              value={studentSignUpSkill}
-              onChange={studentSignUpSkillValue}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="居住区"
-              autoFocus
-              value={studentSignUpLocation}
-              onChange={studentSignUpLocationValue}
-            />
             <CReatableSelect
               placeholder="スキル/資格"
               isMulti
@@ -202,12 +184,14 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+            <br />
+            <br />
+            <br />
           </div>
         </Container>
       ) : (
         <Student />
       )}
-      <h1>新規登録画面</h1>
 
       <Button variant="contained" color="primary" onClick={signOut}>
         ログアウト
