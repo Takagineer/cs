@@ -238,6 +238,7 @@ const prefecture = [
   { value: "奈良県", label: "奈良県" },
   { value: "和歌山県", label: "和歌山県" },
   { value: "鳥取県", label: "鳥取県" },
+  { value: "島根県", label: "鳥取県" },
   { value: "岡山県", label: "岡山県" },
   { value: "広島県", label: "広島県" },
   { value: "山口県", label: "山口県" },
