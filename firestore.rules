@@ -1,9 +1,125 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
+          //readとwriteに分類される。readには、get(単一ドキュメントの取得)とlist(クエリによるコレクション・複数ドキュメントの取得)、writeにはcreate(ドキュメントの生成),update（ドキュメントの一部のフィールドの更新）,delete（ドキュメントの削除）の操作が含まれている。
           request.time < timestamp.date(2021, 8, 29);
+
+        //学生/会社がログインしている
+        function isAuthenticatedStudent(){
+          return request.auth !=null
+        }
+        //学生/会社がログインしている
+
+        //学生がログインしており、かつ、ログインしている学生がリクエストの主である
+        function isStudentAuthenticated(studentId){
+          return isAuthenticatedStudent() && userId === request.auth.uid;
+        }
+        //学生がログインしており、かつ、ログインしている学生がリクエストの主である
+        
+
+        //会社がログインしており、かつ、ログインしている会社がリクエストの主である
+        function isCompanyAuthenticated(companyId){
+          return isAuthenticatedCompany() && companyId === request.auth.uid;
+        }
+        //会社がログインしており、かつ、ログインしている会社がリクエストの主である
+
+        match/companies/{companyId}{
+          allow get, update, delete, create: if isCompanyAuthenticated(companyId);
+        }
+        //会社のページは１ドキュメントのみなのでread,list(全てのドキュメントの取得)を使用せずgetを使用した。
+
+        //studentのスキーマ検証
+        function isValidStudent(student){
+          return student.size()==10
+          && 'createdAt' in student && stundet.createrAt is timestamp
+          && 'age' in student && student.age is number
+          && 'email' in student && student.email is string
+          && 'firstName' in student && student.firstName is string
+          && 'lastName' in student && student.lastName is string
+          && 'password' in student && student.password is string
+          && 'skill' in student && student.skill is string
+          && 'studentIntroduction' in student && student.studentIntroduction is string
+          && 'university' in student && student.university is string
+          && 'year' in student && student.year is string
+        }
+
+        //学生の新規登録のバリデーション
+        match/Students/{studentId}{
+          allow get: if isAuthenticatedStudent(studentId);
+          allow create: if isAuthenticatedStudent(studentId)
+          && isValidStudent(request.resource.data)
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.studentId == studentId
+        }
+
+        }
+
+
+
     }
+
+        
+
+
+    Companies{
+          {companyId}{
+          createdAt:timestamp,
+          companyName:string,
+          password:string,
+          phoneNumber:number,
+          image:image
+
+
+            Businesses{
+              createdAt:timestamp,
+              content:string,
+              detail:string,
+              period:number,
+              reward:number,
+              number:number,
+              comment:string,
+              skill:string,
+              companyId:string,
+              image:image
+            }
+
+          }
+        }
+
+        students{
+          createdAt:timestamp,
+          university:string,
+          firstName:string,
+          lastName:string,
+          studentIntroduction:string,
+          skill:string,
+          age:number
+          year:number,
+          password:string,
+          email:string,
+        }
+
+        appliedWorks{
+          createdAt:timestamp,
+          studentId:string,
+          businessesId:string,
+          status:string
+
+          evaluations{
+            createdAt:timestamp,
+            atomospherePoint:number,
+            rewardPoint:number,
+            contentPoint:number,
+            recommendPoint:number,
+            appliedWorkId:string
+        }
+
+        }
+
+        likes{
+          studentId:string,
+          businessId:string
+        }
+
   }
-}
+// }
