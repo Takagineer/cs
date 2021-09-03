@@ -45,17 +45,13 @@ export default function SignUp() {
   const studentSignUpYearValue = (e) => {
     setStudentSignUpYear(e.target.value);
   };
-  const studentSignUpSkillValue = (newValue, actionMeta) => {
-    console.group("Value Changed");
-    console.group("newValue");
-    console.group("action:${actionMeta.action}");
-    console.groupEnd();
-    // if ("__isNew__" in { ...value }) {
-    //   delete value.__isNew__;
-    //   setStudentSignUpSkill(value);
-    // } else {
-    // setStudentSignUpSkill(value);
-    // }
+  const studentSignUpSkillValue = (value) => {
+    if ("__isNew__" in { ...value }) {
+      delete value.__isNew__;
+      setStudentSignUpSkill(value);
+    } else {
+      setStudentSignUpSkill(value);
+    }
   };
   const studentSignUpLocationValue = (value) => {
     setStudentSignUpLocation(value);
