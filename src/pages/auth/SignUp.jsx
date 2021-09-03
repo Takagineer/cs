@@ -46,7 +46,12 @@ export default function SignUp() {
     setStudentSignUpYear(e.target.value);
   };
   const studentSignUpSkillValue = (value) => {
-    setStudentSignUpSkill(value);
+    if ("__isNew__" in value) {
+      delete value.__isNew__;
+      setStudentSignUpSkill(value);
+    } else {
+      setStudentSignUpSkill(value);
+    }
   };
   const studentSignUpLocationValue = (value) => {
     setStudentSignUpLocation(value);
@@ -71,8 +76,6 @@ export default function SignUp() {
       skill: studentSignUpSkill,
       location: studentSignUpLocation,
     };
-    console.log(studentSignUpSkill);
-    console.log(studentSignUpLocation);
 
     await db.collection("Students").doc(uid).set(userInitialData);
     alert("登録しました");
@@ -176,14 +179,12 @@ export default function SignUp() {
               onChange={studentSignUpSkillValue}
               options={skillList}
             />
-
             <SElect
               placeholder="お住まいの都道府県"
               value={studentSignUpLocation}
               onChange={studentSignUpLocationValue}
               options={prefecture}
             />
-
             <Button
               type="submit"
               fullWidth
