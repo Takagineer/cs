@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
           //readとwriteに分類される。readには、get(単一ドキュメントの取得)とlist(クエリによるコレクション・複数ドキュメントの取得)、writeにはcreate(ドキュメントの生成),update（ドキュメントの一部のフィールドの更新）,delete（ドキュメントの削除）の操作が含まれている。
-          request.time < timestamp.date(2021, 8, 29);
+          request.time < timestamp.date(2021, 9, 29);
 
         //学生/会社がログインしている
         function isAuthenticatedStudent(){

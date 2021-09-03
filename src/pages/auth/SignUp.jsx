@@ -45,38 +45,47 @@ export default function SignUp() {
   const studentSignUpYearValue = (e) => {
     setStudentSignUpYear(e.target.value);
   };
-  const studentSignUpSkillValue = (e) => {
-    setStudentSignUpSkill(skillList.value);
+  const studentSignUpSkillValue = (value) => {
+    setStudentSignUpSkill(value);
   };
-  const studentSignUpLocationValue = (e) => {
-    setStudentSignUpLocation(prefecture.value);
+  const studentSignUpLocationValue = (value) => {
+    setStudentSignUpLocation(value);
   };
 
   const studentSignUp = async (e) => {
-    const user = await signUpWithEmailAndPassword(signUpEmail, signUpPassword);
+    const user = await signUpWithEmailAndPassword(
+      studentSignUpEmail,
+      studentSignUpPassword
+    );
 
     const uid = auth.currentUser.uid;
     const userInitialData = {
-      email: signUpEmail,
-      password: signUpPassword,
-      userName: signUpUserName,
-      age: signUpUserAge,
-      location: signUpUserLocation,
+      email: studentSignUpEmail,
+      password: studentSignUpPassword,
+      firstName: studentSignUpFirstName,
+      lastName: studentSignUpLastName,
+      age: studentSignUpAge,
+      introduction: studentSignUpIntroduction,
+      university: studentSignUpUniversity,
+      year: studentSignUpYear,
+      skill: studentSignUpSkill,
+      location: studentSignUpLocation,
     };
-    await db.collection("users").doc(uid).set(userInitialData);
-    alert("登録しました");
-    setSignUpEmail("");
-    setSignUpPassword("");
-    setSignUpUserName("");
-    setSignUpUserAge("");
-    setSignUpUserLocation("");
-  };
+    console.log(studentSignUpSkill);
+    console.log(studentSignUpLocation);
 
-  const handleChange = (newValue, actionMeta) => {
-    console.group("Value Changed");
-    console.log(newValue);
-    console.log(`action: ${actionMeta.action}`);
-    console.groupEnd();
+    await db.collection("Students").doc(uid).set(userInitialData);
+    alert("登録しました");
+    setStudentSignUpEmail("");
+    setStudentSignUpPassword("");
+    setStudentSignUpFirstName("");
+    setStudentSignUpLastName("");
+    setStudentSignUpAge("");
+    setStudentSignUpSkill("");
+    setStudentSignUpIntroduction("");
+    setStudentSignUpUniversity("");
+    setStudentSignUpYear("");
+    setStudentSignUpLocation("");
   };
 
   return (
@@ -163,14 +172,14 @@ export default function SignUp() {
             <CReatableSelect
               placeholder="スキル/資格"
               isMulti
-              value={skillList.value}
+              value={studentSignUpSkill}
               onChange={studentSignUpSkillValue}
               options={skillList}
             />
 
             <SElect
               placeholder="お住まいの都道府県"
-              value={prefecture.value}
+              value={studentSignUpLocation}
               onChange={studentSignUpLocationValue}
               options={prefecture}
             />
