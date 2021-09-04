@@ -46,12 +46,7 @@ export default function SignUp() {
     setStudentSignUpYear(e.target.value);
   };
   const studentSignUpSkillValue = (value) => {
-    if ("__isNew__" in { ...value }) {
-      delete value.__isNew__;
-      setStudentSignUpSkill(value);
-    } else {
-      setStudentSignUpSkill(value);
-    }
+    setStudentSignUpSkill(value);
   };
   const studentSignUpLocationValue = (value) => {
     setStudentSignUpLocation(value);
@@ -64,6 +59,21 @@ export default function SignUp() {
     );
 
     const uid = auth.currentUser.uid;
+
+    //studentSignUp内に記述されてい流、skillが配列に含まれているため、それをスプレッド構文を使用してオブジェクトに分解して、その中から'__isNew__'の記述を削除する。
+    const A = { ...studentSignUpSkill };
+
+    const newStudentSignUpSkill = studentSignUpSkill.map((skill) => {
+      if ("__isNew__" in skill) {
+        delete skill.__isNew__;
+        return skill;
+      } else {
+        return skill;
+      }
+    });
+
+    //
+
     const userInitialData = {
       email: studentSignUpEmail,
       password: studentSignUpPassword,
@@ -73,7 +83,7 @@ export default function SignUp() {
       introduction: studentSignUpIntroduction,
       university: studentSignUpUniversity,
       year: studentSignUpYear,
-      skill: studentSignUpSkill,
+      skill: newStudentSignUpSkill,
       location: studentSignUpLocation,
     };
 
