@@ -59,7 +59,7 @@ export default function Header({ pathname }) {
                   <Link href="/auth/SignIn">
                     <MenuItem onClick={handleCloseCompany}>ログイン</MenuItem>
                   </Link>
-                  <Link href="/auth/SignUp">
+                  <Link href="/auth/CompanySignUp">
                     <MenuItem onClick={handleCloseCompany}>新規登録</MenuItem>
                   </Link>
                 </div>
