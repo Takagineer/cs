@@ -61,8 +61,6 @@ export default function SignUp() {
     const uid = auth.currentUser.uid;
 
     //studentSignUp内に記述されてい流、skillが配列に含まれているため、それをスプレッド構文を使用してオブジェクトに分解して、その中から'__isNew__'の記述を削除する。
-    const A = { ...studentSignUpSkill };
-
     const newStudentSignUpSkill = studentSignUpSkill.map((skill) => {
       if ("__isNew__" in skill) {
         delete skill.__isNew__;
