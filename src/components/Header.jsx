@@ -56,7 +56,7 @@ export default function Header({ pathname }) {
             >
               {auth.currentUser === null ? (
                 <div>
-                  <Link href="/auth/SignIn">
+                  <Link href="/auth/CompanySignIn">
                     <MenuItem onClick={handleCloseCompany}>ログイン</MenuItem>
                   </Link>
                   <Link href="/auth/CompanySignUp">
