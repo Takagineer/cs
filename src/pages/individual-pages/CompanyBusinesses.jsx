@@ -92,50 +92,52 @@ export default function CompanyBusinesses() {
         <br />
         <form className={classes.root} noValidate autoComplete="off">
           <TextField
-            id="standard-basic"
+            variant="outlined"
             label="募集業務"
             value={business}
             onChange={businessValue}
           />
           <br />
           <TextField
-            id="standard-basic"
+            variant="outlined"
             label="業務内容"
             value={detail}
             onChange={detailValue}
           />
           <br />
           <TextField
-            id="standard-basic"
+            variant="outlined"
             label="想定報酬額"
             value={reward}
             onChange={rewardValue}
           />
           <br />
           <TextField
-            id="standard-basic"
+            variant="outlined"
             label="募集人数"
             value={number}
             onChange={numberValue}
           />
           <br />
           <TextField
-            id="standard-basic"
+            variant="outlined"
             label="勤務場所"
             value={location}
             onChange={locationValue}
           />
           <br />
           <TextField
-            id="standard-basic"
+            variant="outlined"
             label="必要なスキル"
             value={skill}
             onChange={skillValue}
           />
           <br />
           <TextField
-            id="standard-basic"
+            variant="outlined"
             label="メッセージ"
+            multiline
+            rows="5"
             value={message}
             onChange={messageValue}
           />
