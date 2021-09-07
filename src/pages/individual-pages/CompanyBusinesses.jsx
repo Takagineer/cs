@@ -1,4 +1,4 @@
-import { Button, makeStyles, TextField } from "@material-ui/core";
+import { Container, Button, makeStyles, TextField } from "@material-ui/core";
 import Link from "next/link";
 import React, { useState } from "react";
 import App from "../../components/App";
@@ -87,76 +87,93 @@ export default function CompanyBusinesses() {
   return (
     <>
       <App>
-        <br />
-        <br />
-        <br />
-        <form className={classes.root} noValidate autoComplete="off">
-          <TextField
-            variant="outlined"
-            label="募集業務"
-            value={business}
-            onChange={businessValue}
-          />
+        <Container component="main" maxWidth="xs">
           <br />
-          <TextField
-            variant="outlined"
-            label="業務内容"
-            value={detail}
-            onChange={detailValue}
-          />
           <br />
-          <TextField
-            variant="outlined"
-            label="想定報酬額"
-            value={reward}
-            onChange={rewardValue}
-          />
           <br />
-          <TextField
-            variant="outlined"
-            label="募集人数"
-            value={number}
-            onChange={numberValue}
-          />
-          <br />
-          <TextField
-            variant="outlined"
-            label="勤務場所"
-            value={location}
-            onChange={locationValue}
-          />
-          <br />
-          <TextField
-            variant="outlined"
-            label="必要なスキル"
-            value={skill}
-            onChange={skillValue}
-          />
-          <br />
-          <TextField
-            variant="outlined"
-            label="メッセージ"
-            multiline
-            rows="5"
-            value={message}
-            onChange={messageValue}
-          />
+          <form className={classes.root} noValidate autoComplete="off">
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="募集業務"
+              autoFocus
+              value={business}
+              onChange={businessValue}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="業務内容"
+              autoFocus
+              value={detail}
+              onChange={detailValue}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="想定報酬額"
+              autoFocus
+              value={reward}
+              onChange={rewardValue}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="募集人数"
+              autoFocus
+              value={number}
+              onChange={numberValue}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="勤務場所"
+              autoFocus
+              value={location}
+              onChange={locationValue}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="メッセージ"
+              autoFocus
+              multiline
+              rows="5"
+              value={message}
+              onChange={messageValue}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="必要なスキル"
+              autoFocus
+              value={skill}
+              onChange={skillValue}
+            />
+
+            <br />
+          </form>
 
           <br />
-        </form>
-
-        <br />
-        <br />
-        <Button variant="contained" color="primary" onClick={addBusinessData}>
-          追加
-        </Button>
-        <br />
-        <br />
-        <Link href="/">
-          <Button variant="contained" color="secondary">
-            トップページへ
+          <br />
+          <Button variant="contained" color="primary" onClick={addBusinessData}>
+            追加
           </Button>
-        </Link>
+          <br />
+          <br />
+          <Link href="/">
+            <Button variant="contained" color="secondary">
+              トップページへ
+            </Button>
+          </Link>
+        </Container>
       </App>
     </>
   );
