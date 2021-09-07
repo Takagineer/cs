@@ -2,7 +2,9 @@ import { Container, Button, makeStyles, TextField } from "@material-ui/core";
 import Link from "next/link";
 import React, { useState } from "react";
 import App from "../../components/App";
-import { db } from "../../firebase";
+import { auth, db } from "../../firebase";
+import CreatableSelect from "react-select/creatable";
+import styled from "styled-components";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,14 +37,25 @@ export default function CompanyBusinesses() {
       alert("空欄を埋めてください");
       return;
     }
+
+    const newBusinessSkill = skill.map((skill) => {
+      if ("__isNew__" in skill) {
+        delete skill.__isNew__;
+        return skill;
+      } else {
+        return skill;
+      }
+    });
+
     await db.collection("Businesses").add({
       business: business,
       detail: detail,
       reward: reward,
       number: number,
       location: location,
-      skill: skill,
+      skill: newBusinessSkill,
       message: message,
+      companyId: auth.currentUser.uid,
     });
     alert("募集しました");
     setBusiness("");
@@ -52,14 +65,6 @@ export default function CompanyBusinesses() {
     setLocation("");
     setSkill("");
     setMessage("");
-    //コレクションに紐づいたデータの取得
-    // const snapshot = await db
-    //   .collection("Businesses")
-    //   .where("age", "<=", 30)
-    //   .get();
-    // snapshot.forEach((doc) => {
-    //   console.log(doc.id, "=>", doc.data());
-    // });
   };
 
   const businessValue = (e) => {
@@ -77,11 +82,11 @@ export default function CompanyBusinesses() {
   const locationValue = (e) => {
     setLocation(e.target.value);
   };
-  const skillValue = (e) => {
-    setSkill(e.target.value);
-  };
   const messageValue = (e) => {
     setMessage(e.target.value);
+  };
+  const skillValue = (value) => {
+    setSkill(value);
   };
   const classes = useStyles();
   return (
@@ -148,7 +153,7 @@ export default function CompanyBusinesses() {
               value={message}
               onChange={messageValue}
             />
-            <TextField
+            {/* <TextField
               variant="outlined"
               margin="normal"
               fullWidth
@@ -156,6 +161,13 @@ export default function CompanyBusinesses() {
               autoFocus
               value={skill}
               onChange={skillValue}
+            /> */}
+            <CReatableSelect
+              placeholder="スキル/資格"
+              isMulti
+              value={skill}
+              onChange={skillValue}
+              options={skillList}
             />
 
             <br />
@@ -178,3 +190,20 @@ export default function CompanyBusinesses() {
     </>
   );
 }
+
+const skillList = [
+  { value: "英検", label: "英検２級" },
+  { value: "秘書", label: "秘書検定" },
+  { value: "企業診断士", label: "中小企業診断士" },
+  { value: "博士号", label: "博士号" },
+  { value: "司法書士", label: "司法書士" },
+  { value: "社労士", label: "社労士" },
+  { value: "自動車免許", label: "普通自動車免許" },
+  { value: "TOEIC", label: "TOEIC800点以上" },
+  { value: "TOEIC", label: "TOEIC900点以上" },
+];
+
+const CReatableSelect = styled(CreatableSelect)`
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
