@@ -2,7 +2,7 @@ import { Container, Button, makeStyles, TextField } from "@material-ui/core";
 import Link from "next/link";
 import React, { useState } from "react";
 import App from "../../components/App";
-import { auth, db } from "../../firebase";
+import { auth, db, storage } from "../../firebase";
 import CreatableSelect from "react-select/creatable";
 import styled from "styled-components";
 
@@ -23,6 +23,8 @@ export default function CompanyBusinesses() {
   const [location, setLocation] = useState("");
   const [skill, setSkill] = useState("");
   const [message, setMessage] = useState("");
+  const [image, setImage] = useState([]);
+  const [fileUrl, setFileUrl] = useState();
 
   const addBusinessData = async () => {
     if (
@@ -89,6 +91,19 @@ export default function CompanyBusinesses() {
     setSkill(value);
   };
   const classes = useStyles();
+
+  const onSubmit = (e) => {
+    e.prevent.default();
+  };
+
+  const handleImage = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const imageUpLoad = async (e) => {
+    await storage.ref().child(image.name).put(image);
+  };
+
   return (
     <>
       <App>
@@ -153,15 +168,6 @@ export default function CompanyBusinesses() {
               value={message}
               onChange={messageValue}
             />
-            {/* <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="必要なスキル"
-              autoFocus
-              value={skill}
-              onChange={skillValue}
-            /> */}
             <CReatableSelect
               placeholder="スキル/資格"
               isMulti
@@ -172,6 +178,9 @@ export default function CompanyBusinesses() {
 
             <br />
           </form>
+
+          <input type="file" onChange={handleImage} />
+          <button onClick={imageUpLoad}>写真の追加</button>
 
           <br />
           <br />
