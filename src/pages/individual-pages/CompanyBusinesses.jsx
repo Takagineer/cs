@@ -59,7 +59,10 @@ export default function CompanyBusinesses() {
       message: message,
       companyId: auth.currentUser.uid,
     });
-    alert("募集しました");
+
+    await storage.ref().child(image.name).put(image);
+
+    alert("募集をかけました");
     setBusiness("");
     setDetail("");
     setReward("");
@@ -67,6 +70,7 @@ export default function CompanyBusinesses() {
     setLocation("");
     setSkill("");
     setMessage("");
+    setImage("");
   };
 
   const businessValue = (e) => {
@@ -100,9 +104,9 @@ export default function CompanyBusinesses() {
     setImage(e.target.files[0]);
   };
 
-  const imageUpLoad = async (e) => {
-    await storage.ref().child(image.name).put(image);
-  };
+  // const imageUpLoad = async (e) => {
+  //   await storage.ref().child(image.name).put(image);
+  // };
 
   return (
     <>
@@ -179,14 +183,21 @@ export default function CompanyBusinesses() {
             <br />
           </form>
 
-          <input type="file" onChange={handleImage} />
-          <button onClick={imageUpLoad}>写真の追加</button>
+          <Button variant="contained" color="label">
+            <input type="file" onChange={handleImage} />
+          </Button>
+          <br />
+          <br />
+          {/* <Button variant="contained" color="primary" onClick={imageUpLoad}>
+            写真の追加
+          </Button> */}
 
           <br />
           <br />
           <Button variant="contained" color="primary" onClick={addBusinessData}>
             追加
           </Button>
+          <br />
           <br />
           <br />
           <Link href="/">
