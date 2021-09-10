@@ -72,10 +72,10 @@ export default function Filter() {
           onChange={handleChange}
           aria-label="nav tabs example"
         >
-          <LinkTab label="Page One" href="/drafts" {...a11yProps(0)} />
-          <LinkTab label="Page Two" href="/trash" {...a11yProps(1)} />
-          <LinkTab label="Page Three" href="/spam" {...a11yProps(2)} />
-          <LinkTab label="Page Three" href="/spam" {...a11yProps(3)} />
+          <LinkTab label="新着順" href="/drafts" {...a11yProps(0)} />
+          <LinkTab label="いいね数" href="/trash" {...a11yProps(1)} />
+          <LinkTab label="応募順" href="/spam" {...a11yProps(2)} />
+          <LinkTab label="報酬順" href="/spam" {...a11yProps(3)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
