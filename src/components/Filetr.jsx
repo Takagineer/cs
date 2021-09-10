@@ -7,9 +7,9 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import NewBusiness from "./NewBusiness";
-import RankingFav from "./RankingFav";
-import RankingBusinessPopular from "./RankingPopular";
-import RankingBusinessReward from "./RankingReward";
+import FavoBusiness from "./FavoBusiness";
+import ApplyBusiness from "./ApplyBusiness";
+import RewardBusiness from "./RewardBusiness";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -74,7 +74,7 @@ export default function Filter() {
         >
           <LinkTab label="新着順" href="/drafts" {...a11yProps(0)} />
           <LinkTab label="いいね数" href="/trash" {...a11yProps(1)} />
-          <LinkTab label="応募順" href="/spam" {...a11yProps(2)} />
+          <LinkTab label="応募数順" href="/spam" {...a11yProps(2)} />
           <LinkTab label="報酬順" href="/spam" {...a11yProps(3)} />
         </Tabs>
       </AppBar>
@@ -82,13 +82,13 @@ export default function Filter() {
         <NewBusiness />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <RankingFav />
+        <FavoBusiness />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <RankingBusinessPopular />
+        <ApplyBusiness />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <RankingBusinessReward />
+        <RewardBusiness />
       </TabPanel>
     </div>
   );

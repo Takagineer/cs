@@ -3,7 +3,7 @@ import React from "react";
 export default function RankingBusinessPopular() {
   return (
     <>
-      <h1>人気順でのランキング</h1>
+      <h1>応募数でのランキング</h1>
     </>
   );
 }

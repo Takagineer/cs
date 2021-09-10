@@ -4,28 +4,27 @@ import styled from "styled-components";
 import { db } from "../firebase";
 
 export default function RankingBusiness() {
-  const [businessData, setBusinessData] = useState([]);
+  const [newBusinessData, setNewBusinessData] = useState([]);
 
   useEffect(() => {
-    const getBusinessData = db
+    const getNewBusinessData = db
       .collection("Businesses")
       .onSnapshot((querySnapshot) => {
-        const _businesses = querySnapshot.docs.map((doc) => {
+        const _newBusinesses = querySnapshot.docs.map((doc) => {
           return {
             businessId: doc.id,
             ...doc.data(),
           };
         });
-        setBusinessData(_businesses);
+        setNewBusinessData(_newBusinesses);
       });
   }, []);
 
   return (
     <>
       <COntainer>
-        <br />
         <UL>
-          {businessData.map((business) => {
+          {newBusinessData.map((business) => {
             return (
               <LI key={business.businessId}>
                 業務：{business.business}
@@ -42,14 +41,13 @@ export default function RankingBusiness() {
         <br />
         <br />
         <br />
-        <br />
       </COntainer>
     </>
   );
 }
 
 const COntainer = styled.div`
-  padding: 200px 0 0 40px;
+  padding: 0 0 0 20px;
 `;
 
 const UL = styled.ul`
