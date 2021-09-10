@@ -8,6 +8,8 @@ export default function RankingBusiness() {
 
   useEffect(() => {
     const getBusinessData = db
+      .collection("Companies")
+      .doc("jidiFGi3I5Ym7GvvLRH9tb4lXBV2")
       .collection("Businesses")
       .onSnapshot((querySnapshot) => {
         const _businesses = querySnapshot.docs.map((doc) => {
