@@ -15,6 +15,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+console.log(auth.currentUser.uid);
+
 export default function CompanyBusinesses() {
   const [business, setBusiness] = useState("");
   const [detail, setDetail] = useState("");
@@ -49,16 +51,20 @@ export default function CompanyBusinesses() {
       }
     });
 
-    await db.collection("Businesses").add({
-      business: business,
-      detail: detail,
-      reward: reward,
-      number: number,
-      location: location,
-      skill: newBusinessSkill,
-      message: message,
-      companyId: auth.currentUser.uid,
-    });
+    await db
+      .collection("Companies")
+      .doc(auth.currentUser.uid)
+      .collection("Businesses")
+      .add({
+        business: business,
+        detail: detail,
+        reward: reward,
+        number: number,
+        location: location,
+        skill: newBusinessSkill,
+        message: message,
+        companyId: auth.currentUser.uid,
+      });
 
     await storage.ref().child(image.name).put(image);
 
