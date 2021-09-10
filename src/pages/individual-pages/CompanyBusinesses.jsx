@@ -27,6 +27,7 @@ export default function CompanyBusinesses() {
   const [message, setMessage] = useState("");
   const [image, setImage] = useState([]);
   const [fileUrl, setFileUrl] = useState();
+  const [favo, setFavo] = useState(0);
 
   const addBusinessData = async () => {
     if (
@@ -64,6 +65,7 @@ export default function CompanyBusinesses() {
         skill: newBusinessSkill,
         message: message,
         companyId: auth.currentUser.uid,
+        favo: 0,
       });
 
     await storage.ref().child(image.name).put(image);
