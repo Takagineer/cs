@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-console.log(auth.currentUser.uid);
-
 export default function CompanyBusinesses() {
   const [business, setBusiness] = useState("");
   const [detail, setDetail] = useState("");
@@ -57,6 +54,7 @@ export default function CompanyBusinesses() {
       .doc(auth.currentUser.uid)
       .collection("Businesses")
       .add({
+        // timestamp: db.serverTimestamp(),
         business: business,
         detail: detail,
         reward: reward,
