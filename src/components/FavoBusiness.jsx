@@ -27,7 +27,7 @@ export default function RankingFav() {
                 <br />
                 勤務場所：{business.location}
                 <br />
-                想定報酬額：{business.reward}
+                想定報酬額：{`${business.reward}/月`}
                 <br />
                 いいね数：{"星の数"}
               </LI>
