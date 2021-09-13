@@ -9,6 +9,8 @@ export default function RankingBusiness() {
   useEffect(() => {
     const getNewBusinessData = db
       .collection("Businesses")
+      .orderBy("timestamp")
+      .limit(10)
       .onSnapshot((querySnapshot) => {
         const _newBusinesses = querySnapshot.docs.map((doc) => {
           return {
@@ -27,6 +29,8 @@ export default function RankingBusiness() {
           {newBusinessData.map((business) => {
             return (
               <LI key={business.businessId}>
+                {/* 募集開始日：{business.timestamp} */}
+                <br />
                 業務：{business.business}
                 <br />
                 勤務場所：{business.location}
