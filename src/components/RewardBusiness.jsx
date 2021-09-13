@@ -6,6 +6,7 @@ export default function RankingBusinessReward() {
   const [rewardBusinessData, setRewardBusinessData] = useState([]);
   const getRewardBusinessData = db
     .collection("Businesses")
+    .orderBy("reward", "desc")
     .onSnapshot((querySnapshot) => {
       const _rewardBusinesses = querySnapshot.docs.map((doc) => {
         return {
