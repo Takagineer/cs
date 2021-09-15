@@ -66,7 +66,7 @@ export default function Header({ pathname }) {
               ) : (
                 <Link
                   href={{
-                    pathname: "individual-pages/[company]",
+                    pathname: "individual-pages/company/[company]",
                     query: { company: auth.currentUser.uid },
                   }}
                 >
