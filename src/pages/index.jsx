@@ -4,7 +4,6 @@ import Head from "next/Head";
 import PopularBusinesses from "../components/PopularBusinesses";
 import Filter from "../components/Filetr";
 import RankingBusiness from "../components/NewBusiness";
-import BusinessData from "../components/BusinessData";
 
 export default function Home() {
   return (
@@ -23,7 +22,6 @@ export default function Home() {
       <br />
       <br />
       <Filter />
-      <BusinessData />
       <br />
       <br />
       <br />

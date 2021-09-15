@@ -64,7 +64,12 @@ export default function Header({ pathname }) {
                   </Link>
                 </div>
               ) : (
-                <Link href="/individual-pages/Company">
+                <Link
+                  href={{
+                    pathname: "individual-pages/[company]",
+                    query: { company: auth.currentUser.uid },
+                  }}
+                >
                   <MenuItem onClick={handleCloseCompany}>
                     企業様マイページへ
                   </MenuItem>
