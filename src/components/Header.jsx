@@ -99,7 +99,12 @@ export default function Header({ pathname }) {
                   </Link>
                 </div>
               ) : (
-                <Link href="/individual-pages/Student">
+                <Link
+                  href={{
+                    pathname: "individual-pages/student/[student]",
+                    query: { student: auth.currentUser.uid },
+                  }}
+                >
                   <MenuItem onClick={handleCloseStudent}>
                     学生用マイページ
                   </MenuItem>
