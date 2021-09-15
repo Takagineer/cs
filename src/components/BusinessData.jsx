@@ -1,47 +1,58 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../firebase";
 import styled from "styled-components";
-import { db } from "../firebase";
 import { IconButton } from "@material-ui/core";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
+import { ContactsOutlined } from "@material-ui/icons";
 
-export default function RankingBusiness() {
-  const [newBusinessData, setNewBusinessData] = useState([]);
+export default function BusinessData() {
+  const [businessData, setBusinessData] = useState([]);
   const [favo, setFavo] = useState(false);
-  const [likeCount, setLikeCount] = useState();
+  const [colorRed, setColorRed] = useState(false);
 
   useEffect(() => {
-    const getNewBusinessData = db
+    const getBusinessData = db
       .collection("Businesses")
-      .orderBy("timestamp")
-      .limit(10)
       .onSnapshot((querySnapshot) => {
-        const _newBusinesses = querySnapshot.docs.map((doc) => {
+        const _businessData = querySnapshot.docs.map((doc) => {
           return {
             businessId: doc.id,
             ...doc.data(),
           };
         });
-        setNewBusinessData(_newBusinesses);
+        setBusinessData(_businessData);
       });
   }, []);
 
-  const handleClickFavo = () => {
+  const handleClickFavo = async (business) => {
     if (favo === false) {
       setFavo(true);
+      await db.collection("Likes").add({
+        userId: auth.currentUser.uid,
+        businessId: business.businessId,
+      });
+      console.log("赤色に変更する");
     } else {
       setFavo(false);
+      const businessRef = await db
+        .collection("Likes")
+        .where("businessId", "==", business.businessId)
+        .where("userId", "==", auth.currentUser.uid)
+        .get();
+      businessRef.forEach((doc) => {
+        db.collection("Likes").doc(doc.id).delete();
+      });
+      console.log("黒色に変更する");
     }
   };
-
   return (
     <>
       <COntainer>
+        <p>ビジネスデータ</p>
         <UL>
-          {newBusinessData.map((business) => {
+          {businessData.map((business) => {
             return (
               <LI key={business.businessId}>
-                {/* 募集開始日：{business.timestamp} */}
                 <br />
                 業務：{business.business}
                 <br />
@@ -49,21 +60,23 @@ export default function RankingBusiness() {
                 <br />
                 想定報酬額：{`${business.reward}/月`}
                 <br />
-                <IconButton aria-label="settings" onClick={handleClickFavo}>
-                  {favo === false ? (
+                <IconButton
+                  aria-label="settings"
+                  onClick={() => {
+                    handleClickFavo(business);
+                  }}
+                >
+                  {business.favo === false ? (
                     <FavoriteTwoToneIcon />
                   ) : (
                     <FavoriteTwoToneIcon color="secondary" />
                   )}
                 </IconButton>
-                {business.favo}
+                {"数を表示する"}
               </LI>
             );
           })}
         </UL>
-        <br />
-        <br />
-        <br />
       </COntainer>
     </>
   );
