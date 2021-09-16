@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   AppBar,
@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import styled from "styled-components";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
 export default function Header({ pathname }) {
   const [anchorElCompany, setAnchorElCompany] = useState(null);
@@ -30,6 +30,18 @@ export default function Header({ pathname }) {
   const handleCloseStudent = () => {
     setAnchorElStudent(null);
   };
+
+  useEffect(() => {
+    const checkExistenc = async () => {
+      const doc = await db
+        .collection("Students")
+        .doc(auth.currentUser.uid)
+        .get();
+      const exists = doc.exists;
+      console.log(exists);
+    };
+  }, []);
+
   return (
     <HEader>
       <AppBar position="static">
@@ -37,7 +49,6 @@ export default function Header({ pathname }) {
           <Link href="/">
             <Typography variant="h6">C×S</Typography>
           </Link>
-
           <HEaderRight>
             <Link href="/individual-pages/Guide">
               <BUtton color="inherit">使い方ページへ</BUtton>
@@ -45,7 +56,7 @@ export default function Header({ pathname }) {
             {""}
             {/* 企業用のログインページへのリンク */}
             <BUtton color="inherit" onClick={handleClickCompany}>
-              企業用ページ
+              企業の方はこちら
             </BUtton>
             <Menu
               id="simple-menu"
@@ -77,10 +88,12 @@ export default function Header({ pathname }) {
               )}
             </Menu>
             {/* 企業用のログインページへの記述 */}
-
             {/* 学生用のログインページへの記述 */}
+            {/* {db.collection("Students").doc(auth.currentUser.uid).get().exists
+              ? "存在しています"
+              : "存在していません"} */}
             <BUtton color="inherit" onClick={handleClickStudent}>
-              学生用ページ
+              学生の方はこちら
             </BUtton>
             <Menu
               id="simple-menu"
