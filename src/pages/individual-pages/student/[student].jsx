@@ -13,9 +13,7 @@ export default function student() {
     db.collection("Students")
       .doc(router.query.student)
       .get()
-      .then((doc) => {
-        console.log(doc.data());
-      });
+      .then((doc) => {});
   }, []);
 
   return (
