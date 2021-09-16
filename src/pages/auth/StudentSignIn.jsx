@@ -90,9 +90,6 @@ export default function Login() {
           <Student />
         )}
 
-        <Button variant="contained" color="primary" onClick={signOut}>
-          ログアウト
-        </Button>
         {"    "}
         <Link href="/">
           <Button variant="contained" color="primary" onClick={signOut}>
