@@ -80,7 +80,7 @@ export default function Header({ pathname }) {
 
             {/* 学生用のログインページへの記述 */}
             <BUtton color="inherit" onClick={handleClickStudent}>
-              学生用ページへ
+              学生用ページ
             </BUtton>
             <Menu
               id="simple-menu"
