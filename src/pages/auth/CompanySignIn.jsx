@@ -51,10 +51,7 @@ export default function Login() {
               <br />
               <br />
               <br />
-              <br />
-              <Typography component="h1" variant="h5">
-                ログイン
-              </Typography>
+              <h1>企業様用ログインページ</h1>
               <TextField
                 variant="outlined"
                 margin="normal"

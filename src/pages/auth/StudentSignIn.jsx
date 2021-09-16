@@ -43,12 +43,12 @@ export default function Login() {
       <App>
         {auth.currentUser === null ? (
           <Container component="main" maxWidth="xs">
-            <h1>情報登録</h1>
-            <div></div>
             <div>
-              <Typography component="h1" variant="h5">
-                ログイン
-              </Typography>
+              <br />
+              <br />
+              <br />
+              <br />
+              <h1>学生様用ログインページ</h1>
               <TextField
                 variant="outlined"
                 margin="normal"
