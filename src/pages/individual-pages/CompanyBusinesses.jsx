@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-console.log(auth.currentUser.uid);
-
 export default function CompanyBusinesses() {
   const [business, setBusiness] = useState("");
   const [detail, setDetail] = useState("");
@@ -27,7 +24,7 @@ export default function CompanyBusinesses() {
   const [message, setMessage] = useState("");
   const [image, setImage] = useState([]);
   const [fileUrl, setFileUrl] = useState();
-  const [favo, setFavo] = useState(0);
+  const [favo, setFavo] = useState(false);
 
   const addBusinessData = async () => {
     if (
@@ -57,6 +54,7 @@ export default function CompanyBusinesses() {
       .doc(auth.currentUser.uid)
       .collection("Businesses")
       .add({
+        // timestamp: db.serverTimestamp(),
         business: business,
         detail: detail,
         reward: reward,
@@ -65,7 +63,7 @@ export default function CompanyBusinesses() {
         skill: newBusinessSkill,
         message: message,
         companyId: auth.currentUser.uid,
-        favo: 0,
+        favo: false,
       });
 
     await storage.ref().child(image.name).put(image);

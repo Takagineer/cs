@@ -107,6 +107,7 @@ export default function SignUp() {
             <br />
             <br />
             <br />
+            <h1>学生様新規登録ページ</h1>
             <TextField
               variant="outlined"
               margin="normal"

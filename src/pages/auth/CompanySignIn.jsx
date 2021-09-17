@@ -51,10 +51,7 @@ export default function Login() {
               <br />
               <br />
               <br />
-              <br />
-              <Typography component="h1" variant="h5">
-                ログイン
-              </Typography>
+              <h1>企業様用ログインページ</h1>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -81,6 +78,9 @@ export default function Login() {
                 value={companySignInPassword}
                 onChange={companySignInPasswordValue}
               />
+              <br />
+              <br />
+              <br />
               <Button
                 type="submit"
                 fullWidth
@@ -96,10 +96,9 @@ export default function Login() {
           <Company />
         )}
 
-        <Button variant="contained" color="primary" onClick={signOut}>
-          ログアウト
-        </Button>
-        {"    "}
+        <br />
+        <br />
+        <br />
         <Link href="/">
           <Button variant="contained" color="primary" onClick={signOut}>
             トップページへ
