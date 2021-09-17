@@ -78,17 +78,20 @@ export default function Header({ pathname }) {
           <Link href="/">
             <Typography variant="h6">C×S</Typography>
           </Link>
-          <button onClick={checkExistWhichCollection}>テスト</button>
-          {userReturn()}
           <HEaderRight>
             <Link href="/individual-pages/Guide">
               <BUtton color="inherit">使い方ページへ</BUtton>
             </Link>
             {""}
+
             {/* 企業用のログインページへのリンク */}
-            <BUtton color="inherit" onClick={handleClickCompany}>
-              企業の方はこちら
-            </BUtton>
+            {logInUser === "学生" ? (
+              ""
+            ) : (
+              <BUtton color="inherit" onClick={handleClickCompany}>
+                企業の方はこちら
+              </BUtton>
+            )}
             <Menu
               id="simple-menu"
               anchorEl={anchorElCompany}
@@ -123,9 +126,13 @@ export default function Header({ pathname }) {
             {/* {db.collection("Students").doc(auth.currentUser.uid).get().exists
               ? "存在しています"
               : "存在していません"} */}
-            <BUtton color="inherit" onClick={handleClickStudent}>
-              学生の方はこちら
-            </BUtton>
+            {logInUser === "企業" ? (
+              ""
+            ) : (
+              <BUtton color="inherit" onClick={handleClickStudent}>
+                学生の方はこちら
+              </BUtton>
+            )}
             <Menu
               id="simple-menu"
               anchorEl={anchorElStudent}
