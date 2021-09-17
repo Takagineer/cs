@@ -16,7 +16,7 @@ import { auth, db } from "../firebase";
 export default function Header({ pathname }) {
   const [anchorElCompany, setAnchorElCompany] = useState(null);
   const [anchorElStudent, setAnchorElStudent] = useState(null);
-  const [rogInUser, setRogInUser] = useState();
+  const [logInUser, setLogInUser] = useState();
 
   const handleClickCompany = (event) => {
     setAnchorElCompany(event.currentTarget);
@@ -32,15 +32,14 @@ export default function Header({ pathname }) {
     setAnchorElStudent(null);
   };
 
-  useEffect(() => {
-    const checkExistWhichCollection = async () => {
-      console.log("読み込み開始");
+  const checkExistWhichCollection = async () => {
+    if (auth.currentUser === null) {
+      setLogInUser("未ログイン");
+    } else {
       const studentsDoc = await db
         .collection("Students")
         .doc(auth.currentUser.uid)
         .get();
-      console.log("学生側");
-
       const studentsDataExists = studentsDoc.exists;
 
       const companiesDoc = await db
@@ -50,17 +49,27 @@ export default function Header({ pathname }) {
       const companiesDataExists = companiesDoc.exists;
 
       if (studentsDataExists === true) {
-        setRogInUser("学生");
+        setLogInUser("学生");
       } else if (companiesDataExists === true) {
-        setRogInUser("企業");
-      } else {
-        setRogInUser("未ログイン");
+        setLogInUser("企業");
       }
-      console.log(studentsDataExists);
-      console.log(companiesDataExists);
-      console.log(rogInUser);
-    };
+    }
+  };
+
+  useEffect(() => {
+    checkExistWhichCollection();
+    console.log(logInUser);
   }, []);
+
+  const userReturn = () => {
+    if (logInUser === "学生") {
+      return "ログインしているのは学生です";
+    } else if (logInUser === "企業") {
+      return "ログインしているのは企業です";
+    } else {
+      return "誰もログインしていません";
+    }
+  };
 
   return (
     <HEader>
@@ -69,11 +78,8 @@ export default function Header({ pathname }) {
           <Link href="/">
             <Typography variant="h6">C×S</Typography>
           </Link>
-          {/* <button onClick={checkExistWhichCollection}>テスト</button> */}
-          {rogInUser === "学生"
-            ? "学生がログインしています"
-            : "企業がログインもしくは誰もログインしていません"}
-
+          <button onClick={checkExistWhichCollection}>テスト</button>
+          {userReturn()}
           <HEaderRight>
             <Link href="/individual-pages/Guide">
               <BUtton color="inherit">使い方ページへ</BUtton>
