@@ -9,17 +9,10 @@ export default function student() {
   const router = useRouter();
   const [studentInfo, setStudentInfo] = useState();
 
-  useEffect(() => {
-    db.collection("Students")
-      .doc(router.query.student)
-      .get()
-      .then((doc) => {});
-  }, []);
-
   return (
     <App>
       <COntainer>
-        <h1>ようこそ{router.query.studentId}さん</h1>
+        <h1>ようこそ{router.query.student}さん</h1>
         <p>学生用のトップページです</p>
         <table>
           <tr>
