@@ -58,18 +58,7 @@ export default function Header({ pathname }) {
 
   useEffect(() => {
     checkExistWhichCollection();
-    console.log(logInUser);
   }, []);
-
-  const userReturn = () => {
-    if (logInUser === "学生") {
-      return "ログインしているのは学生です";
-    } else if (logInUser === "企業") {
-      return "ログインしているのは企業です";
-    } else {
-      return "誰もログインしていません";
-    }
-  };
 
   return (
     <HEader>
