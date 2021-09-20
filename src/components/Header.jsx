@@ -57,8 +57,12 @@ export default function Header({ pathname }) {
   };
 
   useEffect(() => {
+    let unmounted = false;
     checkExistWhichCollection();
     console.log(logInUser);
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   const userReturn = () => {
@@ -69,6 +73,10 @@ export default function Header({ pathname }) {
     } else {
       return "誰もログインしていません";
     }
+
+    return () => {
+      unmounted = true;
+    };
   };
 
   return (

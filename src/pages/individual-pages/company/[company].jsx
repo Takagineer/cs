@@ -1,12 +1,24 @@
 import { useRouter } from "next/dist/client/router";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/Link";
-import { signOut } from "../../../firebase";
+import { db, signOut } from "../../../firebase";
 import App from "../../../components/App";
 import styled from "styled-components";
 
 export default function company() {
   const router = useRouter();
+
+  useEffect(() => {
+    let unmounted = false;
+    db.collection("Companies")
+      .doc(router.query.company)
+      .get()
+      .then((doc) => {});
+
+    return () => {
+      unmounted = true;
+    };
+  }, []);
   return (
     <>
       <App>

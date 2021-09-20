@@ -14,6 +14,10 @@ export default function student() {
       .doc(router.query.student)
       .get()
       .then((doc) => {});
+
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   return (
