@@ -9,11 +9,24 @@ export default function student() {
   const router = useRouter();
   const [studentInfo, setStudentInfo] = useState();
 
+  const getStudentInformation = async () => {
+    const info = await db
+      .collection("Students")
+      .doc(router.query.student)
+      .get();
+    console.log(info.data().firstName);
+    console.log(info.data().lastName);
+    console.log(info.data().firstName);
+  };
+
+  useEffect(() => {
+    getStudentInformation();
+  }, []);
+
   return (
     <App>
       <COntainer>
-        <h1>ようこそ{router.query.student}さん</h1>
-        <p>学生用のトップページです</p>
+        <button onClick={getStudentInformation}>データ抽出</button>
         <table>
           <tr>
             <th>学生紹介</th>
@@ -29,19 +42,19 @@ export default function student() {
           <tbody>
             <tr>
               <td>氏名</td>
-              <td>◯◯△△</td>
+              <td>{"ここに氏名を記述する"}</td>
             </tr>
             <tr>
               <td>大学</td>
-              <td>××大学</td>
+              <td>{"ここに大学を記述する"}</td>
             </tr>
             <tr>
               <td>年次</td>
-              <td>３年生</td>
+              <td>{"ここに年次を記述"}</td>
             </tr>
             <tr>
               <td>アピール</td>
-              <td>私は、全日本柔道選手権大会３連覇しております。</td>
+              <td>{"ここにアピールを記述する"}</td>
             </tr>
           </tbody>
         </table>
