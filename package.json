@@ -28,8 +28,12 @@
     "swiper": "^6.8.2"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^1.13.2",
     "firebase-functions-test": "^0.2.3",
     "firebase-tools": "^9.3.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "volta": {
+    "node": "12.13.0"
+  }
 }
