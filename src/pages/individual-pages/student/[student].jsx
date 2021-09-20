@@ -4,6 +4,7 @@ import App from "../../../components/App";
 import { db, signOut } from "../../../firebase";
 import styled from "styled-components";
 import Link from "next/Link";
+import { Button } from "@material-ui/core";
 
 export default function student() {
   const router = useRouter();
@@ -13,10 +14,18 @@ export default function student() {
     const info = await db
       .collection("Students")
       .doc(router.query.student)
-      .get();
+      .get(router.query.student);
+    console.log(info.data());
     console.log(info.data().firstName);
     console.log(info.data().lastName);
-    console.log(info.data().firstName);
+    console.log(info.data().introduction);
+    // const studentInformation = info.data();
+    // setStudentInfo(studentInfo);
+
+    // info.forEach((doc) => {
+    //   studentDataAll.push(doc.data());
+    // });
+    // setStudentInfo(studentDataAll);
   };
 
   useEffect(() => {
@@ -42,7 +51,7 @@ export default function student() {
           <tbody>
             <tr>
               <td>氏名</td>
-              <td>{"ここに氏名を記述する"}</td>
+              <td>{"studentInfo.introduction"}</td>
             </tr>
             <tr>
               <td>大学</td>
@@ -67,7 +76,9 @@ export default function student() {
         <p>生徒情報編集機能の実装</p>
 
         <Link href="/">
-          <button onClick={signOut}>ログアウト</button>
+          <Button variant="contained" color="primary" onClick={signOut}>
+            ログアウト
+          </Button>
         </Link>
       </COntainer>
     </App>
