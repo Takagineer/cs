@@ -9,32 +9,26 @@ import { info } from "firebase-functions/lib/logger";
 
 export default function student() {
   const router = useRouter();
+  const [studentQuery, setStudentQuery] = useState();
   const [studentInfo, setStudentInfo] = useState();
 
-  const getStudentInformation = async () => {
-    if (router.query.student === !undefined) {
-      const info = await db
-        .collection("Students")
-        .doc(router.query.student)
-        .get();
-      console.log(router.query.student);
-      setStudentInfo(info.data());
-    }
-    //router.queryがnullなら処理を行わない記述する
+  setStudentQuery(router.query.student);
 
-    // console.log(info.data());
-    // console.log(info.data().firstName);
-    // setStudentInfo(info.data());
-    // console.log(studentInfo);
+  const getStudentInformation = async () => {
+    const info = await db.collection("Students").doc(studentQuery).get();
+    console.log(studentQuery);
+    setStudentInfo(info.data());
   };
 
   useEffect(() => {
-    if (router.query.student === undefined) {
+    if (studentQuery === undefined) {
       console.log("しばらくお待ちください");
+      console.log(studentQuery);
     } else {
       getStudentInformation();
     }
-  }, [router.query.student]);
+  }, [studentQuery]);
+
   // useEffect(() => {
   //   const getStudentData = db
   //     .collection("Students")
