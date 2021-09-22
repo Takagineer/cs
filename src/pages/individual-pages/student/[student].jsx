@@ -9,23 +9,24 @@ import { info } from "firebase-functions/lib/logger";
 
 export default function student() {
   const router = useRouter();
-  const [studentInfo, setStudentInfo] = useState();
+  const [studentInfo, setStudentInfo] = useState([]);
 
-  const getStudentInformation = () => {
+  const getStudentInformation = async () => {
     //router.queryがnullなら処理を行わない記述する
 
-    const info = db.collection("Students").doc(router.query.student).get();
+    const info = await db
+      .collection("Students")
+      .doc(router.query.student)
+      .get();
     if (info.exists) {
       console.log(info.data());
       console.log(info.data().firstName);
-      console.log(info.data().lastName);
-      console.log(info.data().introduction);
       setStudentInfo(info.data());
+      console.log("データの取得完了");
+      console.log(studentInfo);
     } else {
       console.log("データの取得ができていません");
     }
-
-    console.log("データ取得完了");
   };
 
   useEffect(() => {
