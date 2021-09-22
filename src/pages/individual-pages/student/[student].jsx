@@ -5,32 +5,47 @@ import { db, signOut } from "../../../firebase";
 import styled from "styled-components";
 import Link from "next/Link";
 import { Button } from "@material-ui/core";
+import { info } from "firebase-functions/lib/logger";
 
 export default function student() {
   const router = useRouter();
   const [studentInfo, setStudentInfo] = useState();
 
-  const getStudentInformation = async () => {
-    const info = await db
-      .collection("Students")
-      .doc(router.query.student)
-      .get(router.query.student);
-    console.log(info.data());
-    console.log(info.data().firstName);
-    console.log(info.data().lastName);
-    console.log(info.data().introduction);
-    // const studentInformation = info.data();
-    // setStudentInfo(studentInfo);
+  const getStudentInformation = () => {
+    //router.queryがnullなら処理を行わない記述する
 
-    // info.forEach((doc) => {
-    //   studentDataAll.push(doc.data());
-    // });
-    // setStudentInfo(studentDataAll);
+    const info = db.collection("Students").doc(router.query.student).get();
+    if (info.exists) {
+      console.log(info.data());
+      console.log(info.data().firstName);
+      console.log(info.data().lastName);
+      console.log(info.data().introduction);
+      setStudentInfo(info.data());
+    } else {
+      console.log("データの取得ができていません");
+    }
+
+    console.log("データ取得完了");
   };
 
   useEffect(() => {
     getStudentInformation();
   }, []);
+
+  // useEffect(() => {
+  //   const getStudentData = db
+  //     .collection("Students")
+  //     .doc(router.query.student)
+  //     .onSnapshot((querySnapshot) => {
+  //       const _studentInfo = querySnapshot.docs.map((doc) => {
+  //         return {
+  //           studentId: doc.id,
+  //           ...doc.data(),
+  //         };
+  //       });
+  //       setStudentInfo(_studentInfo);
+  //     });
+  // }, []);
 
   return (
     <App>
@@ -51,7 +66,7 @@ export default function student() {
           <tbody>
             <tr>
               <td>氏名</td>
-              <td>{"studentInfo.introduction"}</td>
+              <td>{"studentInfo.firstName"}</td>
             </tr>
             <tr>
               <td>大学</td>
@@ -74,6 +89,14 @@ export default function student() {
           これで表示させて応募もできる
         </p>
         <p>生徒情報編集機能の実装</p>
+
+        {/* <ul>
+          {studentInfo.map((studentInfo) => {
+            return (
+              <li key={studentInfo.studentId}>氏名:{studentInfo.firstName}</li>
+            );
+          })}
+        </ul> */}
 
         <Link href="/">
           <Button variant="contained" color="primary" onClick={signOut}>
