@@ -12,26 +12,29 @@ export default function student() {
   const [studentInfo, setStudentInfo] = useState();
 
   const getStudentInformation = async () => {
-    if (router.query.student === null || router.query.student === undefined) {
-      console.log("値が取得できていません");
-    } else {
-      //router.queryがnullなら処理を行わない記述する
+    if (router.query.student === !undefined) {
       const info = await db
         .collection("Students")
         .doc(router.query.student)
         .get();
       console.log(router.query.student);
-      // console.log(info.data());
-      // console.log(info.data().firstName);
-      // setStudentInfo(info.data());
-      // console.log(studentInfo);
+      setStudentInfo(info.data());
     }
+    //router.queryがnullなら処理を行わない記述する
+
+    // console.log(info.data());
+    // console.log(info.data().firstName);
+    // setStudentInfo(info.data());
+    // console.log(studentInfo);
   };
 
   useEffect(() => {
-    getStudentInformation();
-  }, []);
-
+    if (router.query.student === undefined) {
+      console.log("しばらくお待ちください");
+    } else {
+      getStudentInformation();
+    }
+  }, [router.query.student]);
   // useEffect(() => {
   //   const getStudentData = db
   //     .collection("Students")
