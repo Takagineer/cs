@@ -6,43 +6,40 @@ import styled from "styled-components";
 import Link from "next/Link";
 import { Button } from "@material-ui/core";
 import { info } from "firebase-functions/lib/logger";
+import Loading from "../../Loading";
 
 export default function student() {
   const router = useRouter();
-  const [studentQuery, setStudentQuery] = useState();
+  const isReady = router.isReady;
+  const [loading, setLoading] = useState(false);
   const [studentInfo, setStudentInfo] = useState();
 
-  setStudentQuery(router.query.student);
-
   const getStudentInformation = async () => {
-    const info = await db.collection("Students").doc(studentQuery).get();
-    console.log(studentQuery);
+    const info = await db
+      .collection("Students")
+      .doc(router.query.student)
+      .get();
+    // console.log(router.query.student);
+    // console.log(info.data());
+    // console.log("確認用");
     setStudentInfo(info.data());
+    // console.log(studentInfo);
   };
 
   useEffect(() => {
-    if (studentQuery === undefined) {
-      console.log("しばらくお待ちください");
-      console.log(studentQuery);
-    } else {
+    setStudentInfo(studentInfo);
+  }, [studentInfo]);
+
+  useEffect(() => {
+    if (isReady) {
+      setLoading(true);
       getStudentInformation();
     }
-  }, [studentQuery]);
+  }, [isReady]);
 
-  // useEffect(() => {
-  //   const getStudentData = db
-  //     .collection("Students")
-  //     .doc(router.query.student)
-  //     .onSnapshot((querySnapshot) => {
-  //       const _studentInfo = querySnapshot.docs.map((doc) => {
-  //         return {
-  //           studentId: doc.id,
-  //           ...doc.data(),
-  //         };
-  //       });
-  //       setStudentInfo(_studentInfo);
-  //     });
-  // }, []);
+  if (!loading) {
+    return <Loading />;
+  }
 
   return (
     <App>
