@@ -19,16 +19,13 @@ export default function student() {
       .collection("Students")
       .doc(router.query.student)
       .get();
-    console.log("確認用");
     setStudentInfo(info.data());
-    console.log("関数内なので出力されない");
   };
 
   useEffect(() => {
     if (isReady) {
       setLoading(true);
       getStudentInformation();
-      console.log("isReady:初回レンダリング");
     }
   }, [isReady]);
 
@@ -36,6 +33,9 @@ export default function student() {
     return <Loading />;
   }
 
+  const editStudentInformation = () => {
+    console.log("登録情報の編集をします");
+  };
   return (
     <App>
       <COntainer>
@@ -95,14 +95,18 @@ export default function student() {
         </p>
         <p>生徒情報編集機能の実装</p>
 
-        {/* <ul>
-          {studentInfo.map((studentInfo) => {
-            return (
-              <li key={studentInfo.studentId}>氏名:{studentInfo.firstName}</li>
-            );
-          })}
-        </ul> */}
-
+        <Link href="#">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={editStudentInformation}
+          >
+            登録情報編集
+          </Button>
+        </Link>
+        <br />
+        <br />
+        <br />
         <Link href="/">
           <Button variant="contained" color="primary" onClick={signOut}>
             ログアウト
