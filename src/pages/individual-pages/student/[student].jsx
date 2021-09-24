@@ -19,21 +19,24 @@ export default function student() {
       .collection("Students")
       .doc(router.query.student)
       .get();
-    // console.log(router.query.student);
-    // console.log(info.data());
-    // console.log("確認用");
+    console.log("確認用");
     setStudentInfo(info.data());
-    // console.log(studentInfo);
+    console.log("関数内なので出力されない");
   };
 
   useEffect(() => {
+    console.log("useEffectのstateの値");
+    console.log(studentInfo);
     setStudentInfo(studentInfo);
+    // console.log("studentInfoが出力");
+    // console.log(studentInfo);
   }, [studentInfo]);
 
   useEffect(() => {
     if (isReady) {
       setLoading(true);
       getStudentInformation();
+      console.log("isReady:初回レンダリング");
     }
   }, [isReady]);
 
@@ -60,7 +63,12 @@ export default function student() {
           <tbody>
             <tr>
               <td>氏名</td>
-              <td>{"studentInfo.firstName"}</td>
+              {studentInfo === undefined ? (
+                "抽出中"
+              ) : (
+                <td>{studentInfo.email}</td>
+              )}
+              {/* <td>{studentInfo.email}</td> */}
             </tr>
             <tr>
               <td>大学</td>
