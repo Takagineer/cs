@@ -25,14 +25,6 @@ export default function student() {
   };
 
   useEffect(() => {
-    console.log("useEffectのstateの値");
-    console.log(studentInfo);
-    setStudentInfo(studentInfo);
-    // console.log("studentInfoが出力");
-    // console.log(studentInfo);
-  }, [studentInfo]);
-
-  useEffect(() => {
     if (isReady) {
       setLoading(true);
       getStudentInformation();
@@ -66,21 +58,32 @@ export default function student() {
               {studentInfo === undefined ? (
                 "抽出中"
               ) : (
-                <td>{studentInfo.email}</td>
+                <td>{`${studentInfo.firstName} ${studentInfo.lastName}さん`}</td>
               )}
-              {/* <td>{studentInfo.email}</td> */}
             </tr>
             <tr>
               <td>大学</td>
-              <td>{"ここに大学を記述する"}</td>
+              {studentInfo === undefined ? (
+                "抽出中"
+              ) : (
+                <td>{`${studentInfo.university}`}</td>
+              )}
             </tr>
             <tr>
               <td>年次</td>
-              <td>{"ここに年次を記述"}</td>
+              {studentInfo === undefined ? (
+                "抽出中"
+              ) : (
+                <td>{`${studentInfo.age}`}</td>
+              )}
             </tr>
             <tr>
               <td>アピール</td>
-              <td>{"ここにアピールを記述する"}</td>
+              {studentInfo === undefined ? (
+                "抽出中"
+              ) : (
+                <td>{`${studentInfo.introduction}`}</td>
+              )}
             </tr>
           </tbody>
         </table>
