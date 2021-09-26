@@ -55,7 +55,7 @@ export default function student() {
               )}
             </tr>
             <tr>
-              <td>大学</td>
+              <TD>大学</TD>
               {studentInfo === undefined ? (
                 "抽出中"
               ) : (
@@ -63,7 +63,7 @@ export default function student() {
               )}
             </tr>
             <tr>
-              <td>年次</td>
+              <TD>年次</TD>
               {studentInfo === undefined ? (
                 "抽出中"
               ) : (
@@ -114,5 +114,5 @@ const COntainer = styled.div`
 
 const TD = styled.td`
   white-space: nowrap;
-  margin: auto;
+  text-align: center;
 `;
