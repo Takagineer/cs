@@ -39,22 +39,15 @@ export default function student() {
   return (
     <App>
       <COntainer>
-        <button onClick={getStudentInformation}>データ抽出</button>
-        <table>
-          <tr>
-            <th>学生紹介</th>
-          </tr>
-        </table>
-
         <table border="3" bordercolor="green" width="50%" height="200px">
           <thead>
             <tr>
-              <th colSpan="2">学生概要</th>
+              <th colSpan="2">登録情報</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>氏名</td>
+              <TD>氏名</TD>
               {studentInfo === undefined ? (
                 "抽出中"
               ) : (
@@ -78,7 +71,7 @@ export default function student() {
               )}
             </tr>
             <tr>
-              <td>アピール</td>
+              <TD>自己紹介</TD>
               {studentInfo === undefined ? (
                 "抽出中"
               ) : (
@@ -106,7 +99,6 @@ export default function student() {
         </Link>
         <br />
         <br />
-        <br />
         <Link href="/">
           <Button variant="contained" color="primary" onClick={signOut}>
             ログアウト
@@ -118,4 +110,9 @@ export default function student() {
 }
 const COntainer = styled.div`
   padding: 100px 0 100px 50px;
+`;
+
+const TD = styled.td`
+  white-space: nowrap;
+  margin: auto;
 `;
