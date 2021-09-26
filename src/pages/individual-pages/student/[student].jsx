@@ -67,7 +67,7 @@ export default function student() {
               {studentInfo === undefined ? (
                 "抽出中"
               ) : (
-                <td>{`${studentInfo.age}`}</td>
+                <td>{`${studentInfo.age} 歳`}</td>
               )}
             </tr>
             <tr>
