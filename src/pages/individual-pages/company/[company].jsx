@@ -48,16 +48,12 @@ export default function company() {
             </thead>
             <tbody>
               <tr>
-                <td>会社名</td>
-                <td>◯◯株式会社</td>
-              </tr>
-              <tr>
-                <td>設立</td>
-                <td>△△年</td>
-              </tr>
-              <tr>
-                <td>企業から一言</td>
-                <td>弊社は〜〜〜</td>
+                <TD>会社名</TD>
+                {companyInfo === undefined ? (
+                  "抽出中"
+                ) : (
+                  <TD>{`${companyInfo.companyName}`}</TD>
+                )}
               </tr>
             </tbody>
           </table>
@@ -197,4 +193,9 @@ export default function company() {
 }
 const COntainer = styled.div`
   padding: 100px 0 100px 50px;
+`;
+
+const TD = styled.td`
+  white-space: nowrap;
+  text-align: center;
 `;
