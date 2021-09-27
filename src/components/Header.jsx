@@ -57,8 +57,11 @@ export default function Header({ pathname }) {
   };
 
   useEffect(() => {
+    let unmounted = false;
     checkExistWhichCollection();
+
   }, []);
+
 
   return (
     <HEader>

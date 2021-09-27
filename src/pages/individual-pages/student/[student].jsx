@@ -18,6 +18,7 @@ export default function student() {
     const info = await db
       .collection("Students")
       .doc(router.query.student)
+
       .get();
     setStudentInfo(info.data());
   };
@@ -28,6 +29,7 @@ export default function student() {
       getStudentInformation();
     }
   }, [isReady]);
+
 
   if (!loading) {
     return <Loading />;
