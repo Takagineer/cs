@@ -92,7 +92,7 @@ export default function Login() {
             </div>
           </Container>
         ) : (
-          <Company />
+          <company />
         )}
 
         <br />
