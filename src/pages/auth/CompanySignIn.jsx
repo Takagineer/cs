@@ -18,7 +18,6 @@ import {
   auth,
 } from "../../firebase";
 import styled from "styled-components";
-import Company from "../individual-pages/Company";
 
 export default function Login() {
   const [companySignInEmail, setCompanySignInEmail] = useState("");
