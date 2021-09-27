@@ -1,31 +1,40 @@
 import { useRouter } from "next/dist/client/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/Link";
 import { db, signOut } from "../../../firebase";
 import App from "../../../components/App";
 import styled from "styled-components";
+import Loading from "../../Loading";
 
 export default function company() {
   const router = useRouter();
+  const isReady = router.isReady;
+  const [loading, setLoading] = useState(false);
+  const [companyInfo, setCompanyInfo] = useState();
+
+  const getCompanyInformation = async () => {
+    const info = await db
+      .collection("Companies")
+      .doc(router.query.company)
+      .get();
+    setCompanyInfo(info.data());
+  };
 
   useEffect(() => {
-    let unmounted = false;
-    db.collection("Companies")
-      .doc(router.query.company)
-      .get()
-      .then((doc) => {});
+    if (isReady) {
+      setLoading(true);
+      getCompanyInformation();
+    }
+  }, [isReady]);
 
-    return () => {
-      unmounted = true;
-    };
-  }, []);
+  if (!loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <App>
         <COntainer>
-          <h1>会社用のダイナミックルーティング用のファイル</h1>
-          <h1>ようこそ{router.query.company}さん</h1>
-          <p>企業用のトップページです</p>
           <table border="3" bordercolor="green" width="50%" height="200px">
             <thead>
               <tr>
