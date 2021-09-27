@@ -114,5 +114,4 @@ const COntainer = styled.div`
 
 const TD = styled.td`
   white-space: nowrap;
-  text-align: center;
 `;
