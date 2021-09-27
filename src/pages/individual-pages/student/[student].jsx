@@ -4,55 +4,79 @@ import App from "../../../components/App";
 import { db, signOut } from "../../../firebase";
 import styled from "styled-components";
 import Link from "next/Link";
+import { Button } from "@material-ui/core";
+import { info } from "firebase-functions/lib/logger";
+import Loading from "../../Loading";
 
 export default function student() {
   const router = useRouter();
+  const isReady = router.isReady;
+  const [loading, setLoading] = useState(false);
   const [studentInfo, setStudentInfo] = useState();
 
-  useEffect(() => {
-    db.collection("Students")
+  const getStudentInformation = async () => {
+    const info = await db
+      .collection("Students")
       .doc(router.query.student)
-      .get()
-      .then((doc) => {});
+      .get();
+    setStudentInfo(info.data());
+  };
 
-    return () => {
-      unmounted = true;
-    };
-  }, []);
+  useEffect(() => {
+    if (isReady) {
+      setLoading(true);
+      getStudentInformation();
+    }
+  }, [isReady]);
 
+  if (!loading) {
+    return <Loading />;
+  }
+
+  const editStudentInformation = () => {
+    console.log("登録情報の編集をします");
+  };
   return (
     <App>
       <COntainer>
-        <h1>ようこそ{router.query.studentId}さん</h1>
-        <p>学生用のトップページです</p>
-        <table>
-          <tr>
-            <th>学生紹介</th>
-          </tr>
-        </table>
-
         <table border="3" bordercolor="green" width="50%" height="200px">
           <thead>
             <tr>
-              <th colSpan="2">学生概要</th>
+              <th colSpan="2">登録情報</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>氏名</td>
-              <td>◯◯△△</td>
+              <TD>氏名</TD>
+              {studentInfo === undefined ? (
+                "抽出中"
+              ) : (
+                <td>{`${studentInfo.firstName} ${studentInfo.lastName}さん`}</td>
+              )}
             </tr>
             <tr>
-              <td>大学</td>
-              <td>××大学</td>
+              <TD>大学</TD>
+              {studentInfo === undefined ? (
+                "抽出中"
+              ) : (
+                <td>{`${studentInfo.university}`}</td>
+              )}
             </tr>
             <tr>
-              <td>年次</td>
-              <td>３年生</td>
+              <TD>年次</TD>
+              {studentInfo === undefined ? (
+                "抽出中"
+              ) : (
+                <td>{`${studentInfo.age} 歳`}</td>
+              )}
             </tr>
             <tr>
-              <td>アピール</td>
-              <td>私は、全日本柔道選手権大会３連覇しております。</td>
+              <TD>自己紹介</TD>
+              {studentInfo === undefined ? (
+                "抽出中"
+              ) : (
+                <td>{`${studentInfo.introduction}`}</td>
+              )}
             </tr>
           </tbody>
         </table>
@@ -64,8 +88,21 @@ export default function student() {
         </p>
         <p>生徒情報編集機能の実装</p>
 
+        <Link href="#">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={editStudentInformation}
+          >
+            登録情報編集
+          </Button>
+        </Link>
+        <br />
+        <br />
         <Link href="/">
-          <button onClick={signOut}>ログアウト</button>
+          <Button variant="contained" color="primary" onClick={signOut}>
+            ログアウト
+          </Button>
         </Link>
       </COntainer>
     </App>
@@ -73,4 +110,9 @@ export default function student() {
 }
 const COntainer = styled.div`
   padding: 100px 0 100px 50px;
+`;
+
+const TD = styled.td`
+  white-space: nowrap;
+  text-align: center;
 `;

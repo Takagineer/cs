@@ -59,25 +59,7 @@ export default function Header({ pathname }) {
   useEffect(() => {
     let unmounted = false;
     checkExistWhichCollection();
-    console.log(logInUser);
-    return () => {
-      unmounted = true;
-    };
   }, []);
-
-  const userReturn = () => {
-    if (logInUser === "学生") {
-      return "ログインしているのは学生です";
-    } else if (logInUser === "企業") {
-      return "ログインしているのは企業です";
-    } else {
-      return "誰もログインしていません";
-    }
-
-    return () => {
-      unmounted = true;
-    };
-  };
 
   return (
     <HEader>
@@ -129,11 +111,6 @@ export default function Header({ pathname }) {
                 </Link>
               )}
             </Menu>
-            {/* 企業用のログインページへの記述 */}
-            {/* 学生用のログインページへの記述 */}
-            {/* {db.collection("Students").doc(auth.currentUser.uid).get().exists
-              ? "存在しています"
-              : "存在していません"} */}
             {logInUser === "企業" ? (
               ""
             ) : (
@@ -161,7 +138,7 @@ export default function Header({ pathname }) {
                 <Link
                   href={{
                     pathname: "individual-pages/student/[student]",
-                    query: { studentId: auth.currentUser.uid },
+                    query: { student: auth.currentUser.uid },
                   }}
                 >
                   <MenuItem onClick={handleCloseStudent}>
@@ -170,9 +147,7 @@ export default function Header({ pathname }) {
                 </Link>
               )}
             </Menu>
-            {/* 学生用のログインページへの記述 */}
           </HEaderRight>
-          {/* <Button color="inherit">ログイン</Button> */}
         </Toolbar>
       </AppBar>
     </HEader>
