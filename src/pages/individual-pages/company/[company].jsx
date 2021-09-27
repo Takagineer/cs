@@ -5,6 +5,7 @@ import { db, signOut } from "../../../firebase";
 import App from "../../../components/App";
 import styled from "styled-components";
 import Loading from "../../Loading";
+import { Button } from "@material-ui/core";
 
 export default function company() {
   const router = useRouter();
@@ -30,6 +31,10 @@ export default function company() {
   if (!loading) {
     return <Loading />;
   }
+
+  const editCompanyInformation = () => {
+    console.log("登録情報を編集します");
+  };
 
   return (
     <>
@@ -158,24 +163,32 @@ export default function company() {
             </tbody>
           </table>
 
-          <p>業務募集機能の実装</p>
-          <p>会社情報編集</p>
-          <p>
-            生徒の検索機能（あくまで情報のみ）
-            <br />
-            生徒が過去に応募した業種の、タグを知ることができ、傾向がわかる。
-          </p>
-          <p>タグでの分析機能</p>
-          <br />
-          <br />
           <br />
           <br />
           <Link href="/individual-pages/CompanyBusinesses">
-            <button>業務募集ページへ</button>
+            <Button variant="contained" color="primary">
+              業務募集
+            </Button>
           </Link>
           <br />
+          <br />
+          <br />
+          <Link href="#">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={editCompanyInformation}
+            >
+              登録情報編変更
+            </Button>
+          </Link>
+          <br />
+          <br />
+          <br />
           <Link href="/">
-            <button onClick={signOut}>ログアウト</button>
+            <Button variant="contained" color="primary" onClick={signOut}>
+              ログアウト
+            </Button>
           </Link>
         </COntainer>
       </App>
