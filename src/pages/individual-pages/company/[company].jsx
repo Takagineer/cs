@@ -1,7 +1,7 @@
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import Link from "next/Link";
-import { db, signOut } from "../../../firebase";
+import { auth, db, signOut } from "../../../firebase";
 import App from "../../../components/App";
 import styled from "styled-components";
 import Loading from "../../Loading";
@@ -12,6 +12,7 @@ export default function company() {
   const isReady = router.isReady;
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState();
+  const [companyBusinessInfo, setCompanyBusinessInfo] = useState();
 
   const getCompanyInformation = async () => {
     const info = await db
@@ -21,10 +22,26 @@ export default function company() {
     setCompanyInfo(info.data());
   };
 
+  const getCompanyBusinessInformation = async () => {
+    const businessInfo = await db
+      .collection("Businesses")
+      .where("companyId", "==", router.query.company)
+      .get();
+    const _companyBusinessInfo = [];
+    businessInfo.forEach((doc) => {
+      _companyBusinessInfo.push({
+        businessId: doc.id,
+        ...doc.data(),
+      });
+    });
+    setCompanyBusinessInfo(_companyBusinessInfo);
+  };
+
   useEffect(() => {
     if (isReady) {
       setLoading(true);
       getCompanyInformation();
+      getCompanyBusinessInformation();
     }
   }, [isReady]);
 
@@ -58,107 +75,21 @@ export default function company() {
             </tbody>
           </table>
 
-          <p>募集中の業務一覧(複数あることも想定)</p>
-          <table border="3" bordercolor="green" width="60%" height="200px">
-            <thead>
-              <tr>
-                <th>業務内容</th>
-                <th>配属場所</th>
-                <th>想定報酬</th>
-                <th>募集人数</th>
-                <th>募集状況</th>
-                <th>勤務形態</th>
-                <th>応募状況</th>
-                <th>応募者</th>
-                <th>ステータス</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>営業補佐</th>
-                <th>東京</th>
-                <th>100,000/月</th>
-                <th>５人</th>
-                <th>何割</th>
-                <th>リモート可能</th>
-                <th>10人の応募</th>
-                <th>
-                  <Link href="#">
-                    <a>応募者一覧へ</a>
-                  </Link>
-                </th>
-                <th>応募中</th>
-              </tr>
-              <tr>
-                <th>会計関連</th>
-                <th>東京</th>
-                <th>100,000/月</th>
-                <th>3人</th>
-                <th>5割</th>
-                <th>リモート不可</th>
-                <th>５人応募</th>
-                <th>
-                  <Link href="#">
-                    <a>応募者一覧へ</a>
-                  </Link>
-                </th>
-                <th>応募中</th>
-              </tr>
-            </tbody>
-          </table>
-
-          <p>過去の募集業務一覧(複数あることも想定)</p>
-          <table border="3" bordercolor="green" width="70%" height="200px">
-            <thead>
-              <tr>
-                <th>業務内容</th>
-                <th>配属場所</th>
-                <th>想定報酬</th>
-                <th>募集人数</th>
-                <th>募集状況</th>
-                <th>勤務形態</th>
-                <th>応募状況</th>
-                <th>応募者</th>
-                <th>ステータス</th>
-                <th>評価</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>営業補佐</th>
-                <th>大阪</th>
-                <th>50,000/月</th>
-                <th>6人</th>
-                <th>8割</th>
-                <th>リモート可能</th>
-                <th>10人の応募</th>
-                <th>
-                  <Link href="#">
-                    <a>応募者一覧へ</a>
-                  </Link>
-                </th>
-                <th>締め切り済み</th>
-                <th>星の評価機能をつける</th>
-              </tr>
-              <tr>
-                <th>経理補佐</th>
-                <th>東京</th>
-                <th>100,000/月</th>
-                <th>5人</th>
-                <th>9割</th>
-                <th>リモート不可</th>
-                <th>５人応募</th>
-                <th>
-                  <Link href="#">
-                    <a>応募者一覧へ</a>
-                  </Link>
-                </th>
-                <th>締め切り済み</th>
-                <th>星の評価機能をつける</th>
-              </tr>
-            </tbody>
-          </table>
-
+          {companyBusinessInfo === undefined ? (
+            "Loading"
+          ) : (
+            <ul>
+              {companyBusinessInfo.map((business) => {
+                return (
+                  <li key={business.businessId}>
+                    業務：{business.business}
+                    報酬：{business.reward}
+                    勤務場所：{business.location}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
           <br />
           <br />
           <Link href="/individual-pages/CompanyBusinesses">
