@@ -63,7 +63,6 @@ export default function CompanyBusinesses() {
         skill: newBusinessSkill,
         message: message,
         companyId: auth.currentUser.uid,
-        favo: false,
       });
 
     await storage.ref().child(image.name).put(image);
@@ -109,10 +108,6 @@ export default function CompanyBusinesses() {
   const handleImage = (e) => {
     setImage(e.target.files[0]);
   };
-
-  // const imageUpLoad = async (e) => {
-  //   await storage.ref().child(image.name).put(image);
-  // };
 
   return (
     <>
