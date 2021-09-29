@@ -75,20 +75,25 @@ export default function company() {
             </tbody>
           </table>
 
+          <h2>募集している業務</h2>
           {companyBusinessInfo === undefined ? (
             "Loading"
           ) : (
-            <ul>
+            <UL>
               {companyBusinessInfo.map((business) => {
                 return (
-                  <li key={business.businessId}>
+                  <LI key={business.businessId}>
                     業務：{business.business}
+                    <br />
                     報酬：{business.reward}
+                    <br />
                     勤務場所：{business.location}
-                  </li>
+                    <br />
+                    ステータス:募集中（仮）
+                  </LI>
                 );
               })}
-            </ul>
+            </UL>
           )}
           <br />
           <br />
@@ -129,4 +134,15 @@ const COntainer = styled.div`
 const TD = styled.td`
   white-space: nowrap;
   text-align: center;
+`;
+
+const UL = styled.ul`
+  list-style: none;
+`;
+
+const LI = styled.li`
+  margin: 20px;
+  padding: 10px;
+  background-color: #bce2e8;
+  border-radius: 20px;
 `;
