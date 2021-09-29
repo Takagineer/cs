@@ -1,7 +1,7 @@
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import Link from "next/Link";
-import { auth, db, signOut } from "../../../firebase";
+import { auth, db, signOut, storage } from "../../../firebase";
 import App from "../../../components/App";
 import styled from "styled-components";
 import Loading from "../../Loading";
@@ -32,6 +32,10 @@ export default function company() {
       _companyBusinessInfo.push({
         businessId: doc.id,
         ...doc.data(),
+        // image: storage
+        //   .ref()
+        //   .child(`images/${router.query.company}`)
+        //   .getDownloadURL(),
       });
     });
     setCompanyBusinessInfo(_companyBusinessInfo);
