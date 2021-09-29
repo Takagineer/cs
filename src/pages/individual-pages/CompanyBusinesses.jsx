@@ -194,9 +194,6 @@ export default function CompanyBusinesses() {
           </Button>
           <br />
           <br />
-          {/* <Button variant="contained" color="primary" onClick={imageUpLoad}>
-            写真の追加
-          </Button> */}
 
           <br />
           <br />
