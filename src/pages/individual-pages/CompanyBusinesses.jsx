@@ -60,7 +60,10 @@ export default function CompanyBusinesses() {
       companyId: auth.currentUser.uid,
     });
 
-    await storage.ref().child(image.name).put(image);
+    await storage
+      .ref()
+      .child(`images/${auth.currentUser.uid}/${image.name}`)
+      .put(image);
 
     alert("募集をかけました");
     setBusiness("");
