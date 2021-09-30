@@ -58,6 +58,7 @@ export default function CompanyBusinesses() {
       skill: newBusinessSkill,
       message: message,
       companyId: auth.currentUser.uid,
+      imageURL: `images/${auth.currentUser.uid}/${image.name}`,
     });
 
     await storage
