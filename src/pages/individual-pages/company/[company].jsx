@@ -89,9 +89,9 @@ export default function company() {
                   <LI key={business.businessId}>
                     業務：{business.business}
                     <br />
-                    報酬：{business.reward}
-                    <br />
                     勤務場所：{business.location}
+                    <br />
+                    報酬：{business.reward}
                     <br />
                     ステータス:募集中（仮）
                   </LI>
@@ -145,8 +145,8 @@ const UL = styled.ul`
 `;
 
 const LI = styled.li`
-  margin: 20px;
-  padding: 10px;
-  background-color: #bce2e8;
+  padding: 10px 20px;
+  margin: 10px;
   border-radius: 20px;
+  border: solid 5px #59b9c6;
 `;
