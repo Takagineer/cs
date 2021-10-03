@@ -13,6 +13,7 @@ export default function company() {
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState();
   const [companyBusinessInfo, setCompanyBusinessInfo] = useState();
+  const [companyBusinessImageUrl, setCompanyBusinessImageUrl] = useState();
 
   const getCompanyInformation = async () => {
     const info = await db
@@ -32,12 +33,16 @@ export default function company() {
       _companyBusinessInfo.push({
         businessId: doc.id,
         ...doc.data(),
-        // image: storage
-        //   .ref()
-        //   .child(`images/${router.query.company}`)
-        //   .getDownloadURL(),
+        // image: storage.ref().child(doc.data().imageURL).getDownloadURL(),
       });
+      console.log("開始します");
+      // setCompanyBusinessImageUrl(
+      //   storage.ref().child(doc.data().imageURL).getDownloadURL()
+      // );
+      // console.log(doc.data().imageURL);
     });
+    // console.log(_companyBusinessInfo);
+
     setCompanyBusinessInfo(_companyBusinessInfo);
   };
 
@@ -94,6 +99,8 @@ export default function company() {
                     報酬：{business.reward}
                     <br />
                     ステータス:募集中（仮）
+                    <br />
+                    ステータス:{companyBusinessImageUrl}
                   </LI>
                 );
               })}
