@@ -6,6 +6,7 @@ import App from "../../../components/App";
 import styled from "styled-components";
 import Loading from "../../Loading";
 import { Button } from "@material-ui/core";
+import Image from "next/image";
 
 export default function company() {
   const router = useRouter();
@@ -36,13 +37,11 @@ export default function company() {
         // image: storage.ref().child(doc.data().imageURL).getDownloadURL(),
       });
       console.log("開始します");
-      // setCompanyBusinessImageUrl(
-      //   storage.ref().child(doc.data().imageURL).getDownloadURL()
-      // );
-      // console.log(doc.data().imageURL);
+      const companyBusinessImageURL = doc.data().imageURL;
+      setCompanyBusinessImageUrl(
+        storage.ref().child(companyBusinessImageURL).getDownloadURL()
+      );
     });
-    // console.log(_companyBusinessInfo);
-
     setCompanyBusinessInfo(_companyBusinessInfo);
   };
 
@@ -100,7 +99,11 @@ export default function company() {
                     <br />
                     ステータス:募集中（仮）
                     <br />
-                    ステータス:{companyBusinessImageUrl}
+                    ステータス:
+                    {companyBusinessImageUrl === undefined
+                      ? "No photos"
+                      : // <Image src={companyBusinessImageUrl} />
+                        "写真の表示"}
                   </LI>
                 );
               })}
