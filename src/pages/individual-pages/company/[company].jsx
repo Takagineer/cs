@@ -1,31 +1,64 @@
 import { useRouter } from "next/dist/client/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/Link";
-import { db, signOut } from "../../../firebase";
+import { auth, db, signOut, storage } from "../../../firebase";
 import App from "../../../components/App";
 import styled from "styled-components";
+import Loading from "../../Loading";
+import { Button } from "@material-ui/core";
+import Image from "next/image";
 
 export default function company() {
   const router = useRouter();
+  const isReady = router.isReady;
+  const [loading, setLoading] = useState(false);
+  const [companyInfo, setCompanyInfo] = useState();
+  const [companyBusinessInfo, setCompanyBusinessInfo] = useState();
+  const [companyBusinessImageUrl, setCompanyBusinessImageUrl] = useState([]);
+
+  const getCompanyInformation = async () => {
+    const info = await db
+      .collection("Companies")
+      .doc(router.query.company)
+      .get();
+    setCompanyInfo(info.data());
+  };
+
+  const getCompanyBusinessInformation = async () => {
+    const businessInfo = await db
+      .collection("Businesses")
+      .where("companyId", "==", router.query.company)
+      .get();
+    const _companyBusinessInfo = [];
+    businessInfo.forEach((doc) => {
+      _companyBusinessInfo.push({
+        businessId: doc.id,
+        ...doc.data(),
+      });
+    });
+    setCompanyBusinessInfo(_companyBusinessInfo);
+  };
 
   useEffect(() => {
-    let unmounted = false;
-    db.collection("Companies")
-      .doc(router.query.company)
-      .get()
-      .then((doc) => {});
+    if (isReady) {
+      setLoading(true);
+      getCompanyInformation();
+      getCompanyBusinessInformation();
+    }
+  }, [isReady]);
 
-    return () => {
-      unmounted = true;
-    };
-  }, []);
+  if (!loading) {
+    return <Loading />;
+  }
+
+  const editCompanyInformation = () => {
+    console.log("登録情報を編集します");
+  };
+
   return (
     <>
       <App>
         <COntainer>
-          <h1>会社用のダイナミックルーティング用のファイル</h1>
-          <h1>ようこそ{router.query.company}さん</h1>
-          <p>企業用のトップページです</p>
           <table border="3" bordercolor="green" width="50%" height="200px">
             <thead>
               <tr>
@@ -34,139 +67,68 @@ export default function company() {
             </thead>
             <tbody>
               <tr>
-                <td>会社名</td>
-                <td>◯◯株式会社</td>
-              </tr>
-              <tr>
-                <td>設立</td>
-                <td>△△年</td>
-              </tr>
-              <tr>
-                <td>企業から一言</td>
-                <td>弊社は〜〜〜</td>
+                <TD>会社名</TD>
+                {companyInfo === undefined ? (
+                  "抽出中"
+                ) : (
+                  <TD>{`${companyInfo.companyName}`}</TD>
+                )}
               </tr>
             </tbody>
           </table>
 
-          <p>募集中の業務一覧(複数あることも想定)</p>
-          <table border="3" bordercolor="green" width="60%" height="200px">
-            <thead>
-              <tr>
-                <th>業務内容</th>
-                <th>配属場所</th>
-                <th>想定報酬</th>
-                <th>募集人数</th>
-                <th>募集状況</th>
-                <th>勤務形態</th>
-                <th>応募状況</th>
-                <th>応募者</th>
-                <th>ステータス</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>営業補佐</th>
-                <th>東京</th>
-                <th>100,000/月</th>
-                <th>５人</th>
-                <th>何割</th>
-                <th>リモート可能</th>
-                <th>10人の応募</th>
-                <th>
-                  <Link href="#">
-                    <a>応募者一覧へ</a>
-                  </Link>
-                </th>
-                <th>応募中</th>
-              </tr>
-              <tr>
-                <th>会計関連</th>
-                <th>東京</th>
-                <th>100,000/月</th>
-                <th>3人</th>
-                <th>5割</th>
-                <th>リモート不可</th>
-                <th>５人応募</th>
-                <th>
-                  <Link href="#">
-                    <a>応募者一覧へ</a>
-                  </Link>
-                </th>
-                <th>応募中</th>
-              </tr>
-            </tbody>
-          </table>
-
-          <p>過去の募集業務一覧(複数あることも想定)</p>
-          <table border="3" bordercolor="green" width="70%" height="200px">
-            <thead>
-              <tr>
-                <th>業務内容</th>
-                <th>配属場所</th>
-                <th>想定報酬</th>
-                <th>募集人数</th>
-                <th>募集状況</th>
-                <th>勤務形態</th>
-                <th>応募状況</th>
-                <th>応募者</th>
-                <th>ステータス</th>
-                <th>評価</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>営業補佐</th>
-                <th>大阪</th>
-                <th>50,000/月</th>
-                <th>6人</th>
-                <th>8割</th>
-                <th>リモート可能</th>
-                <th>10人の応募</th>
-                <th>
-                  <Link href="#">
-                    <a>応募者一覧へ</a>
-                  </Link>
-                </th>
-                <th>締め切り済み</th>
-                <th>星の評価機能をつける</th>
-              </tr>
-              <tr>
-                <th>経理補佐</th>
-                <th>東京</th>
-                <th>100,000/月</th>
-                <th>5人</th>
-                <th>9割</th>
-                <th>リモート不可</th>
-                <th>５人応募</th>
-                <th>
-                  <Link href="#">
-                    <a>応募者一覧へ</a>
-                  </Link>
-                </th>
-                <th>締め切り済み</th>
-                <th>星の評価機能をつける</th>
-              </tr>
-            </tbody>
-          </table>
-
-          <p>業務募集機能の実装</p>
-          <p>会社情報編集</p>
-          <p>
-            生徒の検索機能（あくまで情報のみ）
-            <br />
-            生徒が過去に応募した業種の、タグを知ることができ、傾向がわかる。
-          </p>
-          <p>タグでの分析機能</p>
-          <br />
-          <br />
+          <h2>募集している業務</h2>
+          {companyBusinessInfo === undefined ? (
+            "Loading"
+          ) : (
+            <UL>
+              {companyBusinessInfo.map((business) => {
+                return (
+                  <LI key={business.businessId}>
+                    {business.imageURL === undefined ? (
+                      "No photos"
+                    ) : (
+                      <img src={business.imageURL} width={400} height={300} />
+                    )}
+                    <br />
+                    業務：{business.business}
+                    <br />
+                    勤務場所：{business.location}
+                    <br />
+                    報酬：{`${business.reward}/月`}
+                    <br />
+                    {business.imageUrl}
+                  </LI>
+                );
+              })}
+            </UL>
+          )}
           <br />
           <br />
           <Link href="/individual-pages/CompanyBusinesses">
-            <button>業務募集ページへ</button>
+            <Button variant="contained" color="primary">
+              業務募集
+            </Button>
           </Link>
           <br />
+          <br />
+          <br />
+          <Link href="#">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={editCompanyInformation}
+            >
+              登録情報編変更
+            </Button>
+          </Link>
+          <br />
+          <br />
+          <br />
           <Link href="/">
-            <button onClick={signOut}>ログアウト</button>
+            <Button variant="contained" color="primary" onClick={signOut}>
+              ログアウト
+            </Button>
           </Link>
         </COntainer>
       </App>
@@ -175,4 +137,21 @@ export default function company() {
 }
 const COntainer = styled.div`
   padding: 100px 0 100px 50px;
+`;
+
+const TD = styled.td`
+  white-space: nowrap;
+  text-align: center;
+`;
+
+const UL = styled.ul`
+  list-style: none;
+`;
+
+const LI = styled.li`
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 20px;
+  border: solid 5px #fdeff2;
+  background-color: #f5b1aa;
 `;

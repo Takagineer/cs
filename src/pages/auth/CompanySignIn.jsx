@@ -18,7 +18,7 @@ import {
   auth,
 } from "../../firebase";
 import styled from "styled-components";
-import Company from "../individual-pages/Company";
+import company from "../individual-pages/company/[company]";
 
 export default function Login() {
   const [companySignInEmail, setCompanySignInEmail] = useState("");
@@ -93,7 +93,7 @@ export default function Login() {
             </div>
           </Container>
         ) : (
-          <Company />
+          <company />
         )}
 
         <br />

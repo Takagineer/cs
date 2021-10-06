@@ -1,10 +1,11 @@
 import { Container, Button, makeStyles, TextField } from "@material-ui/core";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import App from "../../components/App";
 import { auth, db, storage } from "../../firebase";
 import CreatableSelect from "react-select/creatable";
 import styled from "styled-components";
+import Loading from "../Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +25,6 @@ export default function CompanyBusinesses() {
   const [message, setMessage] = useState("");
   const [image, setImage] = useState([]);
   const [fileUrl, setFileUrl] = useState();
-  const [favo, setFavo] = useState(false);
 
   const addBusinessData = async () => {
     if (
@@ -34,49 +34,18 @@ export default function CompanyBusinesses() {
       !number ||
       !location ||
       !skill ||
-      !message
+      !message ||
+      !image
     ) {
       alert("空欄を埋めてください");
       return;
     }
 
-    const newBusinessSkill = skill.map((skill) => {
-      if ("__isNew__" in skill) {
-        delete skill.__isNew__;
-        return skill;
-      } else {
-        return skill;
-      }
-    });
-
-    await db
-      .collection("Companies")
-      .doc(auth.currentUser.uid)
-      .collection("Businesses")
-      .add({
-        // timestamp: db.serverTimestamp(),
-        business: business,
-        detail: detail,
-        reward: reward,
-        number: number,
-        location: location,
-        skill: newBusinessSkill,
-        message: message,
-        companyId: auth.currentUser.uid,
-        favo: false,
-      });
-
-    await storage.ref().child(image.name).put(image);
-
-    alert("募集をかけました");
-    setBusiness("");
-    setDetail("");
-    setReward("");
-    setNumber("");
-    setLocation("");
-    setSkill("");
-    setMessage("");
-    setImage("");
+    const URL = `images/${auth.currentUser.uid}/${image.name}`;
+    const storageRef = storage.ref().child(URL);
+    await storageRef.put(image);
+    setFileUrl(await storageRef.getDownloadURL());
+    console.log("１回目");
   };
 
   const businessValue = (e) => {
@@ -110,9 +79,43 @@ export default function CompanyBusinesses() {
     setImage(e.target.files[0]);
   };
 
-  // const imageUpLoad = async (e) => {
-  //   await storage.ref().child(image.name).put(image);
-  // };
+  useEffect(() => {
+    console.log("useEffectが呼ばれた");
+    if (fileUrl === undefined) {
+      return;
+    } else {
+      const newBusinessSkill = skill.map((skill) => {
+        if ("__isNew__" in skill) {
+          delete skill.__isNew__;
+          return skill;
+        } else {
+          return skill;
+        }
+      });
+
+      db.collection("Businesses").add({
+        business: business,
+        detail: detail,
+        reward: reward,
+        number: number,
+        location: location,
+        skill: newBusinessSkill,
+        message: message,
+        companyId: auth.currentUser.uid,
+        imageURL: fileUrl,
+      });
+
+      alert("募集をかけました");
+      setBusiness("");
+      setDetail("");
+      setReward("");
+      setNumber("");
+      setLocation("");
+      setSkill("");
+      setMessage("");
+      setImage("");
+    }
+  }, [fileUrl]);
 
   return (
     <>
@@ -194,14 +197,11 @@ export default function CompanyBusinesses() {
           </Button>
           <br />
           <br />
-          {/* <Button variant="contained" color="primary" onClick={imageUpLoad}>
-            写真の追加
-          </Button> */}
 
           <br />
           <br />
           <Button variant="contained" color="primary" onClick={addBusinessData}>
-            追加
+            募集
           </Button>
           <br />
           <br />
