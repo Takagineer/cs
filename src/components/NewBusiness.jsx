@@ -41,7 +41,8 @@ export default function RankingBusiness() {
           {newBusinessData.map((business) => {
             return (
               <LI key={business.businessId}>
-                {/* 募集開始日：{business.timestamp} */}
+                {<img src={business.imageURL} width={400} height={300} />}
+                <br />
                 <br />
                 業務：{business.business}
                 <br />
@@ -81,5 +82,6 @@ const LI = styled.li`
   padding: 10px 20px;
   margin: 10px;
   border-radius: 20px;
-  border: solid 5px #59b9c6;
+  border: solid 5px #fdeff2;
+  background-color: #f5b1aa;
 `;
