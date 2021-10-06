@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import styled from "styled-components";
-import { IconButton } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import { ContactsOutlined } from "@material-ui/icons";
 
@@ -48,35 +57,52 @@ export default function BusinessData() {
   return (
     <>
       <COntainer>
-        <p>ビジネスデータ</p>
-        <UL>
-          {businessData.map((business) => {
-            return (
-              <LI key={business.businessId}>
-                <br />
-                業務：{business.business}
-                <br />
-                勤務場所：{business.location}
-                <br />
-                想定報酬額：{`${business.reward}/月`}
-                <br />
-                <IconButton
-                  aria-label="settings"
-                  onClick={() => {
-                    handleClickFavo(business);
-                  }}
-                >
-                  {business.favo === false ? (
-                    <FavoriteTwoToneIcon />
-                  ) : (
-                    <FavoriteTwoToneIcon color="secondary" />
-                  )}
-                </IconButton>
-                {"数を表示する"}
-              </LI>
-            );
-          })}
-        </UL>
+        {businessData.map((business) => {
+          return (
+            <>
+              <CArd sx={{ maxWidth: 345 }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={business.imageURL}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {business.companyName}
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {business.business}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {business.message}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  {/* <Button size="small" color="primary">
+                    Share
+                  </Button> */}
+                  <br />
+                  <IconButton
+                    aria-label="settings"
+                    onClick={() => {
+                      handleClickFavo(business);
+                    }}
+                  >
+                    {business.favo === false ? (
+                      <FavoriteTwoToneIcon />
+                    ) : (
+                      <FavoriteTwoToneIcon color="secondary" />
+                    )}
+                  </IconButton>
+                </CardActions>
+              </CArd>
+              <br />
+            </>
+          );
+        })}
       </COntainer>
     </>
   );
@@ -86,13 +112,7 @@ const COntainer = styled.div`
   padding: 0 0 0 20px;
 `;
 
-const UL = styled.ul`
-  list-style: none;
-`;
-
-const LI = styled.li`
-  padding: 10px 20px;
-  margin: 10px;
+const CArd = styled(Card)`
+  padding: 30px 30px 30px 30px;
   border-radius: 20px;
-  border: solid 5px #59b9c6;
 `;
