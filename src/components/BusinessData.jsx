@@ -78,6 +78,14 @@ export default function BusinessData() {
                     <Typography variant="body2" color="text.secondary">
                       {business.message}
                     </Typography>
+                    <br />
+                    <Typography variant="body2" color="text.secondary">
+                      {business.location}
+                    </Typography>
+                    <br />
+                    <Typography variant="body2" color="text.secondary">
+                      {`${business.reward}/月`}
+                    </Typography>
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
