@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { db } from "../firebase";
 import { IconButton } from "@material-ui/core";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
+import BusinessData from "./BusinessData";
 
 export default function RankingBusiness() {
   const [newBusinessData, setNewBusinessData] = useState([]);
@@ -37,7 +38,7 @@ export default function RankingBusiness() {
   return (
     <>
       <COntainer>
-        <UL>
+        {/* <UL>
           {newBusinessData.map((business) => {
             return (
               <LI key={business.businessId}>
@@ -64,7 +65,8 @@ export default function RankingBusiness() {
         </UL>
         <br />
         <br />
-        <br />
+        <br /> */}
+        <BusinessData />
       </COntainer>
     </>
   );
