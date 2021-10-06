@@ -80,7 +80,6 @@ export default function CompanyBusinesses() {
   };
 
   useEffect(() => {
-    console.log("useEffectが呼ばれた");
     if (fileUrl === undefined) {
       return;
     } else {
