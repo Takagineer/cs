@@ -14,7 +14,7 @@ export default function company() {
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState();
   const [companyBusinessInfo, setCompanyBusinessInfo] = useState();
-  const [companyBusinessImageUrl, setCompanyBusinessImageUrl] = useState();
+  const [companyBusinessImageUrl, setCompanyBusinessImageUrl] = useState([]);
 
   const getCompanyInformation = async () => {
     const info = await db
@@ -34,13 +34,7 @@ export default function company() {
       _companyBusinessInfo.push({
         businessId: doc.id,
         ...doc.data(),
-        // image: storage.ref().child(doc.data().imageURL).getDownloadURL(),
       });
-      console.log("開始します");
-      const companyBusinessImageURL = doc.data().imageURL;
-      setCompanyBusinessImageUrl(
-        storage.ref().child(companyBusinessImageURL).getDownloadURL()
-      );
     });
     setCompanyBusinessInfo(_companyBusinessInfo);
   };
@@ -91,19 +85,19 @@ export default function company() {
               {companyBusinessInfo.map((business) => {
                 return (
                   <LI key={business.businessId}>
+                    {business.imageURL === undefined ? (
+                      "No photos"
+                    ) : (
+                      <img src={business.imageURL} width={400} height={300} />
+                    )}
+                    <br />
                     業務：{business.business}
                     <br />
                     勤務場所：{business.location}
                     <br />
-                    報酬：{business.reward}
+                    報酬：{`${business.reward}/月`}
                     <br />
-                    ステータス:募集中（仮）
-                    <br />
-                    ステータス:
-                    {companyBusinessImageUrl === undefined
-                      ? "No photos"
-                      : // <Image src={companyBusinessImageUrl} />
-                        "写真の表示"}
+                    {business.imageUrl}
                   </LI>
                 );
               })}
@@ -158,5 +152,6 @@ const LI = styled.li`
   padding: 10px 20px;
   margin: 10px;
   border-radius: 20px;
-  border: solid 5px #59b9c6;
+  border: solid 5px #fdeff2;
+  background-color: #f5b1aa;
 `;
