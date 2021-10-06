@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import { ContactsOutlined } from "@material-ui/icons";
+import Link from "next/Link";
 
 export default function BusinessData() {
   const [businessData, setBusinessData] = useState([]);
@@ -61,33 +62,40 @@ export default function BusinessData() {
           return (
             <>
               <CArd sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={business.imageURL}
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {business.companyName}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {business.business}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {business.message}
-                    </Typography>
-                    <br />
-                    <Typography variant="body2" color="text.secondary">
-                      {business.location}
-                    </Typography>
-                    <br />
-                    <Typography variant="body2" color="text.secondary">
-                      {`${business.reward}/月`}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
+                <Link
+                  href={{
+                    pathname: "individual-pages/business/[business]",
+                    query: { business: business.businessId },
+                  }}
+                >
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={business.imageURL}
+                      alt="green iguana"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {business.companyName}
+                      </Typography>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {business.business}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {business.message}
+                      </Typography>
+                      <br />
+                      <Typography variant="body2" color="text.secondary">
+                        {business.location}
+                      </Typography>
+                      <br />
+                      <Typography variant="body2" color="text.secondary">
+                        {`${business.reward}/月`}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Link>
                 <CardActions>
                   {/* <Button size="small" color="primary">
                     Share
@@ -122,5 +130,4 @@ const COntainer = styled.div`
 
 const CArd = styled(Card)`
   padding: 30px 30px 30px 30px;
-  border-radius: 20px;
 `;
