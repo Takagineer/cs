@@ -73,7 +73,7 @@ export default function company() {
                 return (
                   <LI key={business.businessId}>
                     {business.imageURL === undefined ? (
-                      "No photos"
+                      "No information"
                     ) : (
                       <img src={business.imageURL} width={400} height={300} />
                     )}
