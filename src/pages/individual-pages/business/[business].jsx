@@ -5,6 +5,15 @@ import { db } from "../../../firebase";
 import Loading from "../../Loading";
 import styled from "styled-components";
 import Image from "next/image";
+import { auth } from "../../../firebase";
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 
 export default function business() {
   const router = useRouter();
@@ -34,11 +43,16 @@ export default function business() {
     return <Loading />;
   }
 
+  const handleChange = (e) => {
+    console.log(
+      "グローバルステートで管理しているstateの値を変更できるようにする"
+    );
+  };
+
   return (
     <>
       <App>
         <COntainer>
-          <br />
           <br />
           <br />
           <h1>業務詳細ページ</h1>
@@ -49,13 +63,6 @@ export default function business() {
           ) : (
             <>
               <img src={businessInfo.imageURL} width={400} height={300} />
-              {/* <Image
-                src={
-                  "https://firebasestorage.googleapis.com/v0/b/my-app-cs-f7306.appspot.com/o/images%2FjidiFGi3I5Ym7GvvLRH9tb4lXBV2%2Fhammer-719066_1920.jpeg?alt=media&token=10007bb7-d26d-4936-a1d4-e9854b8aea6a"
-                }
-                width={400}
-                height={300}
-              /> */}
               {/* <Image src={businessInfo.imageURL} width={400} height={300} /> */}
               <h1>業務 ：{businessInfo.business}</h1>
               <h1>業務内容 ：{businessInfo.detail}</h1>
@@ -64,6 +71,35 @@ export default function business() {
               <h1>想定報酬額 ：{`${businessInfo.reward}/月`}</h1>
             </>
           )}
+
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-helper-label">
+              募集状況
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              label="Age"
+              onChange={handleChange}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"募集中"}>募集中</MenuItem>
+              <MenuItem value={"締め切り間近"}>Twenty</MenuItem>
+              <MenuItem value={"募集締め切り"}>Thirty</MenuItem>
+            </Select>
+            <FormHelperText>ステータスを変更してください</FormHelperText>
+          </FormControl>
+          <br />
+          <Button variant="contained" color="primary">
+            更新
+          </Button>
+          <br />
+          <br />
+          <Button variant="contained" color="primary">
+            応募
+          </Button>
         </COntainer>
       </App>
     </>
