@@ -8,7 +8,6 @@ import { RecoilRoot } from "recoil";
 
 export default function Home() {
   return (
-    // <AuthProvider>
     <RecoilRoot>
       <App>
         <Head>
@@ -33,6 +32,5 @@ export default function Home() {
         <br />
       </App>
     </RecoilRoot>
-    // </AuthProvider>
   );
 }
