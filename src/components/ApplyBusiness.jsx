@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { db } from "../firebase";
 import styled from "styled-components";
+import BusinessData from "./BusinessData";
 
 export default function RankingBusinessPopular() {
   const [applyBusinessData, setApplyBusinessData] = useState([]);
@@ -18,7 +19,7 @@ export default function RankingBusinessPopular() {
   return (
     <>
       <COntainer>
-        <UL>
+        {/* <UL>
           {applyBusinessData.map((business) => {
             return (
               <LI key={business.businessId}>
@@ -34,7 +35,8 @@ export default function RankingBusinessPopular() {
               </LI>
             );
           })}
-        </UL>
+        </UL> */}
+        <BusinessData />
       </COntainer>
     </>
   );

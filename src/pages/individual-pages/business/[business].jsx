@@ -67,9 +67,9 @@ export default function business() {
             "No information"
           ) : (
             <>
-              <img src={businessInfo.imageURL} width={400} height={300} />
-              {businessInfo.imageURL}
-              {/* <Image src={businessInfo.imageURL} width={400} height={300} /> */}
+              {businessInfo.imageURL && (
+                <Image src={businessInfo.imageURL} width={400} height={300} />
+              )}
               <h1>業務 ：{businessInfo.business}</h1>
               <h1>業務内容 ：{businessInfo.detail}</h1>
               <h1>勤務場所 ：{businessInfo.location}</h1>

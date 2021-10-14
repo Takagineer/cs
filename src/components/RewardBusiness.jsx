@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { db } from "../firebase";
+import BusinessData from "./BusinessData";
 
 export default function RankingBusinessReward() {
   const [rewardBusinessData, setRewardBusinessData] = useState([]);
@@ -19,7 +20,7 @@ export default function RankingBusinessReward() {
   return (
     <>
       <COntainer>
-        <UL>
+        {/* <UL>
           {rewardBusinessData.map((business) => {
             return (
               <LI key={business.businessId}>
@@ -35,7 +36,8 @@ export default function RankingBusinessReward() {
               </LI>
             );
           })}
-        </UL>
+        </UL> */}
+        <BusinessData />
       </COntainer>
     </>
   );

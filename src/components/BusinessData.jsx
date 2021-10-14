@@ -18,8 +18,11 @@ import App from "./App";
 
 export default function BusinessData() {
   const [businessData, setBusinessData] = useState([]);
-  const [favo, setFavo] = useState(false);
   const [colorRed, setColorRed] = useState(false);
+  const [newRanking, setNewRanking] = useState(false);
+  const [favoRanking, setFavoRanking] = useState(false);
+  const [appliedRanking, setAppliedRanking] = useState(false);
+  const [rewardRanking, setRewardRanking] = useState(false);
 
   useEffect(() => {
     const getBusinessData = db
@@ -36,89 +39,51 @@ export default function BusinessData() {
   }, []);
 
   const handleClickFavo = async (business) => {
-    //Likesコレクションから、business.businessIdで検索をかける。
-    //取得したドキュメントに、現在ログインしているユーザーのIDが含まれているか確認する。
-    //※上記２行は、１行で短縮可能
-    //あれば、いいねマークを赤く表示し、その横にカウントを表示する。
-    //なければ、いいねマークを黒く表示し、その横にカウントを表示する。
-    console.log("開始します");
-    const likedDocument = await db
+    const likedCollection = await db
       .collection("Likes")
       .where("businessId", "==", business.businessId)
       .where("userId", "==", auth.currentUser.uid)
       .get();
+    console.log({ businessId: business.businessId });
+    console.log({ userId: auth.currentUser.uid });
+    console.log({ likedCollectionの値: likedCollection.exists });
 
-    console.log("データの取得完了");
-
-    likedDocument.forEach((doc) => {
-      console.log(doc.data());
-      console.log(doc.exists);
-
-      if (doc.exists) {
-        console.log("削除する記述");
-      } else {
-        console.log("追加する記述");
-      }
-    });
-
-    // likedDocument.forEach((doc) => {
+    // likedCollection.forEach((doc) => {
     //   console.log(doc.data());
-    //   console.log(doc.exists);
-    //   //上記の記述でなければundefinedになる。
-    //   // console.log(likedDocument.exists);
-
-    //   if (doc.exists) {
-    //     console.log("消します");
-    //     db.collection("Likes").doc(doc.id).delete();
-    //   } else {
-    //     console.log("追加します");
-    //     db.collection("Likes").add({
-    //       userId: auth.currentUser.uid,
-    //       businessId: business.businessId,
-    //     });
+    //   if (doc.data().exists) {
+    //     console.log("データがあります。削除します");
+    //   } else if (doc.data().exists === undefined) {
+    //     console.log(
+    //       "この業務データに対してデータが存在していません。データを追加します。"
+    //     );
     //   }
     // });
 
-    // if (likedDocument.exists) {
-    //   console.log("ありますね");
-    //   console.log(likedDocument);
-    //   const businessRef = await db
-    //     .collection("Likes")
-    //     .where("businessId", "==", business.businessId)
-    //     .where("userId", "==", auth.currentUser.uid)
-    //     .get();
-    //   businessRef.forEach((doc) => {
-    //     db.collection("Likes").doc(doc.id).delete();
-    //   });
-    //   console.log("黒色に変更する");
-    // } else {
-    //   console.log("ないですね");
-    //   console.log(likedDocument);
-    //   await db.collection("Likes").add({
-    //     userId: auth.currentUser.uid,
-    //     businessId: business.businessId,
-    //   });
-    //   console.log("赤色に変更する");
-    // }
-    // if (favo === false) {
-    //   setFavo(true);
-    //   await db.collection("Likes").add({
-    //     userId: auth.currentUser.uid,
-    //     businessId: business.businessId,
-    //   });
-    //   console.log("赤色に変更する");
-    // } else {
-    //   setFavo(false);
-    //   const businessRef = await db
-    //     .collection("Likes")
-    //     .where("businessId", "==", business.businessId)
-    //     .where("userId", "==", auth.currentUser.uid)
-    //     .get();
-    //   businessRef.forEach((doc) => {
-    //     db.collection("Likes").doc(doc.id).delete();
-    //   });
-    //   console.log("黒色に変更する");
-    // }
+    if (likedCollection.exists === undefined) {
+      db.collection("Likes").add({
+        userId: auth.currentUser.uid,
+        businessId: business.businessId,
+      });
+      console.log("追加完了");
+    } else if (likedCollection.exists === true) {
+      console.log("undefinedでないときに走るはずの処理");
+      db.collection("Likes").doc(doc.id).delete();
+    }
+
+    likedCollection.forEach((doc) => {
+      console.log(doc.data());
+      console.log(doc.exists);
+
+      if (doc.exists === true) {
+        db.collection("Likes").doc(doc.id).delete();
+        console.log("削除しました");
+      } else {
+        db.collection("Likes").add({
+          userId: auth.currentUser.uid,
+          businessId: business.businessId,
+        });
+      }
+    });
   };
 
   return (

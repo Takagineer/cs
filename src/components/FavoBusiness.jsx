@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { db } from "../firebase";
 import styled from "styled-components";
+import BusinessData from "./BusinessData";
 
 export default function RankingFav() {
   const [favoBusinessData, setFavoBusinessData] = useState([]);
@@ -19,7 +20,7 @@ export default function RankingFav() {
   return (
     <>
       <COntainer>
-        <UL>
+        {/* <UL>
           {favoBusinessData.map((business) => {
             return (
               <LI key={business.businessId}>
@@ -35,7 +36,8 @@ export default function RankingFav() {
               </LI>
             );
           })}
-        </UL>
+        </UL> */}
+        <BusinessData />
       </COntainer>
     </>
   );
