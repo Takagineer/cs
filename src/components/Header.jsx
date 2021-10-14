@@ -13,13 +13,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import styled from "styled-components";
 import { auth, db } from "../firebase";
 import { useRecoilState } from "recoil";
-import { studentState } from "../store/studentState";
+import { userState } from "../store/userState";
 
 export default function Header({ pathname }) {
   const [anchorElCompany, setAnchorElCompany] = useState(null);
   const [anchorElStudent, setAnchorElStudent] = useState(null);
-  // const [logInUser, setLogInUser] = useState();
-  const [logInUser, setLogInUser] = useRecoilState(studentState);
+  const [logInUser, setLogInUser] = useRecoilState(userState);
 
   const handleClickCompany = (event) => {
     setAnchorElCompany(event.currentTarget);
