@@ -39,51 +39,45 @@ export default function BusinessData() {
   }, []);
 
   const handleClickFavo = async (business) => {
-    const likedCollection = await db
+    const likedDocument = await db
       .collection("Likes")
       .where("businessId", "==", business.businessId)
       .where("userId", "==", auth.currentUser.uid)
       .get();
     console.log({ businessId: business.businessId });
     console.log({ userId: auth.currentUser.uid });
-    console.log({ likedCollectionの値: likedCollection.exists });
+    console.log({ likedDocumentの存在確認: likedDocument.exists });
+    console.log({ likedDocumentの値: likedDocument });
 
-    // likedCollection.forEach((doc) => {
-    //   console.log(doc.data());
-    //   if (doc.data().exists) {
-    //     console.log("データがあります。削除します");
-    //   } else if (doc.data().exists === undefined) {
-    //     console.log(
-    //       "この業務データに対してデータが存在していません。データを追加します。"
-    //     );
-    //   }
-    // });
-
-    if (likedCollection.exists === undefined) {
-      db.collection("Likes").add({
-        userId: auth.currentUser.uid,
-        businessId: business.businessId,
-      });
-      console.log("追加完了");
-    } else if (likedCollection.exists === true) {
-      console.log("undefinedでないときに走るはずの処理");
-      db.collection("Likes").doc(doc.id).delete();
-    }
-
-    likedCollection.forEach((doc) => {
+    likedDocument.forEach((doc) => {
       console.log(doc.data());
       console.log(doc.exists);
-
-      if (doc.exists === true) {
-        db.collection("Likes").doc(doc.id).delete();
-        console.log("削除しました");
-      } else {
+      if (likedDocument === undefined) {
         db.collection("Likes").add({
           userId: auth.currentUser.uid,
           businessId: business.businessId,
         });
+        console.log("追加完了");
+      } else {
+        console.log("削除処理");
+        // db.collection("Likes").doc(doc.id).delete();
       }
     });
+
+    // likedCollection.forEach((doc) => {
+    //   console.log(doc.data());
+    //   console.log(doc.exists);
+
+    //   if (doc.exists === true) {
+    //     db.collection("Likes").doc(doc.id).delete();
+    //     console.log("削除しました");
+    //   } else {
+    //     db.collection("Likes").add({
+    //       userId: auth.currentUser.uid,
+    //       businessId: business.businessId,
+    //     });
+    //   }
+    // });
   };
 
   return (
