@@ -75,7 +75,7 @@ export default function company() {
                     {business.imageURL === undefined ? (
                       "No information"
                     ) : (
-                      <img src={business.imageURL} width={400} height={300} />
+                      <Image src={business.imageURL} width={400} height={300} />
                     )}
                     <br />
                     業務：{business.business}
