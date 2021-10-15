@@ -7,7 +7,6 @@ import RankingBusiness from "../components/NewBusiness";
 
 export default function Home() {
   return (
-    // <AuthProvider>
     <App>
       <Head>
         <title>トップページ</title>
@@ -30,6 +29,5 @@ export default function Home() {
       <br />
       <br />
     </App>
-    // </AuthProvider>
   );
 }

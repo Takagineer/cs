@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { db } from "../firebase";
+import BusinessData from "./BusinessData";
 
 export default function RankingBusinessReward() {
   const [rewardBusinessData, setRewardBusinessData] = useState([]);
@@ -19,10 +20,12 @@ export default function RankingBusinessReward() {
   return (
     <>
       <COntainer>
-        <UL>
+        {/* <UL>
           {rewardBusinessData.map((business) => {
             return (
               <LI key={business.businessId}>
+                {<img src={business.imageURL} width={400} height={300} />}
+                <br />
                 業務：{business.business}
                 <br />
                 勤務場所：{business.location}
@@ -33,7 +36,8 @@ export default function RankingBusinessReward() {
               </LI>
             );
           })}
-        </UL>
+        </UL> */}
+        <BusinessData />
       </COntainer>
     </>
   );
@@ -50,5 +54,6 @@ const LI = styled.li`
   padding: 10px 20px;
   margin: 10px;
   border-radius: 20px;
-  border: solid 5px #59b9c6;
+  border: solid 5px #fdeff2;
+  background-color: #f5b1aa;
 `;

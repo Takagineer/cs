@@ -54,41 +54,28 @@ export default function company() {
   const editCompanyInformation = () => {
     console.log("登録情報を編集します");
   };
-
   return (
     <>
       <App>
         <COntainer>
-          <table border="3" bordercolor="green" width="50%" height="200px">
-            <thead>
-              <tr>
-                <th colSpan="2">会社概要</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <TD>会社名</TD>
-                {companyInfo === undefined ? (
-                  "抽出中"
-                ) : (
-                  <TD>{`${companyInfo.companyName}`}</TD>
-                )}
-              </tr>
-            </tbody>
-          </table>
-
+          {companyInfo === undefined ? (
+            "抽出中"
+          ) : (
+            <h1>{`${companyInfo.companyName} 様のページ`}</h1>
+          )}
+          <br />
           <h2>募集している業務</h2>
           {companyBusinessInfo === undefined ? (
-            "Loading"
+            ""
           ) : (
             <UL>
               {companyBusinessInfo.map((business) => {
                 return (
                   <LI key={business.businessId}>
                     {business.imageURL === undefined ? (
-                      "No photos"
+                      "No photo"
                     ) : (
-                      <img src={business.imageURL} width={400} height={300} />
+                      <Image src={business.imageURL} width={400} height={300} />
                     )}
                     <br />
                     業務：{business.business}
@@ -105,11 +92,19 @@ export default function company() {
           )}
           <br />
           <br />
-          <Link href="/individual-pages/CompanyBusinesses">
-            <Button variant="contained" color="primary">
-              業務募集
-            </Button>
-          </Link>
+          {companyInfo === undefined ? (
+            "Loading ..."
+          ) : (
+            <Link href="/individual-pages/CompanyBusinesses">
+              <Button
+                variant="contained"
+                color="primary"
+                companyInfo={companyInfo}
+              >
+                業務募集
+              </Button>
+            </Link>
+          )}
           <br />
           <br />
           <br />
@@ -137,11 +132,6 @@ export default function company() {
 }
 const COntainer = styled.div`
   padding: 100px 0 100px 50px;
-`;
-
-const TD = styled.td`
-  white-space: nowrap;
-  text-align: center;
 `;
 
 const UL = styled.ul`

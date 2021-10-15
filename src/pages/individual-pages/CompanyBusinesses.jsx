@@ -25,6 +25,7 @@ export default function CompanyBusinesses() {
   const [message, setMessage] = useState("");
   const [image, setImage] = useState([]);
   const [fileUrl, setFileUrl] = useState();
+  const [applyStatus, setApplyStatus] = useState("");
 
   const addBusinessData = async () => {
     if (
@@ -80,7 +81,6 @@ export default function CompanyBusinesses() {
   };
 
   useEffect(() => {
-    console.log("useEffectが呼ばれた");
     if (fileUrl === undefined) {
       return;
     } else {
@@ -103,6 +103,7 @@ export default function CompanyBusinesses() {
         message: message,
         companyId: auth.currentUser.uid,
         imageURL: fileUrl,
+        applyStatus: "募集中",
       });
 
       alert("募集をかけました");
@@ -218,6 +219,7 @@ export default function CompanyBusinesses() {
 }
 
 const skillList = [
+  { value: "なし", label: "特になし" },
   { value: "英検", label: "英検２級" },
   { value: "秘書", label: "秘書検定" },
   { value: "企業診断士", label: "中小企業診断士" },
