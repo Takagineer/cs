@@ -1,14 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import styled from "styled-components";
-import { IconButton } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
-import { ContactsOutlined } from "@material-ui/icons";
+import { ContactsOutlined, LinkedCamera } from "@material-ui/icons";
+import Link from "next/Link";
+import App from "./App";
 
 export default function BusinessData() {
   const [businessData, setBusinessData] = useState([]);
-  const [favo, setFavo] = useState(false);
   const [colorRed, setColorRed] = useState(false);
+  const [newRanking, setNewRanking] = useState(false);
+  const [favoRanking, setFavoRanking] = useState(false);
+  const [appliedRanking, setAppliedRanking] = useState(false);
+  const [rewardRanking, setRewardRanking] = useState(false);
 
   useEffect(() => {
     const getBusinessData = db
@@ -25,59 +39,117 @@ export default function BusinessData() {
   }, []);
 
   const handleClickFavo = async (business) => {
-    if (favo === false) {
-      setFavo(true);
-      await db.collection("Likes").add({
+    const likedCollection = await db
+      .collection("Likes")
+      .where("businessId", "==", business.businessId)
+      .where("userId", "==", auth.currentUser.uid)
+      .get();
+    console.log({ businessId: business.businessId });
+    console.log({ userId: auth.currentUser.uid });
+    console.log({ likedCollectionの値: likedCollection.exists });
+
+    // likedCollection.forEach((doc) => {
+    //   console.log(doc.data());
+    //   if (doc.data().exists) {
+    //     console.log("データがあります。削除します");
+    //   } else if (doc.data().exists === undefined) {
+    //     console.log(
+    //       "この業務データに対してデータが存在していません。データを追加します。"
+    //     );
+    //   }
+    // });
+
+    if (likedCollection.exists === undefined) {
+      db.collection("Likes").add({
         userId: auth.currentUser.uid,
         businessId: business.businessId,
       });
-      console.log("赤色に変更する");
-    } else {
-      setFavo(false);
-      const businessRef = await db
-        .collection("Likes")
-        .where("businessId", "==", business.businessId)
-        .where("userId", "==", auth.currentUser.uid)
-        .get();
-      businessRef.forEach((doc) => {
-        db.collection("Likes").doc(doc.id).delete();
-      });
-      console.log("黒色に変更する");
+      console.log("追加完了");
+    } else if (likedCollection.exists === true) {
+      console.log("undefinedでないときに走るはずの処理");
+      db.collection("Likes").doc(doc.id).delete();
     }
+
+    likedCollection.forEach((doc) => {
+      console.log(doc.data());
+      console.log(doc.exists);
+
+      if (doc.exists === true) {
+        db.collection("Likes").doc(doc.id).delete();
+        console.log("削除しました");
+      } else {
+        db.collection("Likes").add({
+          userId: auth.currentUser.uid,
+          businessId: business.businessId,
+        });
+      }
+    });
   };
+
   return (
     <>
-      <COntainer>
-        <p>ビジネスデータ</p>
-        <UL>
+      <App>
+        <COntainer>
           {businessData.map((business) => {
             return (
-              <LI key={business.businessId}>
+              <>
+                <CArd sx={{ maxWidth: 345 }}>
+                  <Link
+                    href={{
+                      pathname: "individual-pages/business/[business]",
+                      query: { business: business.businessId },
+                    }}
+                  >
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="300"
+                        image={business.imageURL}
+                        alt="green iguana"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {business.companyName}
+                        </Typography>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {business.business}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {business.message}
+                        </Typography>
+                        <br />
+                        <Typography variant="body2" color="text.secondary">
+                          {business.location}
+                        </Typography>
+                        <br />
+                        <Typography variant="body2" color="text.secondary">
+                          {`${business.reward}/月`}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Link>
+                  <CardActions>
+                    <br />
+                    <IconButton
+                      aria-label="settings"
+                      onClick={() => {
+                        handleClickFavo(business);
+                      }}
+                    >
+                      {business.favo === false ? (
+                        <FavoriteTwoToneIcon />
+                      ) : (
+                        <FavoriteTwoToneIcon color="secondary" />
+                      )}
+                    </IconButton>
+                  </CardActions>
+                </CArd>
                 <br />
-                業務：{business.business}
-                <br />
-                勤務場所：{business.location}
-                <br />
-                想定報酬額：{`${business.reward}/月`}
-                <br />
-                <IconButton
-                  aria-label="settings"
-                  onClick={() => {
-                    handleClickFavo(business);
-                  }}
-                >
-                  {business.favo === false ? (
-                    <FavoriteTwoToneIcon />
-                  ) : (
-                    <FavoriteTwoToneIcon color="secondary" />
-                  )}
-                </IconButton>
-                {"数を表示する"}
-              </LI>
+              </>
             );
           })}
-        </UL>
-      </COntainer>
+        </COntainer>
+      </App>
     </>
   );
 }
@@ -86,13 +158,6 @@ const COntainer = styled.div`
   padding: 0 0 0 20px;
 `;
 
-const UL = styled.ul`
-  list-style: none;
-`;
-
-const LI = styled.li`
-  padding: 10px 20px;
-  margin: 10px;
-  border-radius: 20px;
-  border: solid 5px #59b9c6;
+const CArd = styled(Card)`
+  padding: 30px 30px 30px 30px;
 `;
