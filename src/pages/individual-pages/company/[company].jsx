@@ -66,14 +66,14 @@ export default function company() {
           <br />
           <h2>募集している業務</h2>
           {companyBusinessInfo === undefined ? (
-            "Loading"
+            ""
           ) : (
             <UL>
               {companyBusinessInfo.map((business) => {
                 return (
                   <LI key={business.businessId}>
                     {business.imageURL === undefined ? (
-                      "No information"
+                      "No photo"
                     ) : (
                       <Image src={business.imageURL} width={400} height={300} />
                     )}
