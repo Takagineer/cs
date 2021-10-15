@@ -38,47 +38,31 @@ export default function BusinessData() {
       });
   }, []);
 
+  // useEffect(() => {
   const handleClickFavo = async (business) => {
     const likedDocument = await db
       .collection("Likes")
       .where("businessId", "==", business.businessId)
       .where("userId", "==", auth.currentUser.uid)
       .get();
-    console.log({ businessId: business.businessId });
-    console.log({ userId: auth.currentUser.uid });
-    console.log({ likedDocumentの存在確認: likedDocument.exists });
-    console.log({ likedDocumentの値: likedDocument });
 
-    likedDocument.forEach((doc) => {
-      console.log(doc.data());
-      console.log(doc.exists);
-      if (likedDocument === undefined) {
-        db.collection("Likes").add({
-          userId: auth.currentUser.uid,
-          businessId: business.businessId,
-        });
-        console.log("追加完了");
-      } else {
-        console.log("削除処理");
-        // db.collection("Likes").doc(doc.id).delete();
-      }
-    });
+    const zeroOrOne = likedDocument.size;
 
-    // likedCollection.forEach((doc) => {
-    //   console.log(doc.data());
-    //   console.log(doc.exists);
-
-    //   if (doc.exists === true) {
-    //     db.collection("Likes").doc(doc.id).delete();
-    //     console.log("削除しました");
-    //   } else {
-    //     db.collection("Likes").add({
-    //       userId: auth.currentUser.uid,
-    //       businessId: business.businessId,
-    //     });
-    //   }
-    // });
+    if (zeroOrOne === 0) {
+      // console.log("登録をかける");
+      db.collection("Likes").add({
+        userId: auth.currentUser.uid,
+        businessId: business.businessId,
+      });
+      return <FavoriteTwoToneIcon color="secondary" />;
+    } else {
+      likedDocument.forEach((doc) => {
+        db.collection("Likes").doc(doc.id).delete();
+      });
+      return <FavoriteTwoToneIcon />;
+    }
   };
+  // }, []);
 
   return (
     <>
