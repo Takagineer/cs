@@ -38,53 +38,31 @@ export default function BusinessData() {
       });
   }, []);
 
+  // useEffect(() => {
   const handleClickFavo = async (business) => {
-    const likedCollection = await db
+    const likedDocument = await db
       .collection("Likes")
       .where("businessId", "==", business.businessId)
       .where("userId", "==", auth.currentUser.uid)
       .get();
-    console.log({ businessId: business.businessId });
-    console.log({ userId: auth.currentUser.uid });
-    console.log({ likedCollectionの値: likedCollection.exists });
 
-    // likedCollection.forEach((doc) => {
-    //   console.log(doc.data());
-    //   if (doc.data().exists) {
-    //     console.log("データがあります。削除します");
-    //   } else if (doc.data().exists === undefined) {
-    //     console.log(
-    //       "この業務データに対してデータが存在していません。データを追加します。"
-    //     );
-    //   }
-    // });
+    const zeroOrOne = likedDocument.size;
 
-    if (likedCollection.exists === undefined) {
+    if (zeroOrOne === 0) {
+      // console.log("登録をかける");
       db.collection("Likes").add({
         userId: auth.currentUser.uid,
         businessId: business.businessId,
       });
-      console.log("追加完了");
-    } else if (likedCollection.exists === true) {
-      console.log("undefinedでないときに走るはずの処理");
-      db.collection("Likes").doc(doc.id).delete();
-    }
-
-    likedCollection.forEach((doc) => {
-      console.log(doc.data());
-      console.log(doc.exists);
-
-      if (doc.exists === true) {
+      return <FavoriteTwoToneIcon color="secondary" />;
+    } else {
+      likedDocument.forEach((doc) => {
         db.collection("Likes").doc(doc.id).delete();
-        console.log("削除しました");
-      } else {
-        db.collection("Likes").add({
-          userId: auth.currentUser.uid,
-          businessId: business.businessId,
-        });
-      }
-    });
+      });
+      return <FavoriteTwoToneIcon />;
+    }
   };
+  // }, []);
 
   return (
     <>
