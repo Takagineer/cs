@@ -106,7 +106,7 @@ export default function business() {
                 color="primary"
                 onClick={changeBusinessStatus}
               >
-                更新
+                募集状況更新
               </Button>
             </>
           ) : (
