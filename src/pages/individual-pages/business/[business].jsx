@@ -21,6 +21,7 @@ export default function business() {
   const [loading, setLoading] = useState(false);
   const [businessInfo, setBusinessInfo] = useState([]);
   const [businessImageUrl, setBusinessImageUrl] = useState();
+  const [businessStatus, setBusinessStatus] = useState();
 
   const getBusinessInformation = async () => {
     const info = await db
@@ -43,17 +44,30 @@ export default function business() {
     return <Loading />;
   }
 
-  const handleChange = (e) => {
-    console.log(
-      "グローバルステートで管理しているstateの値を変更できるようにする"
-    );
-  };
-
   if (!businessInfo) {
     console.log("undefinedです");
   } else {
     console.log(businessInfo.imageURL);
   }
+
+  const handleChange = (e) => {
+    console.log(
+      "グローバルステートで管理しているstateの値を変更できるようにする"
+    );
+    console.log(e.target.value);
+    setBusinessStatus(e.target.value);
+  };
+
+  const changeBusinessStatus = (e) => {
+    console.log("ステータスを更新する");
+    console.log(businessInfo);
+    db.collection("Businesses").doc(router.query.business).set(
+      {
+        status: businessStatus,
+      },
+      { merge: true }
+    );
+  };
 
   return (
     <>
@@ -87,6 +101,7 @@ export default function business() {
               id="demo-simple-select-helper"
               label="Age"
               onChange={handleChange}
+              value={businessStatus}
             >
               <MenuItem value="">
                 <em></em>
@@ -98,7 +113,11 @@ export default function business() {
             <FormHelperText>ステータスを変更してください</FormHelperText>
           </FormControl>
           <br />
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={changeBusinessStatus}
+          >
             更新
           </Button>
           <br />
