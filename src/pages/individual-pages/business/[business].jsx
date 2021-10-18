@@ -89,11 +89,11 @@ export default function business() {
               onChange={handleChange}
             >
               <MenuItem value="">
-                <em>None</em>
+                <em></em>
               </MenuItem>
               <MenuItem value={"募集中"}>募集中</MenuItem>
-              <MenuItem value={"締め切り間近"}>Twenty</MenuItem>
-              <MenuItem value={"募集締め切り"}>Thirty</MenuItem>
+              <MenuItem value={"締め切り間近"}>締め切り間近</MenuItem>
+              <MenuItem value={"募集締め切り"}>募集終了</MenuItem>
             </Select>
             <FormHelperText>ステータスを変更してください</FormHelperText>
           </FormControl>
