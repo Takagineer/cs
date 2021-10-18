@@ -3,10 +3,10 @@ import Link from "next/link";
 import React, { useState } from "react";
 import App from "../../components/App";
 import { auth, db, signOut, signUpWithEmailAndPassword } from "../../firebase";
-import Student from "../individual-pages/Student";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import styled from "styled-components";
+import student from "../individual-pages/student/[student]";
 
 export default function SignUp() {
   const [studentSignUpEmail, setStudentSignUpEmail] = useState("");
@@ -209,7 +209,7 @@ export default function SignUp() {
           </div>
         </Container>
       ) : (
-        <Student />
+        <student />
       )}
 
       <Link href="/">

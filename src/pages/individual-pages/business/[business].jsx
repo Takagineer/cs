@@ -110,7 +110,7 @@ export default function business() {
               </Button>
             </>
           ) : (
-            "ボタン非表示"
+            ""
           )}
           <br />
           <br />
