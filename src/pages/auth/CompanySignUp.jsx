@@ -5,7 +5,7 @@ import { auth, db, signUpWithEmailAndPassword } from "../../firebase";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import Link from "next/link";
-import Company from "../individual-pages/Company";
+import company from "../individual-pages/company/[company]";
 
 export default function CompanySignUp() {
   const [companySignUpEmail, setCompanySignUpEmail] = useState("");
@@ -105,7 +105,7 @@ export default function CompanySignUp() {
             </div>
           </Container>
         ) : (
-          <Company />
+          <company />
         )}
 
         {"    "}
