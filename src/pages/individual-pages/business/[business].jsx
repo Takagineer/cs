@@ -1,11 +1,10 @@
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import App from "../../../components/App";
-import { db } from "../../../firebase";
+import { db, auth } from "../../../firebase";
 import Loading from "../../Loading";
 import styled from "styled-components";
 import Image from "next/image";
-import { auth } from "../../../firebase";
 import {
   Button,
   FormControl,
@@ -21,7 +20,7 @@ export default function business() {
   const [loading, setLoading] = useState(false);
   const [businessInfo, setBusinessInfo] = useState([]);
   const [businessImageUrl, setBusinessImageUrl] = useState();
-  const [businessStatus, setBusinessStatus] = useState();
+  const [businessStatus, setBusinessStatus] = useState("募集中");
 
   const getBusinessInformation = async () => {
     const info = await db
@@ -29,10 +28,6 @@ export default function business() {
       .doc(router.query.business)
       .get();
     setBusinessInfo(info.data());
-  };
-
-  const getBusinessImageUrl = async () => {
-    console.log("画像データの取得");
   };
 
   useEffect(() => {
@@ -44,29 +39,19 @@ export default function business() {
     return <Loading />;
   }
 
-  if (!businessInfo) {
-    console.log("undefinedです");
-  } else {
-    console.log(businessInfo.imageURL);
-  }
-
   const handleChange = (e) => {
-    console.log(
-      "グローバルステートで管理しているstateの値を変更できるようにする"
-    );
-    console.log(e.target.value);
     setBusinessStatus(e.target.value);
   };
 
   const changeBusinessStatus = (e) => {
-    console.log("ステータスを更新する");
-    console.log(businessInfo);
     db.collection("Businesses").doc(router.query.business).set(
       {
-        status: businessStatus,
+        applyStatus: businessStatus,
       },
       { merge: true }
     );
+    alert("更新しました");
+    console.log(businessInfo);
   };
 
   return (
@@ -76,7 +61,6 @@ export default function business() {
           <br />
           <h1>業務詳細ページ</h1>
           <br />
-
           {businessInfo === undefined ? (
             "No information"
           ) : (
@@ -91,35 +75,46 @@ export default function business() {
               <h1>想定報酬額 ：{`${businessInfo.reward}/月`}</h1>
             </>
           )}
-
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-helper-label">
-              募集状況
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              label="Age"
-              onChange={handleChange}
-              value={businessStatus}
-            >
-              <MenuItem value="">
-                <em></em>
-              </MenuItem>
-              <MenuItem value={"募集中"}>募集中</MenuItem>
-              <MenuItem value={"締め切り間近"}>締め切り間近</MenuItem>
-              <MenuItem value={"募集締め切り"}>募集終了</MenuItem>
-            </Select>
-            <FormHelperText>ステータスを変更してください</FormHelperText>
-          </FormControl>
+          {businessInfo === undefined || auth.currentUser === null ? (
+            ""
+          ) : businessInfo.companyId === auth.currentUser.uid ? (
+            <>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-helper-label">
+                  募集状況
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  label="Age"
+                  onChange={handleChange}
+                  value={businessStatus}
+                >
+                  <MenuItem value={"募集中"}>募集中</MenuItem>
+                  <MenuItem value={"締め切り間近"}>締め切り間近</MenuItem>
+                  <MenuItem value={"募集締め切り"}>募集終了</MenuItem>
+                </Select>
+                <FormHelperText>
+                  一度募集締め切りに変更し、更新してしまうと変更できなくなります。
+                </FormHelperText>
+              </FormControl>
+              <br />
+              <br />
+              <br />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={changeBusinessStatus}
+              >
+                更新
+              </Button>
+            </>
+          ) : (
+            "ボタン非表示"
+          )}
           <br />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={changeBusinessStatus}
-          >
-            更新
-          </Button>
+          <br />
+
           <br />
           <br />
           <Button variant="contained" color="primary">
