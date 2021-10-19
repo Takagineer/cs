@@ -22,7 +22,6 @@ export default function business() {
   const [businessImageUrl, setBusinessImageUrl] = useState();
   const [businessStatus, setBusinessStatus] = useState("募集中");
   const [logInUser, setLogInUser] = useState();
-  const [applied, setApplied] = useState(false);
 
   const getBusinessInformation = async () => {
     const info = await db
@@ -95,8 +94,9 @@ export default function business() {
         studentId: auth.currentUser.uid,
         status: "応募中",
       });
-      setApplied(true);
       alert("応募しました");
+    } else {
+      console.log("ボタンを非表示に変更する記述");
     }
   };
 
@@ -163,12 +163,10 @@ export default function business() {
 
           <br />
           <br />
-          {logInUser === "学生" && applied === false ? (
+          {logInUser === "学生" && (
             <Button variant="contained" color="primary" onClick={applyWork}>
               応募
             </Button>
-          ) : (
-            "既に応募しています"
           )}
         </COntainer>
       </App>
