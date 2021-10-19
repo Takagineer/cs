@@ -79,6 +79,15 @@ export default function business() {
     alert("更新しました");
   };
 
+  const applyWork = (async) => {
+    db.collection("AppliedWorks").add({
+      businessId: router.query.business,
+      studentId: auth.currentUser.uid,
+      status: "応募中",
+    });
+    alert("応募しました");
+  };
+
   return (
     <>
       <App>
@@ -142,8 +151,8 @@ export default function business() {
 
           <br />
           <br />
-          {logInUser && (
-            <Button variant="contained" color="primary">
+          {logInUser === "学生" && (
+            <Button variant="contained" color="primary" onClick={applyWork}>
               応募
             </Button>
           )}
