@@ -79,13 +79,25 @@ export default function business() {
     alert("更新しました");
   };
 
-  const applyWork = (async) => {
-    db.collection("AppliedWorks").add({
-      businessId: router.query.business,
-      studentId: auth.currentUser.uid,
-      status: "応募中",
-    });
-    alert("応募しました");
+  const applyWork = async () => {
+    const appliedData = await db
+      .collection("AppliedWorks")
+      .where("businessId", "==", router.query.business)
+      .where("studentId", "==", auth.currentUser.uid)
+      .get();
+
+    const zeroOrOne = appliedData.size;
+
+    if (zeroOrOne === 0) {
+      db.collection("AppliedWorks").add({
+        businessId: router.query.business,
+        studentId: auth.currentUser.uid,
+        status: "応募中",
+      });
+      alert("応募しました");
+    } else {
+      console.log("ボタンを隠します");
+    }
   };
 
   return (
