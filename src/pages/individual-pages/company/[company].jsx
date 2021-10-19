@@ -108,7 +108,7 @@ export default function company() {
           <br />
           <br />
           <br />
-          <Link href="#">
+          <Link href="../../auth/UpdateCompanyInformation">
             <Button
               variant="contained"
               color="primary"

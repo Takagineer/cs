@@ -60,7 +60,7 @@ export default function Header({ pathname }) {
   };
 
   useEffect(() => {
-    let unmounted = false;
+    // let unmounted = false;
     checkExistWhichCollection();
   }, []);
 
@@ -77,79 +77,101 @@ export default function Header({ pathname }) {
             </Link>
             {""}
 
-            {/* 企業用のログインページへのリンク */}
-            {logInUser === "学生" ? (
-              ""
-            ) : (
-              <BUtton color="inherit" onClick={handleClickCompany}>
-                企業の方はこちら
-              </BUtton>
-            )}
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorElCompany}
-              keepMounted
-              open={Boolean(anchorElCompany)}
-              onClose={handleCloseCompany}
-            >
-              {auth.currentUser === null ? (
-                <div>
+            {auth.currentUser === null ? (
+              <>
+                <BUtton color="inherit" onClick={handleClickCompany}>
+                  企業の方はこちら
+                </BUtton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorElCompany}
+                  keepMounted
+                  open={Boolean(anchorElCompany)}
+                  onClose={handleCloseCompany}
+                >
                   <Link href="/auth/CompanySignIn">
                     <MenuItem onClick={handleCloseCompany}>ログイン</MenuItem>
                   </Link>
                   <Link href="/auth/CompanySignUp">
                     <MenuItem onClick={handleCloseCompany}>新規登録</MenuItem>
                   </Link>
-                </div>
-              ) : (
-                <Link
-                  href={{
-                    pathname: "individual-pages/company/[company]",
-                    query: { company: auth.currentUser.uid },
-                  }}
+                </Menu>
+              </>
+            ) : logInUser === "企業" ? (
+              <>
+                <BUtton color="inherit" onClick={handleClickCompany}>
+                  企業の方はこちら
+                </BUtton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorElCompany}
+                  keepMounted
+                  open={Boolean(anchorElCompany)}
+                  onClose={handleCloseCompany}
                 >
-                  <MenuItem onClick={handleCloseCompany}>
-                    企業様マイページへ
-                  </MenuItem>
-                </Link>
-              )}
-            </Menu>
-            {logInUser === "企業" ? (
-              ""
+                  <Link
+                    href={{
+                      pathname: "individual-pages/company/[company]",
+                      query: { company: auth.currentUser.uid },
+                    }}
+                  >
+                    <MenuItem onClick={handleCloseCompany}>
+                      企業様マイページへ
+                    </MenuItem>
+                  </Link>
+                </Menu>
+              </>
             ) : (
-              <BUtton color="inherit" onClick={handleClickStudent}>
-                学生の方はこちら
-              </BUtton>
+              ""
             )}
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorElStudent}
-              keepMounted
-              open={Boolean(anchorElStudent)}
-              onClose={handleCloseStudent}
-            >
-              {auth.currentUser === null ? (
-                <div>
+
+            {auth.currentUser === null ? (
+              <>
+                <BUtton color="inherit" onClick={handleClickStudent}>
+                  学生の方はこちら
+                </BUtton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorElStudent}
+                  keepMounted
+                  open={Boolean(anchorElStudent)}
+                  onClose={handleCloseStudent}
+                >
                   <Link href="/auth/StudentSignIn">
                     <MenuItem onClick={handleCloseStudent}>ログイン</MenuItem>
                   </Link>
                   <Link href="/auth/StudentSignUp">
                     <MenuItem onClick={handleCloseStudent}>新規登録</MenuItem>
                   </Link>
-                </div>
-              ) : (
-                <Link
-                  href={{
-                    pathname: "individual-pages/student/[student]",
-                    query: { student: auth.currentUser.uid },
-                  }}
+                </Menu>
+              </>
+            ) : logInUser === "学生" ? (
+              <>
+                <BUtton color="inherit" onClick={handleClickStudent}>
+                  学生の方はこちら
+                </BUtton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorElStudent}
+                  keepMounted
+                  open={Boolean(anchorElStudent)}
+                  onClose={handleCloseStudent}
                 >
-                  <MenuItem onClick={handleCloseStudent}>
-                    学生用マイページ
-                  </MenuItem>
-                </Link>
-              )}
-            </Menu>
+                  <Link
+                    href={{
+                      pathname: "individual-pages/student/[student]",
+                      query: { student: auth.currentUser.uid },
+                    }}
+                  >
+                    <MenuItem onClick={handleCloseStudent}>
+                      学生用マイページ
+                    </MenuItem>
+                  </Link>
+                </Menu>
+              </>
+            ) : (
+              ""
+            )}
           </HEaderRight>
         </Toolbar>
       </AppBar>
