@@ -21,6 +21,7 @@ export default function business() {
   const [businessInfo, setBusinessInfo] = useState([]);
   const [businessImageUrl, setBusinessImageUrl] = useState();
   const [businessStatus, setBusinessStatus] = useState("募集中");
+  const [logInUser, setLogInUser] = useState();
 
   const getBusinessInformation = async () => {
     const info = await db
@@ -30,9 +31,34 @@ export default function business() {
     setBusinessInfo(info.data());
   };
 
+  const checkExistWhichCollection = async () => {
+    if (auth.currentUser === null) {
+      setLogInUser("未ログイン");
+    } else {
+      const studentsDoc = await db
+        .collection("Students")
+        .doc(auth.currentUser.uid)
+        .get();
+      const studentsDataExists = studentsDoc.exists;
+
+      const companiesDoc = await db
+        .collection("Companies")
+        .doc(auth.currentUser.uid)
+        .get();
+      const companiesDataExists = companiesDoc.exists;
+
+      if (studentsDataExists === true) {
+        setLogInUser("学生");
+      } else if (companiesDataExists === true) {
+        setLogInUser("企業");
+      }
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     getBusinessInformation();
+    checkExistWhichCollection();
   }, [isReady]);
 
   if (!loading) {
@@ -116,9 +142,11 @@ export default function business() {
 
           <br />
           <br />
-          <Button variant="contained" color="primary">
-            応募
-          </Button>
+          {logInUser && (
+            <Button variant="contained" color="primary">
+              応募
+            </Button>
+          )}
         </COntainer>
       </App>
     </>
