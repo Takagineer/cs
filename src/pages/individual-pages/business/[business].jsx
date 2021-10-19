@@ -51,7 +51,6 @@ export default function business() {
       { merge: true }
     );
     alert("更新しました");
-    console.log(businessInfo);
   };
 
   return (
