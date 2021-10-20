@@ -214,6 +214,7 @@ const COntainer = styled.div`
 const TAble = styled.table`
   width: 80 %;
   border-spacing: 0;
+  padding: 100px;
 `;
 
 const TH = styled.th`
