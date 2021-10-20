@@ -92,7 +92,7 @@ export default function business() {
       db.collection("AppliedWorks").add({
         businessId: router.query.business,
         studentId: auth.currentUser.uid,
-        status: "応募中",
+        applyStatusByStudent: "応募中",
       });
       alert("応募しました");
     } else {
