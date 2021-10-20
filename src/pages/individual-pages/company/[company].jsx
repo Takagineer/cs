@@ -62,7 +62,7 @@ export default function company() {
             "Loading..."
           ) : (
             <>
-              <h3>{`${companyInfo.companyName} 様`}</h3>
+              <h2>{`${companyInfo.companyName} 様`}</h2>
               <h3>登録情報</h3>
               <TAble>
                 <tr>
@@ -74,12 +74,21 @@ export default function company() {
                   <TD>{companyInfo.email}</TD>
                 </tr>
                 <tr>
-                  <TH>勤務場所</TH>
+                  <TH>連絡先</TH>
                   <TD>{companyInfo.phoneNumber}</TD>
                 </tr>
               </TAble>
             </>
           )}
+          <Link href="../../auth/UpdateCompanyInformation">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={editCompanyInformation}
+            >
+              登録情報編変更
+            </Button>
+          </Link>
           <br />
           <h3>募集している業務</h3>
           {companyBusinessInfo === undefined ? (
@@ -125,15 +134,7 @@ export default function company() {
           <br />
           <br />
           <br />
-          <Link href="../../auth/UpdateCompanyInformation">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={editCompanyInformation}
-            >
-              登録情報編変更
-            </Button>
-          </Link>
+
           <br />
           <br />
           <br />
