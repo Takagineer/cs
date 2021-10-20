@@ -59,12 +59,29 @@ export default function company() {
       <App>
         <COntainer>
           {companyInfo === undefined ? (
-            "抽出中"
+            "Loading..."
           ) : (
-            <h1>{`${companyInfo.companyName} 様のページ`}</h1>
+            <>
+              <h3>{`${companyInfo.companyName} 様`}</h3>
+              <h3>登録情報</h3>
+              <TAble>
+                <tr>
+                  <TH>会社名</TH>
+                  <TD>{companyInfo.companyName}</TD>
+                </tr>
+                <tr>
+                  <TH>email</TH>
+                  <TD>{companyInfo.email}</TD>
+                </tr>
+                <tr>
+                  <TH>勤務場所</TH>
+                  <TD>{companyInfo.phoneNumber}</TD>
+                </tr>
+              </TAble>
+            </>
           )}
           <br />
-          <h2>募集している業務</h2>
+          <h3>募集している業務</h3>
           {companyBusinessInfo === undefined ? (
             ""
           ) : (
@@ -144,4 +161,22 @@ const LI = styled.li`
   border-radius: 20px;
   border: solid 5px #fdeff2;
   background-color: #f5b1aa;
+`;
+
+const TAble = styled.table`
+  width: 80 %;
+  border-spacing: 0;
+  padding: 100px;
+`;
+
+const TH = styled.th`
+  border-bottom: solid 2px #fb5144;
+  width: 30%;
+  padding: 20px 0;
+`;
+
+const TD = styled.td`
+  border-bottom: solid 2px #ddd;
+  text-align: center;
+  padding: 10px 0;
 `;
