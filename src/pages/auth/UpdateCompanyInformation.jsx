@@ -25,15 +25,17 @@ export default function UpdateCompanyInformation() {
       password: updateCompanyPassword,
       phoneNumber: updateCompanyPhoneNumber,
     });
-    console.log("更新しました");
+    setUpdateCompanyEmail("");
+    setUpdateCompanyPassword("");
+    setUpdateCompanyCompanyName("");
+    setUpdateCompanyPhoneNumber("");
+    alert("更新しました");
   };
 
   return (
     <>
       <App>
         <COntainer>
-          <br />
-          <br />
           <br />
           <DIv>
             <h1>登録情報変更</h1>
