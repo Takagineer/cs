@@ -62,8 +62,8 @@ export default function company() {
             "Loading..."
           ) : (
             <>
-              <h3>登録情報</h3>
               <TAble>
+                <h3>登録情報</h3>
                 <tr>
                   <TH>会社名</TH>
                   <TD>{companyInfo.companyName}</TD>
@@ -168,7 +168,7 @@ const LI = styled.li`
 const TAble = styled.table`
   width: 80 %;
   border-spacing: 0;
-  padding: 100px;
+  padding: 80px;
   background-color: #fbfaf5;
   border-top: solid 5px #5d627b;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
