@@ -59,7 +59,7 @@ export default function company() {
       <App>
         <COntainer>
           {companyInfo === undefined ? (
-            "Loading..."
+            ""
           ) : (
             <>
               <H2>登録情報</H2>
@@ -77,49 +77,67 @@ export default function company() {
                   <TD>{companyInfo.phoneNumber}</TD>
                 </tr>
               </TAble>
+              <br />
+              <Link href="../../auth/UpdateCompanyInformation">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={editCompanyInformation}
+                >
+                  登録情報編変更
+                </Button>
+              </Link>
+              <br />
+              <br />
+              <Link href="/individual-pages/CompanyBusinesses">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  companyInfo={companyInfo}
+                >
+                  業務募集
+                </Button>
+              </Link>
             </>
           )}
           <br />
           <br />
-          <Link href="../../auth/UpdateCompanyInformation">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={editCompanyInformation}
-            >
-              登録情報編変更
-            </Button>
-          </Link>
           <br />
-          <H2>募集している業務</H2>
           {companyBusinessInfo === undefined ? (
             ""
           ) : (
-            <UL>
-              {companyBusinessInfo.map((business) => {
-                return (
-                  <LI key={business.businessId}>
-                    {business.imageURL === undefined ? (
-                      "No photo"
-                    ) : (
-                      <Image src={business.imageURL} width={400} height={300} />
-                    )}
-                    <br />
-                    業務：{business.business}
-                    <br />
-                    勤務場所：{business.location}
-                    <br />
-                    報酬：{`${business.reward}/月`}
-                    <br />
-                    {business.imageUrl}
-                  </LI>
-                );
-              })}
-            </UL>
+            <>
+              <H2>募集している業務</H2>
+              <UL>
+                {companyBusinessInfo.map((business) => {
+                  return (
+                    <LI key={business.businessId}>
+                      {business.imageURL === undefined ? (
+                        "No photo"
+                      ) : (
+                        <Image
+                          src={business.imageURL}
+                          width={400}
+                          height={300}
+                        />
+                      )}
+                      <br />
+                      業務：{business.business}
+                      <br />
+                      勤務場所：{business.location}
+                      <br />
+                      報酬：{`${business.reward}/月`}
+                      <br />
+                      {business.imageUrl}
+                    </LI>
+                  );
+                })}
+              </UL>
+            </>
           )}
           <br />
           <br />
-          {companyInfo === undefined ? (
+          {/* {companyInfo === undefined ? (
             "Loading ..."
           ) : (
             <Link href="/individual-pages/CompanyBusinesses">
@@ -131,7 +149,7 @@ export default function company() {
                 業務募集
               </Button>
             </Link>
-          )}
+          )} */}
           <br />
           <br />
           <br />
