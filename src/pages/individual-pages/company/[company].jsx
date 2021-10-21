@@ -5,7 +5,17 @@ import { auth, db, signOut, storage } from "../../../firebase";
 import App from "../../../components/App";
 import styled from "styled-components";
 import Loading from "../../Loading";
-import { Button } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
+import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import Image from "next/image";
 
 export default function company() {
@@ -111,46 +121,70 @@ export default function company() {
               <UL>
                 {companyBusinessInfo.map((business) => {
                   return (
-                    <LI key={business.businessId}>
-                      {business.imageURL === undefined ? (
-                        "No photo"
-                      ) : (
-                        <Image
-                          src={business.imageURL}
-                          width={400}
-                          height={300}
-                        />
-                      )}
-                      <br />
-                      業務：{business.business}
-                      <br />
-                      勤務場所：{business.location}
-                      <br />
-                      報酬：{`${business.reward}/月`}
-                      <br />
-                      {business.imageUrl}
-                    </LI>
+                    <CArd sx={{ maxWidth: 345 }}>
+                      <Link
+                        href={{
+                          pathname: "/individual-pages/business/[business]",
+                          query: { business: business.businessId },
+                        }}
+                      >
+                        <CardActionArea>
+                          <CardMedia
+                            component="img"
+                            height="300"
+                            image={business.imageURL}
+                            alt="green iguana"
+                          />
+                          <CardContent>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="div"
+                            >
+                              {business.companyName}
+                            </Typography>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="div"
+                            >
+                              {business.business}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              {business.message}
+                            </Typography>
+                            <br />
+                            <Typography variant="body2" color="text.secondary">
+                              {business.location}
+                            </Typography>
+                            <br />
+                            <Typography variant="body2" color="text.secondary">
+                              {`${business.reward}/月`}
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Link>
+                      <CardActions>
+                        <br />
+                        <IconButton
+                          aria-label="settings"
+                          onClick={() => {
+                            handleClickFavo(business);
+                          }}
+                        >
+                          {business.favo === false ? (
+                            <FavoriteTwoToneIcon />
+                          ) : (
+                            <FavoriteTwoToneIcon color="secondary" />
+                          )}
+                        </IconButton>
+                      </CardActions>
+                    </CArd>
                   );
                 })}
               </UL>
             </>
           )}
-          <br />
-          <br />
-          {/* {companyInfo === undefined ? (
-            "Loading ..."
-          ) : (
-            <Link href="/individual-pages/CompanyBusinesses">
-              <Button
-                variant="contained"
-                color="primary"
-                companyInfo={companyInfo}
-              >
-                業務募集
-              </Button>
-            </Link>
-          )} */}
-          <br />
           <br />
           <br />
 
@@ -209,4 +243,8 @@ const H2 = styled.h2`
   padding: 10px 
   border-top: solid 3px #364e96;
   border-bottom: solid 3px #364e96;
+`;
+
+const CArd = styled(Card)`
+  padding: 30px 30px 30px 30px;
 `;
