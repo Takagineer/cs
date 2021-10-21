@@ -62,8 +62,8 @@ export default function company() {
             "Loading..."
           ) : (
             <>
+              <H3>登録情報</H3>
               <TAble>
-                <h3>登録情報</h3>
                 <tr>
                   <TH>会社名</TH>
                   <TD>{companyInfo.companyName}</TD>
@@ -91,7 +91,7 @@ export default function company() {
             </Button>
           </Link>
           <br />
-          <h3>募集している業務</h3>
+          <H3>募集している業務</H3>
           {companyBusinessInfo === undefined ? (
             ""
           ) : (
@@ -184,4 +184,11 @@ const TD = styled.td`
   border-bottom: solid 2px #ddd;
   text-align: center;
   padding: 10px 0;
+`;
+
+const H3 = styled.h3`
+  color: #364e96
+  padding: 10px 
+  border-top: solid 3px #364e96;
+  border-bottom: solid 3px #364e96;
 `;
