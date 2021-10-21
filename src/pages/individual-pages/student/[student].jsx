@@ -39,47 +39,29 @@ export default function student() {
   return (
     <App>
       <COntainer>
-        <table border="3" bordercolor="green" width="50%" height="200px">
-          <thead>
+        {studentInfo === undefined ? (
+          ""
+        ) : (
+          <TAble>
             <tr>
-              <th colSpan="2">登録情報</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <TD>氏名</TD>
-              {studentInfo === undefined ? (
-                "抽出中"
-              ) : (
-                <td>{`${studentInfo.firstName} ${studentInfo.lastName}さん`}</td>
-              )}
+              <TH>氏名</TH>
+
+              <TD>{`${studentInfo.firstName} ${studentInfo.lastName}さん`}</TD>
             </tr>
             <tr>
-              <TD>大学</TD>
-              {studentInfo === undefined ? (
-                "抽出中"
-              ) : (
-                <td>{`${studentInfo.university}`}</td>
-              )}
+              <TH>大学</TH>
+              <TD>{`${studentInfo.university}`}</TD>
             </tr>
             <tr>
-              <TD>年次</TD>
-              {studentInfo === undefined ? (
-                "抽出中"
-              ) : (
-                <td>{`${studentInfo.age} 歳`}</td>
-              )}
+              <TH>年次</TH>
+              <TD>{`${studentInfo.age} 歳`}</TD>
             </tr>
             <tr>
-              <TD>自己紹介</TD>
-              {studentInfo === undefined ? (
-                "抽出中"
-              ) : (
-                <td>{`${studentInfo.introduction}`}</td>
-              )}
+              <TH>自己紹介</TH>
+              <TD>{`${studentInfo.introduction}`}</TD>
             </tr>
-          </tbody>
-        </table>
+          </TAble>
+        )}
 
         <p>
           検索機能の実装（タグで実装？）
@@ -112,7 +94,23 @@ const COntainer = styled.div`
   padding: 100px 0 100px 50px;
 `;
 
+const TAble = styled.table`
+  width: 80 %;
+  border-spacing: 0;
+  padding: 80px;
+  background-color: #fbfaf5;
+  border-top: solid 5px #5d627b;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+`;
+
+const TH = styled.th`
+  border-bottom: solid 2px #fb5144;
+  width: 30%;
+  padding: 20px 0;
+`;
+
 const TD = styled.td`
-  white-space: nowrap;
+  border-bottom: solid 2px #ddd;
   text-align: center;
+  padding: 10px 0;
 `;
