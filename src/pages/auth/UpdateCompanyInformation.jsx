@@ -1,72 +1,105 @@
-import React from "react";
+import React, { useState } from "react";
 import App from "../../components/App";
 import styled from "styled-components";
 import { Button, TextField } from "@material-ui/core";
+import { auth, db } from "../../firebase";
 
 export default function UpdateCompanyInformation() {
+  const [updateCompanyEmail, setUpdateCompanyEmail] = useState();
+  const [updateCompanyPassword, setUpdateCompanyPassword] = useState();
+  const [updateCompanyCompanyName, setUpdateCompanyCompanyName] = useState();
+  const [updateCompanyPhoneNumber, setUpdateCompanyPhoneNumber] = useState();
+  const updateCompanyEmailValue = (e) => setUpdateCompanyEmail(e.target.value);
+  const updateCompanyPasswordValue = (e) =>
+    setUpdateCompanyPassword(e.target.value);
+  const updateCompanyCompanyNameValue = (e) =>
+    setUpdateCompanyCompanyName(e.target.value);
+  const updateCompanyPhoneNumberValue = (e) =>
+    setUpdateCompanyPhoneNumber(e.target.value);
+
+  const updateCompanyInformation = async () => {
+    console.log("編集します");
+    await db.collection("Companies").doc(auth.currentUser.uid).update({
+      companyName: updateCompanyCompanyName,
+      email: updateCompanyEmail,
+      password: updateCompanyPassword,
+      phoneNumber: updateCompanyPhoneNumber,
+    });
+    console.log("更新しました");
+  };
+
   return (
     <>
-      {/* <App>
+      <App>
         <COntainer>
-          <div>
-            <br />
-            <br />
-            <br />
-            <h1>企業様新規登録ページ</h1>
+          <br />
+          <br />
+          <br />
+          <DIv>
+            <h1>登録情報変更</h1>
             <TextField
               variant="outlined"
               margin="normal"
               fullWidth
-              label="Email Address"
+              label="New Email Address"
               autoFocus
-              value={companySignUpEmail}
-              onChange={companySignUpEmailValue}
+              value={updateCompanyEmail}
+              onChange={updateCompanyEmailValue}
             />
+            <form>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                label="New Password"
+                type="password"
+                value={updateCompanyPassword}
+                onChange={updateCompanyPasswordValue}
+              />
+            </form>
             <TextField
               variant="outlined"
               margin="normal"
               fullWidth
-              label="Password"
-              type="password"
-              value={companySignUpPassword}
-              onChange={companySignUpPasswordValue}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Company Name"
-              value={companySignUpCompanyName}
-              onChange={companySignUpCompanyNameValue}
+              label="New Company Name"
+              value={updateCompanyCompanyName}
+              onChange={updateCompanyCompanyNameValue}
             />
             <TextField
               type="tel"
               variant="outlined"
               margin="normal"
               fullWidth
-              label="Phone Number"
-              value={companySignUpPhoneNumber}
-              onChange={companySignUpPhoneNumberValue}
+              label="New Phone Number"
+              value={updateCompanyPhoneNumber}
+              onChange={updateCompanyPhoneNumberValue}
             />
+            <br />
+            <br />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              onClick={companySignUp}
+              onClick={updateCompanyInformation}
             >
-              Sign Up
+              更新
             </Button>
-            <br />
-            <br />
-            <br />
-          </div>
+          </DIv>
+          <br />
+          <br />
+          <br />
         </COntainer>
-      </App> */}
+      </App>
     </>
   );
 }
 
 const COntainer = styled.div`
   padding: 100px 0 100px 50px;
+`;
+
+const DIv = styled.div`
+  width: 40%;
+  margin: 20px auto;
 `;
