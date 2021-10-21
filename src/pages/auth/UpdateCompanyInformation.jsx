@@ -18,7 +18,6 @@ export default function UpdateCompanyInformation() {
     setUpdateCompanyPhoneNumber(e.target.value);
 
   const updateCompanyInformation = async () => {
-    console.log("編集します");
     await db.collection("Companies").doc(auth.currentUser.uid).update({
       companyName: updateCompanyCompanyName,
       email: updateCompanyEmail,
