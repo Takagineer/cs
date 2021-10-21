@@ -62,7 +62,6 @@ export default function company() {
             "Loading..."
           ) : (
             <>
-              <h2>{`${companyInfo.companyName} 様`}</h2>
               <h3>登録情報</h3>
               <TAble>
                 <tr>
@@ -80,6 +79,8 @@ export default function company() {
               </TAble>
             </>
           )}
+          <br />
+          <br />
           <Link href="../../auth/UpdateCompanyInformation">
             <Button
               variant="contained"
@@ -168,6 +169,9 @@ const TAble = styled.table`
   width: 80 %;
   border-spacing: 0;
   padding: 100px;
+  background-color: #fbfaf5;
+  border-top: solid 5px #5d627b;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
 `;
 
 const TH = styled.th`
