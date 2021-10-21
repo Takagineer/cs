@@ -18,7 +18,6 @@ import { userState } from "../store/userState";
 export default function Header({ pathname }) {
   const [anchorElCompany, setAnchorElCompany] = useState(null);
   const [anchorElStudent, setAnchorElStudent] = useState(null);
-  // const [logInUser, setLogInUser] = useState();
   const [logInUser, setLogInUser] = useRecoilState(userState);
 
   const handleClickCompany = (event) => {
@@ -60,7 +59,6 @@ export default function Header({ pathname }) {
   };
 
   useEffect(() => {
-    // let unmounted = false;
     checkExistWhichCollection();
   }, []);
 
