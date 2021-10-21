@@ -62,7 +62,7 @@ export default function company() {
             "Loading..."
           ) : (
             <>
-              <H3>登録情報</H3>
+              <H2>登録情報</H2>
               <TAble>
                 <tr>
                   <TH>会社名</TH>
@@ -91,7 +91,7 @@ export default function company() {
             </Button>
           </Link>
           <br />
-          <H3>募集している業務</H3>
+          <H2>募集している業務</H2>
           {companyBusinessInfo === undefined ? (
             ""
           ) : (
@@ -186,7 +186,7 @@ const TD = styled.td`
   padding: 10px 0;
 `;
 
-const H3 = styled.h3`
+const H2 = styled.h2`
   color: #364e96
   padding: 10px 
   border-top: solid 3px #364e96;
