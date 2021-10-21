@@ -196,6 +196,9 @@ export default function SignUp() {
             />
             <br />
             <br />
+            <br />
+            <br />
+            <br />
             <Button
               type="submit"
               fullWidth
