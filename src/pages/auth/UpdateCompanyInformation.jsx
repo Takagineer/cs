@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import App from "../../components/App";
 import styled from "styled-components";
 import { Button, TextField } from "@material-ui/core";
-import { auth, db } from "../../firebase";
+import { auth, db, updateEmail, updatePassword } from "../../firebase";
 
 export default function UpdateCompanyInformation() {
   const [updateCompanyEmail, setUpdateCompanyEmail] = useState();
@@ -18,6 +18,8 @@ export default function UpdateCompanyInformation() {
     setUpdateCompanyPhoneNumber(e.target.value);
 
   const updateCompanyInformation = async () => {
+    // await updateEmail(auth.currentUser, updateCompanyEmail);
+    // await updatePassword(auth.currentUser, updateCompanyPassword);
     await db.collection("Companies").doc(auth.currentUser.uid).update({
       companyName: updateCompanyCompanyName,
       email: updateCompanyEmail,
