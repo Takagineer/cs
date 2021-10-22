@@ -45,6 +45,32 @@ export const signInWithEmailAndPassword = async (email, password) => {
 };
 //ログイン機能の実装
 
+//登録情報の変更(メールアドレス/Authentcation)
+// export const updateEmail = async (email, updateEmail) => {
+//   try {
+//     const user = await firebase
+//       .auth()
+//       .updateEmail(auth.currentUser, updateEmail);
+//     alert("更新完了");
+//     return email;
+//   } catch (error) {
+//     alert("更新失敗");
+//   }
+// };
+//
+
+//登録情報の変更(パスワード/Authentication)
+// export const updatePassword = async (currentPassword, newPassword) => {
+//   try {
+//     const user = await firebase
+//       .auth()
+//       .updatePassword(auth.currentUser, newPassword);
+//   } catch (error) {
+//     alert("更新失敗");
+//   }
+// };
+//
+
 // ログアウト機能の実装
 export const signOut = async () => {
   const user1 = await firebase.auth().currentUser;
