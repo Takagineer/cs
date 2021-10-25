@@ -4,15 +4,27 @@ import App from "../../../components/App";
 import { db, signOut } from "../../../firebase";
 import styled from "styled-components";
 import Link from "next/Link";
-import { Button } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
+import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import { info } from "firebase-functions/lib/logger";
 import Loading from "../../Loading";
+import { SettingsSystemDaydreamTwoTone } from "@material-ui/icons";
 
 export default function student() {
   const router = useRouter();
   const isReady = router.isReady;
   const [loading, setLoading] = useState(false);
   const [studentInfo, setStudentInfo] = useState();
+  const [studentBusinessInfo, setStudentBusinessInfo] = useState();
 
   const getStudentInformation = async () => {
     const info = await db
@@ -22,10 +34,53 @@ export default function student() {
     setStudentInfo(info.data());
   };
 
+  const getStudentAppliedBusinessData = async () => {
+    const appliedBusinessInfo = await db
+      .collection("AppliedWorks")
+      .where("studentId", "==", router.query.student)
+      .get();
+    appliedBusinessInfo.forEach((doc) => {
+      const businessData = db
+        .collection("Businesses")
+        .doc(doc.data().businessId)
+        .get();
+      const _studentAppliedBusinessInfo = [];
+      _studentAppliedBusinessInfo.push({
+        businessId: doc.id,
+        ...doc.data(),
+      });
+      setStudentBusinessInfo(_studentAppliedBusinessInfo);
+      // businessData.forEach((doc) => {
+      //   _studentBusinessInfo.push({
+      //     businessId: doc.id,
+      //     ...doc.data(),
+      //   });
+      // });
+    });
+  };
+
+  const getFinalBusinessInfo = async () => {
+    console.log(studentBusinessInfo);
+  };
+
+  // 以下に以下に非同期処理を記述していく。
+  // Promise.all(
+  //   getStudentAppliedBusinessData,
+  //   getStudentBusinessData,
+  //   getOpenStudentBusinessData
+  // )
+  //   .then((result) => {
+  //     console.log("成功");
+  //   })
+  //   .catch((result) => {
+  //     console.log("失敗");
+  //   });
+
   useEffect(() => {
     if (isReady) {
       setLoading(true);
       getStudentInformation();
+      getStudentAppliedBusinessData();
     }
   }, [isReady]);
 
@@ -60,16 +115,79 @@ export default function student() {
               <TH>自己紹介</TH>
               <TD>{`${studentInfo.introduction}`}</TD>
             </tr>
+            {/* <tr>
+              <TH>スキル</TH>
+              <TD>{`${studentInfo.skill}`}</TD>
+            </tr> */}
           </TAble>
         )}
 
-        <p>
-          検索機能の実装（タグで実装？）
-          <br />
-          これで表示させて応募もできる
-        </p>
-        <p>生徒情報編集機能の実装</p>
+        {studentBusinessInfo === undefined ? (
+          ""
+        ) : (
+          <>
+            <H2>応募している業務</H2>
+            {studentBusinessInfo.map((business) => {
+              return (
+                <CArd sx={{ maxWidth: 345 }}>
+                  <Link
+                    href={{
+                      pathname: "/individual-pages/business/[business]",
+                      query: { business: business.businessId },
+                    }}
+                  >
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="300"
+                        image={business.imageURL}
+                        alt="green iguana"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {business.companyName}
+                        </Typography>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {business.business}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {business.message}
+                        </Typography>
+                        <br />
+                        <Typography variant="body2" color="text.secondary">
+                          {business.location}
+                        </Typography>
+                        <br />
+                        <Typography variant="body2" color="text.secondary">
+                          {`${business.reward}/月`}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Link>
+                  <CardActions>
+                    <br />
+                    <IconButton
+                      aria-label="settings"
+                      onClick={() => {
+                        handleClickFavo(business);
+                      }}
+                    >
+                      {business.favo === false ? (
+                        <FavoriteTwoToneIcon />
+                      ) : (
+                        <FavoriteTwoToneIcon color="secondary" />
+                      )}
+                    </IconButton>
+                  </CardActions>
+                </CArd>
+              );
+            })}
+          </>
+        )}
 
+        <br />
+        <br />
+        <br />
         <Link href="#">
           <Button
             variant="contained"
@@ -113,4 +231,15 @@ const TD = styled.td`
   border-bottom: solid 2px #ddd;
   text-align: center;
   padding: 10px 0;
+`;
+
+const H2 = styled.h2`
+  color: #364e96
+  padding: 10px
+  border-top: solid 3px #364e96;
+  border-bottom: solid 3px #364e96;
+`;
+
+const CArd = styled(Card)`
+  padding: 30px 30px 30px 30px;
 `;
