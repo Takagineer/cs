@@ -105,22 +105,54 @@ export default function business() {
       <App>
         <COntainer>
           <br />
-          <h1>業務詳細ページ</h1>
           <br />
           {businessInfo === undefined ? (
             "No information"
           ) : (
             <>
-              {businessInfo.imageURL && (
-                <Image src={businessInfo.imageURL} width={400} height={300} />
-              )}
-              <h1>業務 ：{businessInfo.business}</h1>
-              <h1>業務内容 ：{businessInfo.detail}</h1>
-              <h1>勤務場所 ：{businessInfo.location}</h1>
-              <h1>採用人数 ：{`${businessInfo.number}人`}</h1>
-              <h1>想定報酬額 ：{`${businessInfo.reward}/月`}</h1>
+              <TAble>
+                <tr>
+                  <td colSpan="2">
+                    {businessInfo.imageURL && (
+                      <Image
+                        src={businessInfo.imageURL}
+                        width={600}
+                        height={300}
+                        objectFit="contain"
+                      />
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <TH>業務</TH>
+                  <TD>{businessInfo.business}</TD>
+                </tr>
+                <tr>
+                  <TH>業務内容</TH>
+                  <TD>{businessInfo.detail}</TD>
+                </tr>
+                <tr>
+                  <TH>勤務場所</TH>
+                  <TD>{businessInfo.location}</TD>
+                </tr>
+                <tr>
+                  <TH>採用人数</TH>
+                  <TD>000-{`${businessInfo.number}人`}-0000</TD>
+                </tr>
+                <tr>
+                  <TH>想定報酬額</TH>
+                  <TD>{`${businessInfo.reward}/月`}</TD>
+                </tr>
+                <tr>
+                  <TH>企業からのメッセージ</TH>
+                  <TD>{businessInfo.message}</TD>
+                </tr>
+              </TAble>
             </>
           )}
+          <br />
+          <br />
+          <br />
           {businessInfo === undefined || auth.currentUser === null ? (
             ""
           ) : businessInfo.companyId === auth.currentUser.uid ? (
@@ -177,4 +209,22 @@ export default function business() {
 const COntainer = styled.div`
   padding: 100px 0 100px 50px;
   margin: auto;
+`;
+
+const TAble = styled.table`
+  width: 80 %;
+  border-spacing: 0;
+  padding: 100px;
+`;
+
+const TH = styled.th`
+  border-bottom: solid 2px #fb5144;
+  width: 30%;
+  padding: 20px 0;
+`;
+
+const TD = styled.td`
+  border-bottom: solid 2px #ddd;
+  text-align: center;
+  padding: 10px 0;
 `;

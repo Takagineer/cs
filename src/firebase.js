@@ -26,7 +26,6 @@ export const signUpWithEmailAndPassword = async (email, password) => {
     return user;
   } catch (error) {
     alert("errorです");
-    console.log(error);
   }
 };
 // 新規登録の実装
@@ -38,25 +37,45 @@ export const signInWithEmailAndPassword = async (email, password) => {
       .auth()
       .signInWithEmailAndPassword(email, password);
     await firebase.auth().currentUser.sendEmailVerification;
-
     alert("サインイン成功");
     return user;
   } catch (error) {
     alert("サインイン失敗");
-    console.log(error);
   }
 };
 //ログイン機能の実装
 
+//登録情報の変更(メールアドレス/Authentcation)
+// export const updateEmail = async (email, updateEmail) => {
+//   try {
+//     const user = await firebase
+//       .auth()
+//       .updateEmail(auth.currentUser, updateEmail);
+//     alert("更新完了");
+//     return email;
+//   } catch (error) {
+//     alert("更新失敗");
+//   }
+// };
+//
+
+//登録情報の変更(パスワード/Authentication)
+// export const updatePassword = async (currentPassword, newPassword) => {
+//   try {
+//     const user = await firebase
+//       .auth()
+//       .updatePassword(auth.currentUser, newPassword);
+//   } catch (error) {
+//     alert("更新失敗");
+//   }
+// };
+//
+
 // ログアウト機能の実装
 export const signOut = async () => {
   const user1 = await firebase.auth().currentUser;
-  console.log("サインアウト前:", user1);
-
   await firebase.auth().signOut();
-
   const user2 = await firebase.auth().currentUser;
-  console.log("サインアウト後:", user2);
 };
 // ログアウト機能の実装
 

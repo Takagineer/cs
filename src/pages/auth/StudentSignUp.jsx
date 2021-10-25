@@ -194,6 +194,11 @@ export default function SignUp() {
               onChange={studentSignUpLocationValue}
               options={prefecture}
             />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <Button
               type="submit"
               fullWidth
