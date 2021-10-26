@@ -102,7 +102,7 @@ export default function business() {
       await db
         .collection("Students")
         .doc(auth.currentUser.uid)
-        .collection("applied")
+        .collection("apply")
         .add({
           businessId: router.query.business,
           applyStatusByStudent: "応募中",
