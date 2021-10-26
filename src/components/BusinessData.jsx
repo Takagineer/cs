@@ -23,6 +23,7 @@ export default function BusinessData() {
   const [favoRanking, setFavoRanking] = useState(false);
   const [appliedRanking, setAppliedRanking] = useState(false);
   const [rewardRanking, setRewardRanking] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     const getBusinessData = db
@@ -54,12 +55,14 @@ export default function BusinessData() {
         userId: auth.currentUser.uid,
         businessId: business.businessId,
       });
-      return <FavoriteTwoToneIcon color="secondary" />;
+      // return <FavoriteTwoToneIcon color="secondary" />;
+      setIsLiked(true);
     } else {
       likedDocument.forEach((doc) => {
         db.collection("Likes").doc(doc.id).delete();
       });
-      return <FavoriteTwoToneIcon />;
+      // return <FavoriteTwoToneIcon />;
+      setIsLiked(false);
     }
   };
   // }, []);
@@ -119,6 +122,8 @@ export default function BusinessData() {
                       ) : (
                         <FavoriteTwoToneIcon color="secondary" />
                       )}
+
+                      {isLiked === true ? "あかい" : "くろい"}
                     </IconButton>
                   </CardActions>
                 </CArd>
