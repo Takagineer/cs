@@ -46,7 +46,6 @@ export default function CompanyBusinesses() {
     const storageRef = storage.ref().child(URL);
     await storageRef.put(image);
     setFileUrl(await storageRef.getDownloadURL());
-    console.log("１回目");
   };
 
   const businessValue = (e) => {
@@ -104,6 +103,8 @@ export default function CompanyBusinesses() {
         companyId: auth.currentUser.uid,
         imageURL: fileUrl,
         applyStatus: "募集中",
+        isApplied: "",
+        isLiked: "",
       });
 
       alert("募集をかけました");
