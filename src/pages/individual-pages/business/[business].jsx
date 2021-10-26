@@ -91,11 +91,20 @@ export default function business() {
     const zeroOrOne = appliedData.size;
 
     if (zeroOrOne === 0) {
-      db.collection("Businesses")
+      await db
+        .collection("Businesses")
         .doc(router.query.business)
         .collection("isApplied")
         .add({
           studentId: auth.currentUser.uid,
+          applyStatusByStudent: "応募中",
+        });
+      await db
+        .collection("Students")
+        .doc(auth.currentUser.uid)
+        .collection("applied")
+        .add({
+          businessId: router.query.business,
           applyStatusByStudent: "応募中",
         });
       alert("応募しました");
