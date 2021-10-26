@@ -39,42 +39,33 @@ export default function student() {
       .collection("AppliedWorks")
       .where("studentId", "==", router.query.student)
       .get();
+
+    const appliedWorks = [];
     appliedBusinessInfo.forEach((doc) => {
-      const businessData = db
-        .collection("Businesses")
-        .doc(doc.data().businessId)
-        .get();
-      const _studentAppliedBusinessInfo = [];
-      _studentAppliedBusinessInfo.push({
+      appliedWorks.push({
         businessId: doc.id,
         ...doc.data(),
       });
-      setStudentBusinessInfo(_studentAppliedBusinessInfo);
-      // businessData.forEach((doc) => {
-      //   _studentBusinessInfo.push({
-      //     businessId: doc.id,
-      //     ...doc.data(),
-      //   });
-      // });
     });
-  };
+    console.log({ appliedWorks: appliedWorks.length });
+    console.log({ appliedWorks: appliedWorks });
 
-  const getFinalBusinessInfo = async () => {
-    console.log(studentBusinessInfo);
-  };
+    const businessDatas = [];
+    appliedWorks.map(async (appliedWork) => {
+      const businessData = await db
+        .collection("Businesses")
+        .doc(appliedWork.businessId)
+        .get();
+      businessDatas.push({
+        businessId: appliedWork.businessId,
+        ...businessData.data(),
+      });
+    });
 
-  // 以下に以下に非同期処理を記述していく。
-  // Promise.all(
-  //   getStudentAppliedBusinessData,
-  //   getStudentBusinessData,
-  //   getOpenStudentBusinessData
-  // )
-  //   .then((result) => {
-  //     console.log("成功");
-  //   })
-  //   .catch((result) => {
-  //     console.log("失敗");
-  //   });
+    console.log({ businessDatas: businessDatas.length });
+    console.log({ businessDatas: businessDatas });
+    setStudentBusinessInfo(businessDatas);
+  };
 
   useEffect(() => {
     if (isReady) {
@@ -88,9 +79,6 @@ export default function student() {
     return <Loading />;
   }
 
-  const editStudentInformation = () => {
-    console.log("登録情報の編集をします");
-  };
   return (
     <App>
       <COntainer>
@@ -115,10 +103,6 @@ export default function student() {
               <TH>自己紹介</TH>
               <TD>{`${studentInfo.introduction}`}</TD>
             </tr>
-            {/* <tr>
-              <TH>スキル</TH>
-              <TD>{`${studentInfo.skill}`}</TD>
-            </tr> */}
           </TAble>
         )}
 
@@ -144,9 +128,9 @@ export default function student() {
                         alt="green iguana"
                       />
                       <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
+                        {/* <Typography gutterBottom variant="h5" component="div">
                           {business.companyName}
-                        </Typography>
+                        </Typography> */}
                         <Typography gutterBottom variant="h5" component="div">
                           {business.business}
                         </Typography>
@@ -186,17 +170,6 @@ export default function student() {
         )}
 
         <br />
-        <br />
-        <br />
-        <Link href="#">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={editStudentInformation}
-          >
-            登録情報編集
-          </Button>
-        </Link>
         <br />
         <br />
         <Link href="/">
