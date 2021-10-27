@@ -35,36 +35,42 @@ export default function student() {
   };
 
   const getStudentAppliedBusinessData = async () => {
+    //学生の応募しているデータを取得したが、このデータを基に、businessIdを参照して、Businessesのコレクションからデータを取得する必要がある。
     const appliedBusinessInfo = await db
-      .collection("AppliedWorks")
-      .where("studentId", "==", router.query.student)
+      .collection("Students")
+      .doc(router.query.student)
+      .collection("apply")
       .get();
 
-    const appliedWorks = [];
     appliedBusinessInfo.forEach((doc) => {
-      appliedWorks.push({
-        businessId: doc.id,
-        ...doc.data(),
-      });
-    });
-    console.log({ appliedWorks: appliedWorks.length });
-    console.log({ appliedWorks: appliedWorks });
-
-    const businessDatas = [];
-    appliedWorks.map(async (appliedWork) => {
-      const businessData = await db
-        .collection("Businesses")
-        .doc(appliedWork.businessId)
-        .get();
-      businessDatas.push({
-        businessId: appliedWork.businessId,
-        ...businessData.data(),
-      });
+      console.log(doc.data().businessId);
     });
 
-    console.log({ businessDatas: businessDatas.length });
-    console.log({ businessDatas: businessDatas });
-    setStudentBusinessInfo(businessDatas);
+    // const appliedWorks = [];
+    // appliedBusinessInfo.forEach((doc) => {
+    //   appliedWorks.push({
+    //     businessId: doc.id,
+    //     ...doc.data(),
+    //   });
+    // });
+    // console.log({ appliedWorks: appliedWorks.length });
+    // console.log({ appliedWorks: appliedWorks });
+
+    // const businessDatas = [];
+    // appliedWorks.map(async (appliedWork) => {
+    //   const businessData = await db
+    //     .collection("Businesses")
+    //     .doc(appliedWork.businessId)
+    //     .get();
+    //   businessDatas.push({
+    //     businessId: appliedWork.businessId,
+    //     ...businessData.data(),
+    //   });
+    // });
+
+    // console.log({ businessDatas: businessDatas.length });
+    // console.log({ businessDatas: businessDatas });
+    // setStudentBusinessInfo(businessDatas);
   };
 
   useEffect(() => {

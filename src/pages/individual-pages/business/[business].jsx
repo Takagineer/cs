@@ -89,24 +89,31 @@ export default function business() {
       .get();
 
     const zeroOrOne = appliedData.size;
-
     if (zeroOrOne === 0) {
       await db
         .collection("Businesses")
         .doc(router.query.business)
         .collection("isApplied")
-        .add({
-          studentId: auth.currentUser.uid,
-          applyStatusByStudent: "応募中",
-        });
+        .doc(auth.currentUser.uid)
+        .set(
+          {
+            studentId: auth.currentUser.uid,
+            applyStatusByStudent: "応募中",
+          },
+          { merge: true }
+        );
       await db
         .collection("Students")
         .doc(auth.currentUser.uid)
         .collection("apply")
-        .add({
-          businessId: router.query.business,
-          applyStatusByStudent: "応募中",
-        });
+        .doc(router.query.business)
+        .set(
+          {
+            businessId: router.query.business,
+            applyStatusByStudent: "応募中",
+          },
+          { merge: true }
+        );
       alert("応募しました");
     } else {
       setIsApplied(true);
