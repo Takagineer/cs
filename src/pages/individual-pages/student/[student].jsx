@@ -36,15 +36,22 @@ export default function student() {
 
   const getStudentAppliedBusinessData = async () => {
     //学生の応募しているデータを取得したが、このデータを基に、businessIdを参照して、Businessesのコレクションからデータを取得する必要がある。
-    const appliedBusinessInfo = await db
+    const appliedBusinessInfoByStudent = await db
       .collection("Students")
       .doc(router.query.student)
       .collection("apply")
       .get();
 
-    appliedBusinessInfo.forEach((doc) => {
+    const businessInfo = [];
+    appliedBusinessInfoByStudent.forEach((doc) => {
       console.log(doc.data().businessId);
+      businessInfo.push({
+        businessId: doc.id,
+        ...doc.data(),
+      });
     });
+    setStudentBusinessInfo(businessInfo);
+    console.log(businessInfo.length);
 
     // const appliedWorks = [];
     // appliedBusinessInfo.forEach((doc) => {
