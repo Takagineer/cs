@@ -35,24 +35,36 @@ export default function student() {
   };
 
   const getStudentAppliedBusinessData = async () => {
-    //学生の応募しているデータを取得したが、このデータを基に、businessIdを参照して、Businessesのコレクションからデータを取得する必要がある。
-    const appliedBusinessInfoByStudent = await db
+    const appliedBusinessInfo = await db
       .collection("Students")
       .doc(router.query.student)
       .collection("apply")
       .get();
 
-    const businessInfo = [];
-    appliedBusinessInfoByStudent.forEach((doc) => {
-      console.log(doc.data().businessId);
-      businessInfo.push({
-        businessId: doc.id,
-        ...doc.data(),
+    const _businessInfo = [];
+    appliedBusinessInfo.forEach((doc) => {
+      const businessInfo = db
+        .collection("Businesses")
+        .doc(doc.data().businessId)
+        .get();
+      _businessInfo.push({
+        businessId: businessInfo.id,
+        ...businessInfo.data(),
       });
     });
-    setStudentBusinessInfo(businessInfo);
-    console.log(businessInfo.length);
-
+    setStudentBusinessInfo(_businessInfo);
+    console.log(_businessInfo);
+    // const _businessInfo = [];
+    // appliedBusinessInfo.forEach((doc) => {
+    //   const businessInfo = db
+    //     .collection("Businesses")
+    //     .doc(doc.data().businessId)
+    //     .get();
+    //   _businessInfo.push({
+    //     businessId: doc.id,
+    //     ...doc.data(),
+    //   });
+    // });
     // const appliedWorks = [];
     // appliedBusinessInfo.forEach((doc) => {
     //   appliedWorks.push({
