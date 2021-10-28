@@ -191,9 +191,6 @@ export default function business() {
                   <MenuItem value={"締め切り間近"}>締め切り間近</MenuItem>
                   <MenuItem value={"募集締め切り"}>募集終了</MenuItem>
                 </Select>
-                <FormHelperText>
-                  一度募集締め切りに変更し、更新してしまうと変更できなくなります。
-                </FormHelperText>
               </FormControl>
               <br />
               <br />
