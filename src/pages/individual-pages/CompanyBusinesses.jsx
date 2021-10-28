@@ -103,8 +103,6 @@ export default function CompanyBusinesses() {
         companyId: auth.currentUser.uid,
         imageURL: fileUrl,
         applyStatus: "募集中",
-        isApplied: "",
-        isLiked: "",
       });
 
       alert("募集をかけました");
