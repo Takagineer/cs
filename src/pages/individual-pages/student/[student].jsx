@@ -103,9 +103,10 @@ export default function student() {
                     pathname: "/individual-pages/business/[business]",
                     query: { business: business.businessId },
                   }}
+                  key={business.businessId}
                 >
-                  <UL key={business.businessId}>
-                    <LI>業務ID:{business.businessId}</LI>
+                  <UL>
+                    <LI>業務ID:{business.companyName}</LI>
                     <LI>応募状況:{business.applyStatusByStudent}</LI>
                   </UL>
                 </Link>
