@@ -96,7 +96,7 @@ export default function student() {
         ) : (
           <>
             <H2>応募している業務</H2>
-            {studentBusinessInfo.map((business, index) => {
+            {studentBusinessInfo.map((business) => {
               return (
                 <Link
                   href={{
@@ -104,7 +104,7 @@ export default function student() {
                     query: { business: business.businessId },
                   }}
                 >
-                  <UL key={index}>
+                  <UL key={business.businessId}>
                     <LI>業務ID:{business.businessId}</LI>
                     <LI>応募状況:{business.applyStatusByStudent}</LI>
                   </UL>

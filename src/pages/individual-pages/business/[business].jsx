@@ -130,42 +130,48 @@ export default function business() {
           ) : (
             <>
               <TAble>
-                <tr>
-                  <td colSpan="2">
-                    {businessInfo.imageURL && (
-                      <Image
-                        src={businessInfo.imageURL}
-                        width={600}
-                        height={300}
-                        objectFit="contain"
-                      />
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <TH>業務</TH>
-                  <TD>{businessInfo.business}</TD>
-                </tr>
-                <tr>
-                  <TH>業務内容</TH>
-                  <TD>{businessInfo.detail}</TD>
-                </tr>
-                <tr>
-                  <TH>勤務場所</TH>
-                  <TD>{businessInfo.location}</TD>
-                </tr>
-                <tr>
-                  <TH>採用人数</TH>
-                  <TD>000-{`${businessInfo.number}人`}-0000</TD>
-                </tr>
-                <tr>
-                  <TH>想定報酬額</TH>
-                  <TD>{`${businessInfo.reward}/月`}</TD>
-                </tr>
-                <tr>
-                  <TH>企業からのメッセージ</TH>
-                  <TD>{businessInfo.message}</TD>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td colSpan="2">
+                      {businessInfo.imageURL && (
+                        <Image
+                          src={businessInfo.imageURL}
+                          width={600}
+                          height={300}
+                          objectFit="contain"
+                        />
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <TH>会社名</TH>
+                    <TD>{businessInfo.companyName}</TD>
+                  </tr>
+                  <tr>
+                    <TH>業務</TH>
+                    <TD>{businessInfo.business}</TD>
+                  </tr>
+                  <tr>
+                    <TH>業務内容</TH>
+                    <TD>{businessInfo.detail}</TD>
+                  </tr>
+                  <tr>
+                    <TH>勤務場所</TH>
+                    <TD>{businessInfo.location}</TD>
+                  </tr>
+                  <tr>
+                    <TH>採用人数</TH>
+                    <TD>000-{`${businessInfo.number}人`}-0000</TD>
+                  </tr>
+                  <tr>
+                    <TH>想定報酬額</TH>
+                    <TD>{`${businessInfo.reward}/月`}</TD>
+                  </tr>
+                  <tr>
+                    <TH>企業からのメッセージ</TH>
+                    <TD>{businessInfo.message}</TD>
+                  </tr>
+                </tbody>
               </TAble>
             </>
           )}
