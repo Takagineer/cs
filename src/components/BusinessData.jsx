@@ -28,6 +28,7 @@ export default function BusinessData() {
   useEffect(() => {
     const getBusinessData = db
       .collection("Businesses")
+      .limit(10)
       .onSnapshot((querySnapshot) => {
         const _businessData = querySnapshot.docs.map((doc) => {
           return {
