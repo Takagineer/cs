@@ -24,7 +24,7 @@ export default function student() {
   const isReady = router.isReady;
   const [loading, setLoading] = useState(false);
   const [studentInfo, setStudentInfo] = useState();
-  const [studentBusinessInfo, setStudentBusinessInfo] = useState();
+  const [studentBusinessInfo, setStudentBusinessInfo] = useState([]);
 
   const getStudentInformation = async () => {
     const info = await db
@@ -40,56 +40,25 @@ export default function student() {
       .doc(router.query.student)
       .collection("apply")
       .get();
-
-    const _businessInfo = [];
+    const _appliedBusinessInfo = [];
     appliedBusinessInfo.forEach((doc) => {
-      const businessInfo = db
-        .collection("Businesses")
-        .doc(doc.data().businessId)
-        .get();
-      _businessInfo.push({
-        businessId: businessInfo.id,
-        ...businessInfo.data(),
+      _appliedBusinessInfo.push({
+        businessId: doc.id,
+        ...doc.data(),
       });
     });
-    setStudentBusinessInfo(_businessInfo);
-    console.log(_businessInfo);
-    // const _businessInfo = [];
-    // appliedBusinessInfo.forEach((doc) => {
-    //   const businessInfo = db
-    //     .collection("Businesses")
-    //     .doc(doc.data().businessId)
-    //     .get();
-    //   _businessInfo.push({
-    //     businessId: doc.id,
-    //     ...doc.data(),
-    //   });
-    // });
-    // const appliedWorks = [];
-    // appliedBusinessInfo.forEach((doc) => {
-    //   appliedWorks.push({
-    //     businessId: doc.id,
-    //     ...doc.data(),
-    //   });
-    // });
-    // console.log({ appliedWorks: appliedWorks.length });
-    // console.log({ appliedWorks: appliedWorks });
+    setStudentBusinessInfo(_appliedBusinessInfo);
 
-    // const businessDatas = [];
-    // appliedWorks.map(async (appliedWork) => {
+    // const _businessInfo = [];
+    // _appliedBusinessInfo.map(async (business) => {
     //   const businessData = await db
     //     .collection("Businesses")
-    //     .doc(appliedWork.businessId)
+    //     .doc(business.businessId)
     //     .get();
-    //   businessDatas.push({
-    //     businessId: appliedWork.businessId,
-    //     ...businessData.data(),
-    //   });
+    //   _businessInfo.push(businessData.data());
+    //   console.log(businessData.data());
     // });
-
-    // console.log({ businessDatas: businessDatas.length });
-    // console.log({ businessDatas: businessDatas });
-    // setStudentBusinessInfo(businessDatas);
+    // setStudentBusinessInfo(_businessInfo);
   };
 
   useEffect(() => {
@@ -111,23 +80,25 @@ export default function student() {
           ""
         ) : (
           <TAble>
-            <tr>
-              <TH>氏名</TH>
+            <tbody>
+              <tr>
+                <TH>氏名</TH>
 
-              <TD>{`${studentInfo.firstName} ${studentInfo.lastName}さん`}</TD>
-            </tr>
-            <tr>
-              <TH>大学</TH>
-              <TD>{`${studentInfo.university}`}</TD>
-            </tr>
-            <tr>
-              <TH>年次</TH>
-              <TD>{`${studentInfo.age} 歳`}</TD>
-            </tr>
-            <tr>
-              <TH>自己紹介</TH>
-              <TD>{`${studentInfo.introduction}`}</TD>
-            </tr>
+                <TD>{`${studentInfo.firstName} ${studentInfo.lastName}さん`}</TD>
+              </tr>
+              <tr>
+                <TH>大学</TH>
+                <TD>{`${studentInfo.university}`}</TD>
+              </tr>
+              <tr>
+                <TH>年次</TH>
+                <TD>{`${studentInfo.age} 歳`}</TD>
+              </tr>
+              <tr>
+                <TH>自己紹介</TH>
+                <TD>{`${studentInfo.introduction}`}</TD>
+              </tr>
+            </tbody>
           </TAble>
         )}
 
@@ -136,59 +107,19 @@ export default function student() {
         ) : (
           <>
             <H2>応募している業務</H2>
-            {studentBusinessInfo.map((business) => {
+            {studentBusinessInfo.map((business, index) => {
               return (
-                <CArd sx={{ maxWidth: 345 }}>
-                  <Link
-                    href={{
-                      pathname: "/individual-pages/business/[business]",
-                      query: { business: business.businessId },
-                    }}
-                  >
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        height="300"
-                        image={business.imageURL}
-                        alt="green iguana"
-                      />
-                      <CardContent>
-                        {/* <Typography gutterBottom variant="h5" component="div">
-                          {business.companyName}
-                        </Typography> */}
-                        <Typography gutterBottom variant="h5" component="div">
-                          {business.business}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {business.message}
-                        </Typography>
-                        <br />
-                        <Typography variant="body2" color="text.secondary">
-                          {business.location}
-                        </Typography>
-                        <br />
-                        <Typography variant="body2" color="text.secondary">
-                          {`${business.reward}/月`}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Link>
-                  <CardActions>
-                    <br />
-                    <IconButton
-                      aria-label="settings"
-                      onClick={() => {
-                        handleClickFavo(business);
-                      }}
-                    >
-                      {business.favo === false ? (
-                        <FavoriteTwoToneIcon />
-                      ) : (
-                        <FavoriteTwoToneIcon color="secondary" />
-                      )}
-                    </IconButton>
-                  </CardActions>
-                </CArd>
+                <Link
+                  href={{
+                    pathname: "/individual-pages/business/[business]",
+                    query: { business: business.businessId },
+                  }}
+                >
+                  <UL key={index}>
+                    <LI>業務ID:{business.businessId}</LI>
+                    <LI>応募状況:{business.applyStatusByStudent}</LI>
+                  </UL>
+                </Link>
               );
             })}
           </>
@@ -240,4 +171,19 @@ const H2 = styled.h2`
 
 const CArd = styled(Card)`
   padding: 30px 30px 30px 30px;
+`;
+
+const UL = styled.ul`
+  background: #f3f3f2;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px silver;
+  padding: 0.5em 0.5em 0.5em 2em;
+  list-style: none;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const LI = styled.li`
+  line-height: 1.5;
+  padding: 10px 0;
 `;
