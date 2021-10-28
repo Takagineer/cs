@@ -48,17 +48,6 @@ export default function student() {
       });
     });
     setStudentBusinessInfo(_appliedBusinessInfo);
-
-    // const _businessInfo = [];
-    // _appliedBusinessInfo.map(async (business) => {
-    //   const businessData = await db
-    //     .collection("Businesses")
-    //     .doc(business.businessId)
-    //     .get();
-    //   _businessInfo.push(businessData.data());
-    //   console.log(businessData.data());
-    // });
-    // setStudentBusinessInfo(_businessInfo);
   };
 
   useEffect(() => {
