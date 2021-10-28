@@ -139,7 +139,7 @@ export default function company() {
                               </Typography>
                               <Typography
                                 gutterBottom
-                                variant="h5"
+                                variant="h6"
                                 component="div"
                               >
                                 {business.business}

@@ -119,7 +119,7 @@ export default function BusinessData() {
                         <Typography gutterBottom variant="h5" component="div">
                           {business.companyName}
                         </Typography>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h6" component="div">
                           {business.business}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
