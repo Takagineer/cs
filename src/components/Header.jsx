@@ -183,6 +183,7 @@ const HEader = styled.header`
   left: 0px;
   right: 0px;
   width: 100%;
+  z-index: 99;
 `;
 
 const HEaderRight = styled.div`
