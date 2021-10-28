@@ -46,7 +46,6 @@ export default function CompanyBusinesses() {
     const storageRef = storage.ref().child(URL);
     await storageRef.put(image);
     setFileUrl(await storageRef.getDownloadURL());
-    console.log("１回目");
   };
 
   const businessValue = (e) => {

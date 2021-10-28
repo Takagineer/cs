@@ -60,10 +60,6 @@ export default function company() {
   if (!loading) {
     return <Loading />;
   }
-
-  const editCompanyInformation = () => {
-    console.log("登録情報を編集します");
-  };
   return (
     <>
       <App>
@@ -89,11 +85,7 @@ export default function company() {
               </TAble>
               <br />
               <Link href="../../auth/UpdateCompanyInformation">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={editCompanyInformation}
-                >
+                <Button variant="contained" color="primary">
                   登録情報編変更
                 </Button>
               </Link>

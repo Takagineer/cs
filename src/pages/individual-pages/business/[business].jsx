@@ -22,6 +22,7 @@ export default function business() {
   const [businessImageUrl, setBusinessImageUrl] = useState();
   const [businessStatus, setBusinessStatus] = useState("募集中");
   const [logInUser, setLogInUser] = useState();
+  const [isApplied, setIsApplied] = useState(false);
 
   const getBusinessInformation = async () => {
     const info = await db
@@ -81,22 +82,41 @@ export default function business() {
 
   const applyWork = async () => {
     const appliedData = await db
-      .collection("AppliedWorks")
-      .where("businessId", "==", router.query.business)
+      .collection("Businesses")
+      .doc(router.query.business)
+      .collection("isApplied")
       .where("studentId", "==", auth.currentUser.uid)
       .get();
 
     const zeroOrOne = appliedData.size;
-
     if (zeroOrOne === 0) {
-      db.collection("AppliedWorks").add({
-        businessId: router.query.business,
-        studentId: auth.currentUser.uid,
-        applyStatusByStudent: "応募中",
-      });
+      await db
+        .collection("Businesses")
+        .doc(router.query.business)
+        .collection("isApplied")
+        .doc(auth.currentUser.uid)
+        .set(
+          {
+            studentId: auth.currentUser.uid,
+            applyStatusByStudent: "応募中",
+          },
+          { merge: true }
+        );
+      await db
+        .collection("Students")
+        .doc(auth.currentUser.uid)
+        .collection("apply")
+        .doc(router.query.business)
+        .set(
+          {
+            businessId: router.query.business,
+            applyStatusByStudent: "応募中",
+          },
+          { merge: true }
+        );
       alert("応募しました");
     } else {
-      console.log("ボタンを非表示に変更する記述");
+      setIsApplied(true);
     }
   };
 
@@ -104,7 +124,6 @@ export default function business() {
     <>
       <App>
         <COntainer>
-          <br />
           <br />
           {businessInfo === undefined ? (
             "No information"
@@ -172,9 +191,6 @@ export default function business() {
                   <MenuItem value={"締め切り間近"}>締め切り間近</MenuItem>
                   <MenuItem value={"募集締め切り"}>募集終了</MenuItem>
                 </Select>
-                <FormHelperText>
-                  一度募集締め切りに変更し、更新してしまうと変更できなくなります。
-                </FormHelperText>
               </FormControl>
               <br />
               <br />
@@ -192,13 +208,12 @@ export default function business() {
           )}
           <br />
           <br />
-
-          <br />
-          <br />
-          {logInUser === "学生" && (
+          {logInUser === "学生" && isApplied === false ? (
             <Button variant="contained" color="primary" onClick={applyWork}>
               応募
             </Button>
+          ) : (
+            <div>応募しています。企業からのご連絡をお待ちください。</div>
           )}
         </COntainer>
       </App>
