@@ -113,65 +113,77 @@ export default function company() {
               <UL>
                 {companyBusinessInfo.map((business) => {
                   return (
-                    <CArd sx={{ maxWidth: 345 }}>
-                      <Link
-                        href={{
-                          pathname: "/individual-pages/business/[business]",
-                          query: { business: business.businessId },
-                        }}
-                      >
-                        <CardActionArea>
-                          <CardMedia
-                            component="img"
-                            height="300"
-                            image={business.imageURL}
-                            alt="green iguana"
-                          />
-                          <CardContent>
-                            <Typography
-                              gutterBottom
-                              variant="h5"
-                              component="div"
-                            >
-                              {business.companyName}
-                            </Typography>
-                            <Typography
-                              gutterBottom
-                              variant="h5"
-                              component="div"
-                            >
-                              {business.business}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {business.message}
-                            </Typography>
-                            <br />
-                            <Typography variant="body2" color="text.secondary">
-                              {business.location}
-                            </Typography>
-                            <br />
-                            <Typography variant="body2" color="text.secondary">
-                              {`${business.reward}/月`}
-                            </Typography>
-                          </CardContent>
-                        </CardActionArea>
-                      </Link>
-                      <CardActions>
-                        <br />
-                        <IconButton
-                          aria-label="settings"
-                          onClick={() => {
-                            handleClickFavo(business);
+                    <>
+                      <CArd sx={{ maxWidth: 345 }}>
+                        <Link
+                          href={{
+                            pathname: "/individual-pages/business/[business]",
+                            query: { business: business.businessId },
                           }}
                         >
-                          {business.favo === false ? (
-                            <FavoriteTwoToneIcon />
-                          ) : (
-                            <FavoriteTwoToneIcon color="secondary" />
-                          )}
-                        </IconButton>
-                      </CardActions>
-                    </CArd>
+                          <CardActionArea>
+                            <CardMedia
+                              component="img"
+                              height="300"
+                              image={business.imageURL}
+                              alt="green iguana"
+                            />
+                            <CardContent>
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="div"
+                              >
+                                {business.companyName}
+                              </Typography>
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="div"
+                              >
+                                {business.business}
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                {business.message}
+                              </Typography>
+                              <br />
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                {business.location}
+                              </Typography>
+                              <br />
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                {`${business.reward}/月`}
+                              </Typography>
+                            </CardContent>
+                          </CardActionArea>
+                        </Link>
+                        <CardActions>
+                          <br />
+                          <IconButton
+                            aria-label="settings"
+                            onClick={() => {
+                              handleClickFavo(business);
+                            }}
+                          >
+                            {business.favo === false ? (
+                              <FavoriteTwoToneIcon />
+                            ) : (
+                              <FavoriteTwoToneIcon color="secondary" />
+                            )}
+                          </IconButton>
+                        </CardActions>
+                      </CArd>
+                      <br />
+                    </>
                   );
                 })}
               </UL>
@@ -239,4 +251,6 @@ const H2 = styled.h2`
 
 const CArd = styled(Card)`
   padding: 30px 30px 30px 30px;
+  border-radius: 20px;
+  margin: 20px 40px 20px 10px;
 `;
