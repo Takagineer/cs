@@ -23,10 +23,12 @@ export default function BusinessData() {
   const [favoRanking, setFavoRanking] = useState(false);
   const [appliedRanking, setAppliedRanking] = useState(false);
   const [rewardRanking, setRewardRanking] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     const getBusinessData = db
       .collection("Businesses")
+      .limit(10)
       .onSnapshot((querySnapshot) => {
         const _businessData = querySnapshot.docs.map((doc) => {
           return {
@@ -41,25 +43,53 @@ export default function BusinessData() {
   // useEffect(() => {
   const handleClickFavo = async (business) => {
     const likedDocument = await db
-      .collection("Likes")
-      .where("businessId", "==", business.businessId)
+      .collection("Businesses")
+      .doc(business.businessId)
+      .collection("isLiked")
       .where("userId", "==", auth.currentUser.uid)
+      .get();
+
+    const likedDocumentByStudent = await db
+      .collection("Students")
+      .doc(auth.currentUser.uid)
+      .collection("like")
+      .where("businessId", "==", business.businessId)
       .get();
 
     const zeroOrOne = likedDocument.size;
 
     if (zeroOrOne === 0) {
-      // console.log("登録をかける");
-      db.collection("Likes").add({
-        userId: auth.currentUser.uid,
-        businessId: business.businessId,
-      });
-      return <FavoriteTwoToneIcon color="secondary" />;
+      await db
+        .collection("Businesses")
+        .doc(business.businessId)
+        .collection("isLiked")
+        .add({
+          userId: auth.currentUser.uid,
+        });
+      await db
+        .collection("Students")
+        .doc(auth.currentUser.uid)
+        .collection("like")
+        .add({
+          businessId: business.businessId,
+        });
+      setIsLiked(true);
     } else {
       likedDocument.forEach((doc) => {
-        db.collection("Likes").doc(doc.id).delete();
+        db.collection("Businesses")
+          .doc(business.businessId)
+          .collection("isLiked")
+          .doc(doc.id)
+          .delete();
       });
-      return <FavoriteTwoToneIcon />;
+      likedDocumentByStudent.forEach((doc) => {
+        db.collection("Students")
+          .doc(auth.currentUser.uid)
+          .collection("like")
+          .doc(doc.id)
+          .delete();
+      });
+      setIsLiked(false);
     }
   };
   // }, []);
@@ -119,6 +149,8 @@ export default function BusinessData() {
                       ) : (
                         <FavoriteTwoToneIcon color="secondary" />
                       )}
+
+                      {isLiked === true ? "あかい" : "くろい"}
                     </IconButton>
                   </CardActions>
                 </CArd>
