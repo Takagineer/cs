@@ -6,6 +6,7 @@ import { auth, db, storage } from "../../firebase";
 import CreatableSelect from "react-select/creatable";
 import styled from "styled-components";
 import Loading from "../Loading";
+import { useRouter } from "next/dist/client/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +27,7 @@ export default function CompanyBusinesses() {
   const [image, setImage] = useState([]);
   const [fileUrl, setFileUrl] = useState();
   const [applyStatus, setApplyStatus] = useState("");
+  const router = useRouter();
 
   const addBusinessData = async () => {
     if (
@@ -93,6 +95,8 @@ export default function CompanyBusinesses() {
       });
 
       db.collection("Businesses").add({
+        companyId: auth.currentUser.uid,
+        companyName: router.query.companyName,
         business: business,
         detail: detail,
         reward: reward,
@@ -100,7 +104,6 @@ export default function CompanyBusinesses() {
         location: location,
         skill: newBusinessSkill,
         message: message,
-        companyId: auth.currentUser.uid,
         imageURL: fileUrl,
         applyStatus: "募集中",
       });

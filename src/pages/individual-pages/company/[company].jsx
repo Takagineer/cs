@@ -91,13 +91,14 @@ export default function company() {
               </Link>
               <br />
               <br />
-              <Link href="/individual-pages/CompanyBusinesses">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  companyInfo={companyInfo}
-                >
-                  業務募集
+              <Link
+                href={{
+                  pathname: "/individual-pages/CompanyBusinesses",
+                  query: { companyName: companyInfo.companyName },
+                }}
+              >
+                <Button variant="contained" color="primary">
+                  求人を出す
                 </Button>
               </Link>
             </>
