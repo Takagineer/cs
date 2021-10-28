@@ -99,6 +99,7 @@ export default function business() {
           {
             studentId: auth.currentUser.uid,
             applyStatusByStudent: "応募中",
+            companyName: businessInfo.companyName,
           },
           { merge: true }
         );
@@ -111,9 +112,11 @@ export default function business() {
           {
             businessId: router.query.business,
             applyStatusByStudent: "応募中",
+            companyName: businessInfo.companyName,
           },
           { merge: true }
         );
+      console.log(businessInfo.companyName);
       alert("応募しました");
     } else {
       setIsApplied(true);
