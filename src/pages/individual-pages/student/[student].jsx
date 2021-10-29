@@ -111,7 +111,7 @@ export default function student() {
                         ? { background: "#e5abbe" }
                         : business.applyStatusByStudent === "審査中"
                         ? { background: "#ffd900" }
-                        : business.applyStatusByStudent === "残念でした"
+                        : business.applyStatusByStudent === "残念..."
                         ? { background: "#bbbcde" }
                         : business.applyStatusByStudent === "通過"
                         ? { background: "#98d98e" }
