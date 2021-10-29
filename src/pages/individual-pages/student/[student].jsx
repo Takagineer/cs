@@ -105,9 +105,21 @@ export default function student() {
                   }}
                   key={business.businessId}
                 >
-                  <UL>
-                    <LI>業務ID:{business.companyName}</LI>
-                    <LI>応募状況:{business.applyStatusByStudent}</LI>
+                  <UL
+                    style={
+                      business.applyStatusByStudent === "応募中"
+                        ? { background: "#e5abbe" }
+                        : business.applyStatusByStudent === "審査中"
+                        ? { background: "#ffd900" }
+                        : business.applyStatusByStudent === "残念でした"
+                        ? { background: "#bbbcde" }
+                        : business.applyStatusByStudent === "通過"
+                        ? { background: "#98d98e" }
+                        : { background: "#e5e4e6" }
+                    }
+                  >
+                    <LI>{business.companyName}</LI>
+                    <LI>{business.applyStatusByStudent}</LI>
                   </UL>
                 </Link>
               );
@@ -168,9 +180,14 @@ const UL = styled.ul`
   border-radius: 8px;
   box-shadow: 0px 0px 5px silver;
   padding: 0.5em 0.5em 0.5em 2em;
+  margin-bottom: 20px;
   list-style: none;
+  margin-right: 40%;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+  transition: all 0.2s;
   &:hover {
     cursor: pointer;
+    transform: scale(1.1, 1.1);
   }
 `;
 const LI = styled.li`
