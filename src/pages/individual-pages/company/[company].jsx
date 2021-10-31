@@ -25,6 +25,7 @@ export default function company() {
   const [companyInfo, setCompanyInfo] = useState();
   const [companyBusinessInfo, setCompanyBusinessInfo] = useState();
   const [companyBusinessImageUrl, setCompanyBusinessImageUrl] = useState([]);
+  const [exists, setExists] = useState(false);
 
   const getCompanyInformation = async () => {
     const info = await db
@@ -39,12 +40,33 @@ export default function company() {
       .collection("Businesses")
       .where("companyId", "==", router.query.company)
       .get();
+    console.log({ businessInfoの数: businessInfo.size });
     const _companyBusinessInfo = [];
-    businessInfo.forEach((doc) => {
-      _companyBusinessInfo.push({
-        businessId: doc.id,
-        ...doc.data(),
-      });
+    businessInfo.forEach(async (doc) => {
+      //取得したbusinessに呼応したサブコレクションの情報を取得する・下のawaitを消すと、先にif文→サブこれを取得する前に、記述が終了する。
+      const subCollection = db
+        .collection("Businesses")
+        .doc(doc.id)
+        .collection("isApplied")
+        .get();
+      console.log({ subCollectionの数: subCollection.size });
+      //subコレクションを有しているデータに関しては、
+      if (subCollection.size > 0) {
+        _companyBusinessInfo.push({
+          businessId: doc.id,
+          ...doc.data(),
+          sub: "応募者あり",
+        });
+        console.log("応募者がいる時の記述");
+      } else {
+        _companyBusinessInfo.push({
+          businessId: doc.id,
+          ...doc.data(),
+        });
+        console.log("応募者がいない時の記述");
+      }
+      console.log("set関数終了");
+      console.log({ _companyBusinessInfoの中身: _companyBusinessInfo });
     });
     setCompanyBusinessInfo(_companyBusinessInfo);
   };
@@ -60,6 +82,7 @@ export default function company() {
   if (!loading) {
     return <Loading />;
   }
+
   return (
     <>
       <App>
@@ -111,83 +134,73 @@ export default function company() {
           ) : (
             <>
               <H2>募集している業務</H2>
-              <UL>
-                {companyBusinessInfo.map((business) => {
-                  return (
-                    <>
-                      <CArd sx={{ maxWidth: 345 }}>
-                        <Link
-                          href={{
-                            pathname: "/individual-pages/business/[business]",
-                            query: { business: business.businessId },
+              {companyBusinessInfo.length}
+              {companyBusinessInfo.map((business) => {
+                return (
+                  <>
+                    <CArd sx={{ maxWidth: 345 }} key={business.businessId}>
+                      <Link
+                        href={{
+                          pathname: "/individual-pages/business/[business]",
+                          query: { business: business.businessId },
+                        }}
+                      >
+                        <CardActionArea>
+                          <CardMedia
+                            component="img"
+                            height="300"
+                            image={business.imageURL}
+                            alt="green iguana"
+                          />
+                          <CardContent>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="div"
+                            >
+                              {business.companyName}
+                            </Typography>
+                            <Typography
+                              gutterBottom
+                              variant="h6"
+                              component="div"
+                            >
+                              {business.business}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              {business.message}
+                            </Typography>
+                            <br />
+                            <Typography variant="body2" color="text.secondary">
+                              {business.location}
+                            </Typography>
+                            <br />
+                            <Typography variant="body2" color="text.secondary">
+                              {`${business.reward}/月`}
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Link>
+                      <CardActions>
+                        <br />
+                        <IconButton
+                          aria-label="settings"
+                          onClick={() => {
+                            handleClickFavo(business);
                           }}
                         >
-                          <CardActionArea>
-                            <CardMedia
-                              component="img"
-                              height="300"
-                              image={business.imageURL}
-                              alt="green iguana"
-                            />
-                            <CardContent>
-                              <Typography
-                                gutterBottom
-                                variant="h5"
-                                component="div"
-                              >
-                                {business.companyName}
-                              </Typography>
-                              <Typography
-                                gutterBottom
-                                variant="h6"
-                                component="div"
-                              >
-                                {business.business}
-                              </Typography>
-                              <Typography
-                                variant="body2"
-                                color="text.secondary"
-                              >
-                                {business.message}
-                              </Typography>
-                              <br />
-                              <Typography
-                                variant="body2"
-                                color="text.secondary"
-                              >
-                                {business.location}
-                              </Typography>
-                              <br />
-                              <Typography
-                                variant="body2"
-                                color="text.secondary"
-                              >
-                                {`${business.reward}/月`}
-                              </Typography>
-                            </CardContent>
-                          </CardActionArea>
-                        </Link>
-                        <CardActions>
-                          <br />
-                          <IconButton
-                            aria-label="settings"
-                            onClick={() => {
-                              handleClickFavo(business);
-                            }}
-                          >
-                            {business.favo === false ? (
-                              <FavoriteTwoToneIcon />
-                            ) : (
-                              <FavoriteTwoToneIcon color="secondary" />
-                            )}
-                          </IconButton>
-                        </CardActions>
-                      </CArd>
-                      <br />
-                    </>
-                  );
-                })}
-              </UL>
+                          {business.favo === false ? (
+                            <FavoriteTwoToneIcon />
+                          ) : (
+                            <FavoriteTwoToneIcon color="secondary" />
+                          )}
+                        </IconButton>
+                      </CardActions>
+                    </CArd>
+                    <br />
+                  </>
+                );
+              })}
             </>
           )}
           <br />
