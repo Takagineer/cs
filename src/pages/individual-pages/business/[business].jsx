@@ -6,13 +6,17 @@ import Loading from "../../Loading";
 import styled from "styled-components";
 import Image from "next/image";
 import {
+  Box,
   Button,
   FormControl,
   FormHelperText,
   InputLabel,
   MenuItem,
+  Modal,
   Select,
 } from "@material-ui/core";
+import ChildModal from "../../../components/ChildModal";
+import { ConfirmationNumberSharp } from "@material-ui/icons";
 
 export default function business() {
   const router = useRouter();
@@ -23,6 +27,12 @@ export default function business() {
   const [businessStatus, setBusinessStatus] = useState("募集中");
   const [logInUser, setLogInUser] = useState();
   const [isApplied, setIsApplied] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [studentId, setStudentId] = useState([]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const getBusinessInformation = async () => {
     const info = await db
@@ -116,11 +126,40 @@ export default function business() {
           },
           { merge: true }
         );
-      console.log(businessInfo.companyName);
       alert("応募しました");
     } else {
       setIsApplied(true);
     }
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    pt: 2,
+    px: 4,
+    pb: 3,
+  };
+
+  const getStudentInfoAndOpenModal = async () => {
+    setOpen(true);
+    const studentId = await db
+      .collection("Businesses")
+      .doc(router.query.business)
+      .collection("isApplied")
+      .get();
+    const _studentId = [];
+    studentId.forEach((student) => {
+      _studentId.push({
+        studentId: student.id,
+      });
+    });
+    setStudentId(_studentId);
   };
 
   return (
@@ -216,6 +255,29 @@ export default function business() {
             ""
           )}
           <br />
+          <Button onClick={getStudentInfoAndOpenModal}>応募者一覧</Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+          >
+            <Box
+              sx={{ ...style, width: 400 }}
+              variant="contained"
+              color="primary"
+            >
+              {studentId.map((student, index) => {
+                return (
+                  <h3 key={student.studentId}>
+                    No:
+                    {student.studentId}
+                    <ChildModal studentId={student.studentId} />;
+                  </h3>
+                );
+              })}
+            </Box>
+          </Modal>
           <br />
           {logInUser === "学生" && isApplied === false ? (
             <Button variant="contained" color="primary" onClick={applyWork}>
