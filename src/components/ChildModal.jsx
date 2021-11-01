@@ -1,6 +1,7 @@
 import { Box, Button, Modal } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
+import styled from "styled-components";
 
 export default function ChildModal(props) {
   const [open, setOpen] = React.useState(false);
@@ -54,15 +55,44 @@ export default function ChildModal(props) {
               <h2 id="child-modal-title">
                 {studentData.firstName} {studentData.lastName}
               </h2>
+              <p id="child-modal-description">{studentData.introduction}</p>
+              <p id="child-modal-description">{studentData.age}齢</p>
+              <p id="child-modal-description">
+                {studentData.location.label}出身
+              </p>
+              <p id="child-modal-description">{studentData.university}大学</p>
+              <p id="child-modal-description">{studentData.year}年生</p>
+              <p id="child-modal-description">
+                {studentData.skill.map((data) => {
+                  return (
+                    <>
+                      <A>{data.label}</A>
+                      <br />
+                    </>
+                  );
+                })}
+              </p>
             </>
           )}
-          <p id="child-modal-description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p>
 
-          <Button onClick={handleClose}>Close Child Modal</Button>
+          <Button onClick={handleClose}>閉じる</Button>
         </Box>
       </Modal>
     </React.Fragment>
   );
 }
+
+const A = styled.a`
+  display: inline-block;
+  margin: 0 0.1em 0.6em 0;
+  padding: 0.6em;
+  line-height: 1;
+  text-decoration: none;
+  color: #0000ee;
+  background-color: #fff;
+  border: 1px solid #0000ee;
+  border-radius: 2em;
+  :before {
+    content: "#";
+  }
+`;
