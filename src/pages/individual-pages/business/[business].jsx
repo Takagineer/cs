@@ -250,12 +250,20 @@ export default function business() {
               >
                 募集状況更新
               </Button>
+              <br />
+              <br />
             </>
           ) : (
             ""
           )}
           <br />
-          <Button onClick={getStudentInfoAndOpenModal}>応募者一覧</Button>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={getStudentInfoAndOpenModal}
+          >
+            応募者一覧
+          </Button>
           <Modal
             open={open}
             onClose={handleClose}
