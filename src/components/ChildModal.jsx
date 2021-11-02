@@ -116,14 +116,8 @@ export default function ChildModal(props) {
                   control={<Checkbox defaultChecked />}
                   label="審査中"
                 />
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  label="残念..."
-                />
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  label="通過"
-                />
+                <FormControlLabel control={<Checkbox />} label="残念..." />
+                <FormControlLabel control={<Checkbox />} label="通過" />
               </FormGroup>
             </>
           )}
