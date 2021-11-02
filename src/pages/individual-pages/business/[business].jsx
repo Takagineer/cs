@@ -270,9 +270,10 @@ export default function business() {
               {studentId.map((student, index) => {
                 return (
                   <h3 key={student.studentId}>
-                    No:
+                    学生No
+                    <br />
                     {student.studentId}
-                    <ChildModal studentId={student.studentId} />;
+                    <ChildModal studentId={student.studentId} />
                   </h3>
                 );
               })}

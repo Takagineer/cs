@@ -40,35 +40,31 @@ export default function company() {
       .collection("Businesses")
       .where("companyId", "==", router.query.company)
       .get();
-    console.log({ businessInfoの数: businessInfo.size });
     const _companyBusinessInfo = [];
-    businessInfo.forEach(async (doc) => {
-      //取得したbusinessに呼応したサブコレクションの情報を取得する・下のawaitを消すと、先にif文→サブこれを取得する前に、記述が終了する。
-      const subCollection = db
+    businessInfo.forEach((doc) => {
+      _companyBusinessInfo.push({
+        businessId: doc.id,
+        ...doc.data(),
+      });
+    });
+    console.log({ _companyBusinessInfo: _companyBusinessInfo });
+
+    const _businessInfoWithSub = [];
+    _companyBusinessInfo.map(async (business) => {
+      const subCollection = await db
         .collection("Businesses")
-        .doc(doc.id)
+        .doc(business.businessId)
         .collection("isApplied")
         .get();
-      console.log({ subCollectionの数: subCollection.size });
-      //subコレクションを有しているデータに関しては、
-      if (subCollection.size > 0) {
-        _companyBusinessInfo.push({
-          businessId: doc.id,
-          ...doc.data(),
-          sub: "応募者あり",
-        });
-        console.log("応募者がいる時の記述");
-      } else {
-        _companyBusinessInfo.push({
-          businessId: doc.id,
-          ...doc.data(),
-        });
-        console.log("応募者がいない時の記述");
-      }
-      console.log("set関数終了");
-      console.log({ _companyBusinessInfoの中身: _companyBusinessInfo });
+
+      _businessInfoWithSub.push({
+        ...business,
+        sub: subCollection.size,
+      });
+      console.log({ return後新しい: _businessInfoWithSub });
+      console.log({ return後: _companyBusinessInfo });
+      setCompanyBusinessInfo(_businessInfoWithSub);
     });
-    setCompanyBusinessInfo(_companyBusinessInfo);
   };
 
   useEffect(() => {
@@ -93,18 +89,20 @@ export default function company() {
             <>
               <H2>登録情報</H2>
               <TAble>
-                <tr>
-                  <TH>会社名</TH>
-                  <TD>{companyInfo.companyName}</TD>
-                </tr>
-                <tr>
-                  <TH>email</TH>
-                  <TD>{companyInfo.email}</TD>
-                </tr>
-                <tr>
-                  <TH>連絡先</TH>
-                  <TD>{companyInfo.phoneNumber}</TD>
-                </tr>
+                <tbody>
+                  <tr>
+                    <TH>会社名</TH>
+                    <TD>{companyInfo.companyName}</TD>
+                  </tr>
+                  <tr>
+                    <TH>email</TH>
+                    <TD>{companyInfo.email}</TD>
+                  </tr>
+                  <tr>
+                    <TH>連絡先</TH>
+                    <TD>{companyInfo.phoneNumber}</TD>
+                  </tr>
+                </tbody>
               </TAble>
               <br />
               <Link href="../../auth/UpdateCompanyInformation">
@@ -134,11 +132,18 @@ export default function company() {
           ) : (
             <>
               <H2>募集している業務</H2>
-              {companyBusinessInfo.length}
               {companyBusinessInfo.map((business) => {
                 return (
                   <>
-                    <CArd sx={{ maxWidth: 345 }} key={business.businessId}>
+                    <CArd
+                      sx={{ maxWidth: 345 }}
+                      key={business.businessId}
+                      style={
+                        business.sub === 0
+                          ? { background: "white" }
+                          : { background: "#e9dfe5" }
+                      }
+                    >
                       <Link
                         href={{
                           pathname: "/individual-pages/business/[business]",

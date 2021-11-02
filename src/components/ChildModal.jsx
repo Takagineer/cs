@@ -7,6 +7,7 @@ export default function ChildModal(props) {
   const [open, setOpen] = React.useState(false);
   const { studentId } = props;
   const [studentData, setStudentData] = useState();
+  const [studentApplyStatus, setStudentApplyStatus] = useState("");
 
   const handleOpen = () => {
     setOpen(true);
@@ -33,13 +34,18 @@ export default function ChildModal(props) {
     setStudentData(studentInfo.data());
   };
 
+  const colorAndStatusChange = (e) => {
+    setStudentApplyStatus();
+  };
+
   useEffect(() => {
     getStudentInfo();
   }, []);
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Open Child Modal</Button>
+      <br />
+      <Button onClick={handleOpen}>詳細ページ</Button>
       <Modal
         hideBackdrop
         open={open}
@@ -60,7 +66,7 @@ export default function ChildModal(props) {
               <p id="child-modal-description">
                 {studentData.location.label}出身
               </p>
-              <p id="child-modal-description">{studentData.university}大学</p>
+              <p id="child-modal-description">{studentData.university}</p>
               <p id="child-modal-description">{studentData.year}年生</p>
               <p id="child-modal-description">
                 {studentData.skill.map((data) => {
@@ -72,9 +78,18 @@ export default function ChildModal(props) {
                   );
                 })}
               </p>
+              <A onClick={colorAndStatusChange} value="審査中">
+                審査中
+              </A>
+              <A onClick={colorAndStatusChange} value="残念...">
+                残念...
+              </A>
+              <A onClick={colorAndStatusChange} value="通過">
+                通過
+              </A>
             </>
           )}
-
+          <br />
           <Button onClick={handleClose}>閉じる</Button>
         </Box>
       </Modal>
