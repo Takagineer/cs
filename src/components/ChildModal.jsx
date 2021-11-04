@@ -2,19 +2,26 @@ import {
   Box,
   Button,
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
+  InputLabel,
+  MenuItem,
   Modal,
+  Select,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import styled from "styled-components";
+import { delBasePath } from "next/dist/shared/lib/router/router";
+import { useRouter } from "next/router";
 
 export default function ChildModal(props) {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const { studentId } = props;
   const [studentData, setStudentData] = useState();
-  const [studentApplyStatus, setStudentApplyStatus] = useState("");
+  const [applyStatusByStudent, setApplyStatusByStudent] = useState("審査中");
 
   const handleOpen = () => {
     setOpen(true);
@@ -36,6 +43,7 @@ export default function ChildModal(props) {
     px: 4,
     pb: 3,
   };
+
   const getStudentInfo = async () => {
     const studentInfo = await db.collection("Students").doc(studentId).get();
     setStudentData(studentInfo.data());
@@ -44,6 +52,25 @@ export default function ChildModal(props) {
   useEffect(() => {
     getStudentInfo();
   }, []);
+
+  const selectStatus = (e) => {
+    setApplyStatusByStudent(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const check = async () => {
+    await db
+      .collection("Businesses")
+      .doc(router.query.business)
+      .collection("isApplied")
+      .doc(studentId)
+      .set(
+        {
+          applyStatusByStudent: applyStatusByStudent,
+        },
+        { merge: true }
+      );
+  };
 
   return (
     <React.Fragment>
@@ -61,36 +88,6 @@ export default function ChildModal(props) {
             "お待ちください"
           ) : (
             <>
-              {/* <table>
-                <tbody>
-                  <tr>
-                    <th>名前</th>
-                    <td>
-                      {studentData.firstName} {studentData.lastName}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>自己紹介</th>
-                    <td>{studentData.introduction}</td>
-                  </tr>
-                  <tr>
-                    <th>年齢</th>
-                    <td>{studentData.age}歳</td>
-                  </tr>
-                  <tr>
-                    <th>出身地</th>
-                    <td>{studentData.location.label}</td>
-                  </tr>
-                  <tr>
-                    <th>大学</th>
-                    <td>{studentData.university}</td>
-                  </tr>
-                  <tr>
-                    <th>年次</th>
-                    <td>{studentData.year}</td>
-                  </tr>
-                </tbody>
-              </table> */}
               <H2 id="child-modal-title">
                 {studentData.firstName} {studentData.lastName}
               </H2>
@@ -105,24 +102,52 @@ export default function ChildModal(props) {
                 {studentData.skill.map((data) => {
                   return (
                     <>
-                      <A>{data.label}</A>
+                      <A key={data.label}>{data.label}</A>
                       <br />
                     </>
                   );
                 })}
               </p>
-              <FormGroup>
+              {/* <FormGroup
+                onChange={(e) => setStudentApplyStatus(e.target.value)}
+                value={studentApplyStatus}
+              >
                 <FormControlLabel
                   control={<Checkbox defaultChecked />}
                   label="審査中"
+                  value="審査中"
                 />
-                <FormControlLabel control={<Checkbox />} label="残念..." />
-                <FormControlLabel control={<Checkbox />} label="通過" />
-              </FormGroup>
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="残念..."
+                  value="残念..."
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="通過"
+                  value="通過"
+                />
+              </FormGroup> */}
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-helper-label">
+                  選考ステータス変更
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  label="Age"
+                  value={applyStatusByStudent}
+                  onChange={selectStatus}
+                >
+                  <MenuItem value={"審査中"}>審査中</MenuItem>
+                  <MenuItem value={"残念..."}>残念...</MenuItem>
+                  <MenuItem value={"通過"}>通過</MenuItem>
+                </Select>
+              </FormControl>
             </>
           )}
           <br />
-          <Button>ステータス確定</Button>
+          <Button onClick={check}> ステータス確定</Button>
           <br />
           <Button onClick={handleClose}>閉じる</Button>
         </Box>
@@ -141,9 +166,6 @@ const A = styled.a`
   background-color: #fff;
   border: 1px solid #0000ee;
   border-radius: 2em;
-  :before {
-    content: "#";
-  }
 `;
 
 const H2 = styled.h2`
