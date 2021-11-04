@@ -25,6 +25,7 @@ export default function company() {
   const [companyInfo, setCompanyInfo] = useState();
   const [companyBusinessInfo, setCompanyBusinessInfo] = useState();
   const [companyBusinessImageUrl, setCompanyBusinessImageUrl] = useState([]);
+  const [exists, setExists] = useState(false);
 
   const getCompanyInformation = async () => {
     const info = await db
@@ -46,7 +47,24 @@ export default function company() {
         ...doc.data(),
       });
     });
-    setCompanyBusinessInfo(_companyBusinessInfo);
+    console.log({ _companyBusinessInfo: _companyBusinessInfo });
+
+    const _businessInfoWithSub = [];
+    _companyBusinessInfo.map(async (business) => {
+      const subCollection = await db
+        .collection("Businesses")
+        .doc(business.businessId)
+        .collection("isApplied")
+        .get();
+
+      _businessInfoWithSub.push({
+        ...business,
+        sub: subCollection.size,
+      });
+      console.log({ return後新しい: _businessInfoWithSub });
+      console.log({ return後: _companyBusinessInfo });
+      setCompanyBusinessInfo(_businessInfoWithSub);
+    });
   };
 
   useEffect(() => {
@@ -60,6 +78,7 @@ export default function company() {
   if (!loading) {
     return <Loading />;
   }
+
   return (
     <>
       <App>
@@ -70,18 +89,20 @@ export default function company() {
             <>
               <H2>登録情報</H2>
               <TAble>
-                <tr>
-                  <TH>会社名</TH>
-                  <TD>{companyInfo.companyName}</TD>
-                </tr>
-                <tr>
-                  <TH>email</TH>
-                  <TD>{companyInfo.email}</TD>
-                </tr>
-                <tr>
-                  <TH>連絡先</TH>
-                  <TD>{companyInfo.phoneNumber}</TD>
-                </tr>
+                <tbody>
+                  <tr>
+                    <TH>会社名</TH>
+                    <TD>{companyInfo.companyName}</TD>
+                  </tr>
+                  <tr>
+                    <TH>email</TH>
+                    <TD>{companyInfo.email}</TD>
+                  </tr>
+                  <tr>
+                    <TH>連絡先</TH>
+                    <TD>{companyInfo.phoneNumber}</TD>
+                  </tr>
+                </tbody>
               </TAble>
               <br />
               <Link href="../../auth/UpdateCompanyInformation">
@@ -91,13 +112,14 @@ export default function company() {
               </Link>
               <br />
               <br />
-              <Link href="/individual-pages/CompanyBusinesses">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  companyInfo={companyInfo}
-                >
-                  業務募集
+              <Link
+                href={{
+                  pathname: "/individual-pages/CompanyBusinesses",
+                  query: { companyName: companyInfo.companyName },
+                }}
+              >
+                <Button variant="contained" color="primary">
+                  求人を出す
                 </Button>
               </Link>
             </>
@@ -110,10 +132,18 @@ export default function company() {
           ) : (
             <>
               <H2>募集している業務</H2>
-              <UL>
-                {companyBusinessInfo.map((business) => {
-                  return (
-                    <CArd sx={{ maxWidth: 345 }}>
+              {companyBusinessInfo.map((business) => {
+                return (
+                  <>
+                    <CArd
+                      sx={{ maxWidth: 345 }}
+                      key={business.businessId}
+                      style={
+                        business.sub === 0
+                          ? { background: "white" }
+                          : { background: "#e9dfe5" }
+                      }
+                    >
                       <Link
                         href={{
                           pathname: "/individual-pages/business/[business]",
@@ -137,7 +167,7 @@ export default function company() {
                             </Typography>
                             <Typography
                               gutterBottom
-                              variant="h5"
+                              variant="h6"
                               component="div"
                             >
                               {business.business}
@@ -172,9 +202,10 @@ export default function company() {
                         </IconButton>
                       </CardActions>
                     </CArd>
-                  );
-                })}
-              </UL>
+                    <br />
+                  </>
+                );
+              })}
             </>
           )}
           <br />
@@ -239,4 +270,6 @@ const H2 = styled.h2`
 
 const CArd = styled(Card)`
   padding: 30px 30px 30px 30px;
+  border-radius: 20px;
+  margin: 20px 40px 20px 10px;
 `;

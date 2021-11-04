@@ -6,13 +6,17 @@ import Loading from "../../Loading";
 import styled from "styled-components";
 import Image from "next/image";
 import {
+  Box,
   Button,
   FormControl,
   FormHelperText,
   InputLabel,
   MenuItem,
+  Modal,
   Select,
 } from "@material-ui/core";
+import ChildModal from "../../../components/ChildModal";
+import { ConfirmationNumberSharp } from "@material-ui/icons";
 
 export default function business() {
   const router = useRouter();
@@ -23,6 +27,12 @@ export default function business() {
   const [businessStatus, setBusinessStatus] = useState("募集中");
   const [logInUser, setLogInUser] = useState();
   const [isApplied, setIsApplied] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [studentId, setStudentId] = useState([]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const getBusinessInformation = async () => {
     const info = await db
@@ -99,6 +109,7 @@ export default function business() {
           {
             studentId: auth.currentUser.uid,
             applyStatusByStudent: "応募中",
+            companyName: businessInfo.companyName,
           },
           { merge: true }
         );
@@ -111,6 +122,7 @@ export default function business() {
           {
             businessId: router.query.business,
             applyStatusByStudent: "応募中",
+            companyName: businessInfo.companyName,
           },
           { merge: true }
         );
@@ -118,6 +130,36 @@ export default function business() {
     } else {
       setIsApplied(true);
     }
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    pt: 2,
+    px: 4,
+    pb: 3,
+  };
+
+  const getStudentInfoAndOpenModal = async () => {
+    setOpen(true);
+    const studentId = await db
+      .collection("Businesses")
+      .doc(router.query.business)
+      .collection("isApplied")
+      .get();
+    const _studentId = [];
+    studentId.forEach((student) => {
+      _studentId.push({
+        studentId: student.id,
+      });
+    });
+    setStudentId(_studentId);
   };
 
   return (
@@ -130,42 +172,48 @@ export default function business() {
           ) : (
             <>
               <TAble>
-                <tr>
-                  <td colSpan="2">
-                    {businessInfo.imageURL && (
-                      <Image
-                        src={businessInfo.imageURL}
-                        width={600}
-                        height={300}
-                        objectFit="contain"
-                      />
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <TH>業務</TH>
-                  <TD>{businessInfo.business}</TD>
-                </tr>
-                <tr>
-                  <TH>業務内容</TH>
-                  <TD>{businessInfo.detail}</TD>
-                </tr>
-                <tr>
-                  <TH>勤務場所</TH>
-                  <TD>{businessInfo.location}</TD>
-                </tr>
-                <tr>
-                  <TH>採用人数</TH>
-                  <TD>000-{`${businessInfo.number}人`}-0000</TD>
-                </tr>
-                <tr>
-                  <TH>想定報酬額</TH>
-                  <TD>{`${businessInfo.reward}/月`}</TD>
-                </tr>
-                <tr>
-                  <TH>企業からのメッセージ</TH>
-                  <TD>{businessInfo.message}</TD>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td colSpan="2">
+                      {businessInfo.imageURL && (
+                        <Image
+                          src={businessInfo.imageURL}
+                          width={600}
+                          height={300}
+                          objectFit="contain"
+                        />
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <TH>会社名</TH>
+                    <TD>{businessInfo.companyName}</TD>
+                  </tr>
+                  <tr>
+                    <TH>業務</TH>
+                    <TD>{businessInfo.business}</TD>
+                  </tr>
+                  <tr>
+                    <TH>業務内容</TH>
+                    <TD>{businessInfo.detail}</TD>
+                  </tr>
+                  <tr>
+                    <TH>勤務場所</TH>
+                    <TD>{businessInfo.location}</TD>
+                  </tr>
+                  <tr>
+                    <TH>採用人数</TH>
+                    <TD>000-{`${businessInfo.number}人`}-0000</TD>
+                  </tr>
+                  <tr>
+                    <TH>想定報酬額</TH>
+                    <TD>{`${businessInfo.reward}/月`}</TD>
+                  </tr>
+                  <tr>
+                    <TH>企業からのメッセージ</TH>
+                    <TD>{businessInfo.message}</TD>
+                  </tr>
+                </tbody>
               </TAble>
             </>
           )}
@@ -202,11 +250,43 @@ export default function business() {
               >
                 募集状況更新
               </Button>
+              <br />
+              <br />
             </>
           ) : (
             ""
           )}
           <br />
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={getStudentInfoAndOpenModal}
+          >
+            応募者一覧
+          </Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+          >
+            <Box
+              sx={{ ...style, width: 400 }}
+              variant="contained"
+              color="primary"
+            >
+              {studentId.map((student, index) => {
+                return (
+                  <h3 key={student.studentId}>
+                    学生No
+                    <br />
+                    {student.studentId}
+                    <ChildModal studentId={student.studentId} />
+                  </h3>
+                );
+              })}
+            </Box>
+          </Modal>
           <br />
           {logInUser === "学生" && isApplied === false ? (
             <Button variant="contained" color="primary" onClick={applyWork}>

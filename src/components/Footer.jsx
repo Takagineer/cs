@@ -26,7 +26,6 @@ const Header = ({ pathname }) => (
 export default Header;
 
 const FOoter = styled.footer`
-  position: fixed;
   bottom: 0;
   width: 100%;
 `;
