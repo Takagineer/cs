@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
@@ -10,6 +11,8 @@ import {
 } from "@material-ui/core";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import React, { useState } from "react";
+import styled from "styled-components";
+import Link from "next/Link";
 
 const useStyles = makeStyles({
   bullet: {
@@ -28,7 +31,7 @@ const useStyles = makeStyles({
 export default function BusinessCard(props) {
   const [likeCount, setLikeCount] = useState(0);
   const [favo, setFavo] = useState(false);
-  const { companyName, image, text } = props;
+  const { id, companyName, image, business, location } = props;
 
   const handleClick = () => {
     if (favo === false) {
@@ -39,29 +42,54 @@ export default function BusinessCard(props) {
       setLikeCount(likeCount - 1);
     }
   };
+
   return (
     <>
-      <Card variant="outlined">
-        <CardContent>
-          <Typography color="textSecondary" gutterBottom>
-            {companyName}
-          </Typography>
-          <CardMedia style={{ height: "250px" }} image={image} />
+      <CArd sx={{ maxWidth: 345 }}>
+        <Link
+          href={{
+            pathname: "individual-pages/business/[business]",
+            query: { business: id },
+          }}
+        >
+          <CardActionArea>
+            <CardMedia component="img" height="300" image={image} />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {companyName}
+              </Typography>
+              <Typography gutterBottom variant="h6" component="div">
+                {business}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {location}
+              </Typography>
+              <br />
+            </CardContent>
+          </CardActionArea>
+        </Link>
+        <CardActions>
           <br />
-          <Typography variant="body2" component="p">
-            {text}
-          </Typography>
-          評価（星評価機能）
-        </CardContent>
-        <IconButton aria-label="settings" onClick={handleClick}>
-          {favo === false ? (
-            <FavoriteTwoToneIcon />
-          ) : (
-            <FavoriteTwoToneIcon color="secondary" />
-          )}
-          {likeCount}
-        </IconButton>
-      </Card>
+          <IconButton
+            aria-label="settings"
+            onClick={() => {
+              handleClickFavo(business);
+            }}
+          >
+            {business.favo === false ? (
+              <FavoriteTwoToneIcon />
+            ) : (
+              <FavoriteTwoToneIcon color="secondary" />
+            )}
+          </IconButton>
+        </CardActions>
+      </CArd>
+      <br />
     </>
   );
 }
+
+const CArd = styled(Card)`
+  padding: 30px 30px 30px 30px;
+  height: 480px;
+`;
