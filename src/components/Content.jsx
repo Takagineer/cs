@@ -41,81 +41,77 @@ export default function Content() {
         ...doc.data(),
       });
       console.log(_businessInfo);
+      console.log("businessInfoの値を抽出");
     });
     setBusinessInfo(_businessInfo);
   };
 
   useEffect(() => {
     getBusinessInfo();
-    console.log({ businessInfoの値: businessInfo });
   }, []);
 
   return (
     <>
-      {
-        businessInfo === undefined ? (
-          "お待ちください"
-        ) : (
-          // businessInfo.map((business) => {
-          //     return (
-          <Swiper
-            style={{
-              "--swiper-navigation-color": "#2ca9e1",
-              "--swiper-pagination-color": "#2ca9e1",
-            }}
-            loop={true}
-            spaceBetween={10}
-            navigation={true}
-            thumbs={{ swiper: thumbsSwiper }}
-            className="mySwiper2"
-          >
-            <Grid container spacing={2}>
-              <SwiperSlide>
-                <Grid item xs={11}>
-                  <BusinessCard
-                    id={businessInfo[0].businessId}
-                    image={businessInfo[0].imageURL}
-                    companyName={businessInfo[0].companyName}
-                    business={businessInfo[0].business}
-                    message={businessInfo[0].message}
-                    location={businessInfo[0].location}
-                    reward={businessInfo[0].reward}
-                  />
-                </Grid>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Grid item xs={11}>
-                  <BusinessCard
-                    id={businessInfo[1].businessId}
-                    image={businessInfo[1].imageURL}
-                    companyName={businessInfo[1].companyName}
-                    business={businessInfo[1].business}
-                    message={businessInfo[1].message}
-                    location={businessInfo[1].location}
-                    reward={businessInfo[1].reward}
-                  />
-                </Grid>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Grid item xs={11}>
-                  <BusinessCard
-                    id={businessInfo[2].businessId}
-                    image={businessInfo[2].imageURL}
-                    companyName={businessInfo[2].companyName}
-                    business={businessInfo[2].business}
-                    message={businessInfo[2].message}
-                    location={businessInfo[2].location}
-                    reward={businessInfo[2].reward}
-                  />
-                </Grid>
-              </SwiperSlide>
-            </Grid>
-            <br />
-          </Swiper>
-        )
-        //   );
-        // })
-      }
+      {businessInfo[0] === undefined &&
+      businessInfo[1] === undefined &&
+      businessInfo[2] === undefined ? (
+        "お待ちください"
+      ) : (
+        <Swiper
+          style={{
+            "--swiper-navigation-color": "#2ca9e1",
+            "--swiper-pagination-color": "#2ca9e1",
+          }}
+          loop={true}
+          spaceBetween={10}
+          navigation={true}
+          thumbs={{ swiper: thumbsSwiper }}
+          className="mySwiper2"
+        >
+          <Grid container spacing={2}>
+            <SwiperSlide>
+              <Grid item xs={11}>
+                <BusinessCard
+                  id={businessInfo[0].businessId}
+                  image={businessInfo[0].imageURL}
+                  companyName={businessInfo[0].companyName}
+                  business={businessInfo[0].business}
+                  message={businessInfo[0].message}
+                  location={businessInfo[0].location}
+                  reward={businessInfo[0].reward}
+                />
+              </Grid>
+            </SwiperSlide>
+            <SwiperSlide>
+              <Grid item xs={11}>
+                <BusinessCard
+                  id={businessInfo[1].businessId}
+                  image={businessInfo[1].imageURL}
+                  companyName={businessInfo[1].companyName}
+                  business={businessInfo[1].business}
+                  message={businessInfo[1].message}
+                  location={businessInfo[1].location}
+                  reward={businessInfo[1].reward}
+                />
+              </Grid>
+            </SwiperSlide>
+            <SwiperSlide>
+              <Grid item xs={11}>
+                <BusinessCard
+                  id={businessInfo[2].businessId}
+                  image={businessInfo[2].imageURL}
+                  companyName={businessInfo[2].companyName}
+                  business={businessInfo[2].business}
+                  message={businessInfo[2].message}
+                  location={businessInfo[2].location}
+                  reward={businessInfo[2].reward}
+                />
+              </Grid>
+            </SwiperSlide>
+          </Grid>
+          <br />
+        </Swiper>
+      )}
       <br />
       <br />
       <br />
