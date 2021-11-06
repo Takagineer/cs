@@ -14,23 +14,6 @@ SwiperCore.use([Navigation, Thumbs]);
 export default function Content() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [businessInfo, setBusinessInfo] = useState([]);
-  const cardContents = [
-    {
-      companyName: "東京エネルギー株式会社",
-      image: "https://picsum.photos/150",
-      text: "業務詳細を記入してください。",
-    },
-    {
-      companyName: "メディア株式会社",
-      image: "https://picsum.photos/150",
-      text: "業務詳細を記入してください。",
-    },
-    {
-      companyName: "稲作株式会社",
-      image: "https://picsum.photos/150",
-      text: "業務詳細を記入してください。",
-    },
-  ];
 
   const getBusinessInfo = async () => {
     const _businessInfo = [];
@@ -40,8 +23,6 @@ export default function Content() {
         businessId: doc.id,
         ...doc.data(),
       });
-      console.log(_businessInfo);
-      console.log("businessInfoの値を抽出");
     });
     setBusinessInfo(_businessInfo);
   };
