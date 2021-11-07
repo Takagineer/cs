@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 export default function BusinessCard(props) {
   const [likeCount, setLikeCount] = useState(0);
   const [favo, setFavo] = useState(false);
-  const { id, companyName, image, business, location } = props;
+  const { id, companyName, image, business, location, skills } = props;
 
   const handleClick = () => {
     if (favo === false) {
@@ -42,6 +42,7 @@ export default function BusinessCard(props) {
       setLikeCount(likeCount - 1);
     }
   };
+  console.log({ skillsの詳細: skills });
 
   return (
     <>
@@ -68,6 +69,11 @@ export default function BusinessCard(props) {
             </CardContent>
           </CardActionArea>
         </Link>
+        {skills === undefined
+          ? "...Loading"
+          : skills.map((skill) => {
+              return <A>{skill.label}</A>;
+            })}
         <CardActions>
           <br />
           <IconButton
@@ -84,12 +90,23 @@ export default function BusinessCard(props) {
           </IconButton>
         </CardActions>
       </CArd>
-      <br />
     </>
   );
 }
 
 const CArd = styled(Card)`
   padding: 30px 30px 30px 30px;
-  height: 480px;
+  height: 530px;
+`;
+
+const A = styled.a`
+  display: inline-block;
+  margin: 0 9px 8px 0;
+  padding: 9px;
+  line-height: 1;
+  text-decoration: none;
+  color: #0000ee;
+  background-color: #fff;
+  border: 1px solid #0000ee;
+  border-radius: 32px;
 `;

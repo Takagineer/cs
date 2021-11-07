@@ -60,6 +60,7 @@ export default function Content() {
                   message={businessInfo[0].message}
                   location={businessInfo[0].location}
                   reward={businessInfo[0].reward}
+                  skills={businessInfo[0].skill}
                 />
               </Grid>
             </SwiperSlide>
@@ -73,6 +74,7 @@ export default function Content() {
                   message={businessInfo[1].message}
                   location={businessInfo[1].location}
                   reward={businessInfo[1].reward}
+                  skills={businessInfo[1].skill}
                 />
               </Grid>
             </SwiperSlide>
@@ -86,6 +88,7 @@ export default function Content() {
                   message={businessInfo[2].message}
                   location={businessInfo[2].location}
                   reward={businessInfo[2].reward}
+                  skills={businessInfo[2].skill}
                 />
               </Grid>
             </SwiperSlide>
