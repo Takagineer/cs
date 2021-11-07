@@ -47,7 +47,6 @@ export default function company() {
         ...doc.data(),
       });
     });
-    console.log({ _companyBusinessInfo: _companyBusinessInfo });
 
     const _businessInfoWithSub = [];
     _companyBusinessInfo.map(async (business) => {
@@ -61,8 +60,6 @@ export default function company() {
         ...business,
         sub: subCollection.size,
       });
-      console.log({ return後新しい: _businessInfoWithSub });
-      console.log({ return後: _companyBusinessInfo });
       setCompanyBusinessInfo(_businessInfoWithSub);
     });
   };
