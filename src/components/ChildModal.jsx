@@ -108,26 +108,6 @@ export default function ChildModal(props) {
                   );
                 })}
               </p>
-              {/* <FormGroup
-                onChange={(e) => setStudentApplyStatus(e.target.value)}
-                value={studentApplyStatus}
-              >
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  label="審査中"
-                  value="審査中"
-                />
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="残念..."
-                  value="残念..."
-                />
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="通過"
-                  value="通過"
-                />
-              </FormGroup> */}
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-helper-label">
                   選考ステータス変更
@@ -158,14 +138,14 @@ export default function ChildModal(props) {
 
 const A = styled.a`
   display: inline-block;
-  margin: 0 0.1em 0.6em 0;
-  padding: 0.6em;
+  margin: 0 9px 8px 0;
+  padding: 9px;
   line-height: 1;
   text-decoration: none;
   color: #0000ee;
   background-color: #fff;
   border: 1px solid #0000ee;
-  border-radius: 2em;
+  border-radius: 32px;
 `;
 
 const H2 = styled.h2`

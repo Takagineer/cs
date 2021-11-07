@@ -14,23 +14,6 @@ SwiperCore.use([Navigation, Thumbs]);
 export default function Content() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [businessInfo, setBusinessInfo] = useState([]);
-  const cardContents = [
-    {
-      companyName: "東京エネルギー株式会社",
-      image: "https://picsum.photos/150",
-      text: "業務詳細を記入してください。",
-    },
-    {
-      companyName: "メディア株式会社",
-      image: "https://picsum.photos/150",
-      text: "業務詳細を記入してください。",
-    },
-    {
-      companyName: "稲作株式会社",
-      image: "https://picsum.photos/150",
-      text: "業務詳細を記入してください。",
-    },
-  ];
 
   const getBusinessInfo = async () => {
     const _businessInfo = [];
@@ -40,8 +23,6 @@ export default function Content() {
         businessId: doc.id,
         ...doc.data(),
       });
-      console.log(_businessInfo);
-      console.log("businessInfoの値を抽出");
     });
     setBusinessInfo(_businessInfo);
   };
@@ -79,6 +60,7 @@ export default function Content() {
                   message={businessInfo[0].message}
                   location={businessInfo[0].location}
                   reward={businessInfo[0].reward}
+                  skills={businessInfo[0].skill}
                 />
               </Grid>
             </SwiperSlide>
@@ -92,6 +74,7 @@ export default function Content() {
                   message={businessInfo[1].message}
                   location={businessInfo[1].location}
                   reward={businessInfo[1].reward}
+                  skills={businessInfo[1].skill}
                 />
               </Grid>
             </SwiperSlide>
@@ -105,6 +88,7 @@ export default function Content() {
                   message={businessInfo[2].message}
                   location={businessInfo[2].location}
                   reward={businessInfo[2].reward}
+                  skills={businessInfo[2].skill}
                 />
               </Grid>
             </SwiperSlide>
