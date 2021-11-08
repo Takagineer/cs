@@ -83,7 +83,6 @@ export default function ChildModal(props) {
         { merge: true }
       );
   };
-  console.log({ studentIdの値: studentId });
 
   return (
     <React.Fragment>
