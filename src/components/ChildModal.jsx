@@ -55,7 +55,6 @@ export default function ChildModal(props) {
 
   const selectStatus = (e) => {
     setApplyStatusByStudent(e.target.value);
-    console.log(e.target.value);
   };
 
   const check = async () => {
@@ -70,7 +69,21 @@ export default function ChildModal(props) {
         },
         { merge: true }
       );
+
+    //学生側のステータスの変更記述
+    await db
+      .collection("Students")
+      .doc(studentId)
+      .collection("apply")
+      .doc(router.query.business)
+      .set(
+        {
+          applyStatusByStudent: applyStatusByStudent,
+        },
+        { merge: true }
+      );
   };
+  console.log({ studentIdの値: studentId });
 
   return (
     <React.Fragment>
