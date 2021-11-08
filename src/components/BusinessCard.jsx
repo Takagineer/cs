@@ -42,7 +42,6 @@ export default function BusinessCard(props) {
       setLikeCount(likeCount - 1);
     }
   };
-  console.log({ skillsの詳細: skills });
 
   return (
     <>

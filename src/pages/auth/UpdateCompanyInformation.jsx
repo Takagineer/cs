@@ -5,29 +5,18 @@ import { Button, TextField } from "@material-ui/core";
 import { auth, db, updateEmail, updatePassword } from "../../firebase";
 
 export default function UpdateCompanyInformation() {
-  const [updateCompanyEmail, setUpdateCompanyEmail] = useState();
-  const [updateCompanyPassword, setUpdateCompanyPassword] = useState();
   const [updateCompanyCompanyName, setUpdateCompanyCompanyName] = useState();
   const [updateCompanyPhoneNumber, setUpdateCompanyPhoneNumber] = useState();
-  const updateCompanyEmailValue = (e) => setUpdateCompanyEmail(e.target.value);
-  const updateCompanyPasswordValue = (e) =>
-    setUpdateCompanyPassword(e.target.value);
   const updateCompanyCompanyNameValue = (e) =>
     setUpdateCompanyCompanyName(e.target.value);
   const updateCompanyPhoneNumberValue = (e) =>
     setUpdateCompanyPhoneNumber(e.target.value);
 
   const updateCompanyInformation = async () => {
-    // await updateEmail(auth.currentUser, updateCompanyEmail);
-    // await updatePassword(auth.currentUser, updateCompanyPassword);
     await db.collection("Companies").doc(auth.currentUser.uid).update({
       companyName: updateCompanyCompanyName,
-      email: updateCompanyEmail,
-      password: updateCompanyPassword,
       phoneNumber: updateCompanyPhoneNumber,
     });
-    setUpdateCompanyEmail("");
-    setUpdateCompanyPassword("");
     setUpdateCompanyCompanyName("");
     setUpdateCompanyPhoneNumber("");
     alert("更新しました");
@@ -40,26 +29,6 @@ export default function UpdateCompanyInformation() {
           <br />
           <DIv>
             <h1>登録情報変更</h1>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="New Email Address"
-              autoFocus
-              value={updateCompanyEmail}
-              onChange={updateCompanyEmailValue}
-            />
-            <form>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                label="New Password"
-                type="password"
-                value={updateCompanyPassword}
-                onChange={updateCompanyPasswordValue}
-              />
-            </form>
             <TextField
               variant="outlined"
               margin="normal"

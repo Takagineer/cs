@@ -252,42 +252,43 @@ export default function business() {
               </Button>
               <br />
               <br />
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={getStudentInfoAndOpenModal}
+              >
+                応募者一覧
+              </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="parent-modal-title"
+                aria-describedby="parent-modal-description"
+              >
+                <Box
+                  sx={{ ...style, width: 400 }}
+                  variant="contained"
+                  color="primary"
+                >
+                  {studentId.map((student, index) => {
+                    return (
+                      <h3 key={student.studentId}>
+                        学生No
+                        <br />
+                        {student.studentId}
+                        <ChildModal studentId={student.studentId} />
+                      </h3>
+                    );
+                  })}
+                </Box>
+              </Modal>
+              <br />
             </>
           ) : (
             ""
           )}
           <br />
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={getStudentInfoAndOpenModal}
-          >
-            応募者一覧
-          </Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="parent-modal-title"
-            aria-describedby="parent-modal-description"
-          >
-            <Box
-              sx={{ ...style, width: 400 }}
-              variant="contained"
-              color="primary"
-            >
-              {studentId.map((student, index) => {
-                return (
-                  <h3 key={student.studentId}>
-                    学生No
-                    <br />
-                    {student.studentId}
-                    <ChildModal studentId={student.studentId} />
-                  </h3>
-                );
-              })}
-            </Box>
-          </Modal>
-          <br />
+
           {logInUser === "学生" && isApplied === false ? (
             <Button variant="contained" color="primary" onClick={applyWork}>
               応募

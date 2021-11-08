@@ -55,7 +55,6 @@ export default function ChildModal(props) {
 
   const selectStatus = (e) => {
     setApplyStatusByStudent(e.target.value);
-    console.log(e.target.value);
   };
 
   const check = async () => {
@@ -64,6 +63,18 @@ export default function ChildModal(props) {
       .doc(router.query.business)
       .collection("isApplied")
       .doc(studentId)
+      .set(
+        {
+          applyStatusByStudent: applyStatusByStudent,
+        },
+        { merge: true }
+      );
+
+    await db
+      .collection("Students")
+      .doc(studentId)
+      .collection("apply")
+      .doc(router.query.business)
       .set(
         {
           applyStatusByStudent: applyStatusByStudent,
