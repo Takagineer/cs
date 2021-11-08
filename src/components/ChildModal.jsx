@@ -109,6 +109,7 @@ export default function ChildModal(props) {
               </P>
               <P id="child-modal-description">{studentData.university}</P>
               <P id="child-modal-description">{studentData.year}年生</P>
+              <P id="child-modal-description">{studentData.email}</P>
               <p id="child-modal-description">
                 {studentData.skill.map((data) => {
                   return (
