@@ -30,18 +30,18 @@ const useStyles = makeStyles({
 
 export default function BusinessCard(props) {
   const [likeCount, setLikeCount] = useState(0);
-  const [favo, setFavo] = useState(false);
+  // const [favo, setFavo] = useState(false);
   const { id, companyName, image, business, location, skills } = props;
 
-  const handleClick = () => {
-    if (favo === false) {
-      setFavo(true);
-      setLikeCount(likeCount + 1);
-    } else {
-      setFavo(false);
-      setLikeCount(likeCount - 1);
-    }
-  };
+  // const handleClick = () => {
+  //   if (favo === false) {
+  //     setFavo(true);
+  //     setLikeCount(likeCount + 1);
+  //   } else {
+  //     setFavo(false);
+  //     setLikeCount(likeCount - 1);
+  //   }
+  // };
 
   return (
     <>
@@ -73,7 +73,7 @@ export default function BusinessCard(props) {
           : skills.map((skill) => {
               return <A>{skill.label}</A>;
             })}
-        <CardActions>
+        {/* <CardActions>
           <br />
           <IconButton
             aria-label="settings"
@@ -87,7 +87,7 @@ export default function BusinessCard(props) {
               <FavoriteTwoToneIcon color="secondary" />
             )}
           </IconButton>
-        </CardActions>
+        </CardActions> */}
       </CArd>
     </>
   );

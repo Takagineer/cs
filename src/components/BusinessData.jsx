@@ -31,9 +31,19 @@ export default function BusinessData() {
       .limit(10)
       .onSnapshot((querySnapshot) => {
         const _businessData = querySnapshot.docs.map((doc) => {
+          // const likedCount = await db
+          //   .collection("Businesses")
+          //   .doc(doc.id)
+          //   .collection("isLiked")
+          //   .get();
+          // console.log(likedCount.size);
+          // likedCount.forEach((count) => {
+          //   console.log(count.size);
+          // });
           return {
             businessId: doc.id,
             ...doc.data(),
+            // likedCount: likedCount.size,
           };
         });
         setBusinessData(_businessData);
@@ -41,57 +51,57 @@ export default function BusinessData() {
   }, []);
 
   // useEffect(() => {
-  const handleClickFavo = async (business) => {
-    const likedDocument = await db
-      .collection("Businesses")
-      .doc(business.businessId)
-      .collection("isLiked")
-      .where("userId", "==", auth.currentUser.uid)
-      .get();
+  // const handleClickFavo = async (business) => {
+  //   const likedDocument = await db
+  //     .collection("Businesses")
+  //     .doc(business.businessId)
+  //     .collection("isLiked")
+  //     .where("userId", "==", auth.currentUser.uid)
+  //     .get();
 
-    const likedDocumentByStudent = await db
-      .collection("Students")
-      .doc(auth.currentUser.uid)
-      .collection("like")
-      .where("businessId", "==", business.businessId)
-      .get();
+  //   const likedDocumentByStudent = await db
+  //     .collection("Students")
+  //     .doc(auth.currentUser.uid)
+  //     .collection("like")
+  //     .where("businessId", "==", business.businessId)
+  //     .get();
 
-    const zeroOrOne = likedDocument.size;
+  //   const zeroOrOne = likedDocument.size;
 
-    if (zeroOrOne === 0) {
-      await db
-        .collection("Businesses")
-        .doc(business.businessId)
-        .collection("isLiked")
-        .add({
-          userId: auth.currentUser.uid,
-        });
-      await db
-        .collection("Students")
-        .doc(auth.currentUser.uid)
-        .collection("like")
-        .add({
-          businessId: business.businessId,
-        });
-      setIsLiked(true);
-    } else {
-      likedDocument.forEach((doc) => {
-        db.collection("Businesses")
-          .doc(business.businessId)
-          .collection("isLiked")
-          .doc(doc.id)
-          .delete();
-      });
-      likedDocumentByStudent.forEach((doc) => {
-        db.collection("Students")
-          .doc(auth.currentUser.uid)
-          .collection("like")
-          .doc(doc.id)
-          .delete();
-      });
-      setIsLiked(false);
-    }
-  };
+  //   if (zeroOrOne === 0) {
+  //     await db
+  //       .collection("Businesses")
+  //       .doc(business.businessId)
+  //       .collection("isLiked")
+  //       .add({
+  //         userId: auth.currentUser.uid,
+  //       });
+  //     await db
+  //       .collection("Students")
+  //       .doc(auth.currentUser.uid)
+  //       .collection("like")
+  //       .add({
+  //         businessId: business.businessId,
+  //       });
+  //     setIsLiked(true);
+  //   } else {
+  //     likedDocument.forEach((doc) => {
+  //       db.collection("Businesses")
+  //         .doc(business.businessId)
+  //         .collection("isLiked")
+  //         .doc(doc.id)
+  //         .delete();
+  //     });
+  //     likedDocumentByStudent.forEach((doc) => {
+  //       db.collection("Students")
+  //         .doc(auth.currentUser.uid)
+  //         .collection("like")
+  //         .doc(doc.id)
+  //         .delete();
+  //     });
+  //     setIsLiked(false);
+  //   }
+  // };
   // }, []);
 
   return (
@@ -136,10 +146,7 @@ export default function BusinessData() {
                       </CardContent>
                     </CardActionArea>
                   </Link>
-                  {business.skill.map((skill) => {
-                    return <A key={skill.label}>{skill.label}</A>;
-                  })}
-                  <CardActions>
+                  {/* <CardActions>
                     <br />
                     <IconButton
                       aria-label="settings"
@@ -155,7 +162,7 @@ export default function BusinessData() {
 
                       {isLiked === true ? "あかい" : "くろい"}
                     </IconButton>
-                  </CardActions>
+                  </CardActions> */}
                 </CArd>
                 <br />
               </>
@@ -173,16 +180,4 @@ const COntainer = styled.div`
 
 const CArd = styled(Card)`
   padding: 30px 30px 30px 30px;
-`;
-
-const A = styled.a`
-  display: inline-block;
-  margin: 0 9px 8px 0;
-  padding: 9px;
-  line-height: 1;
-  text-decoration: none;
-  color: #0000ee;
-  background-color: #fff;
-  border: 1px solid #0000ee;
-  border-radius: 32px;
 `;
