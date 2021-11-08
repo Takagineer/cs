@@ -70,7 +70,6 @@ export default function ChildModal(props) {
         { merge: true }
       );
 
-    //学生側のステータスの変更記述
     await db
       .collection("Students")
       .doc(studentId)
