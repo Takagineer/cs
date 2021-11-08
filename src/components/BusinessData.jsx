@@ -146,6 +146,10 @@ export default function BusinessData() {
                       </CardContent>
                     </CardActionArea>
                   </Link>
+
+                  {business.skill.map((skill) => {
+                    return <A key={skill.label}>{skill.label}</A>;
+                  })}
                   {/* <CardActions>
                     <br />
                     <IconButton
