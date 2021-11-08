@@ -146,6 +146,9 @@ export default function BusinessData() {
                       </CardContent>
                     </CardActionArea>
                   </Link>
+                  {business.skill.map((skill) => {
+                    return <A key={skill.label}>{skill.label}</A>;
+                  })}
                   {/* <CardActions>
                     <br />
                     <IconButton
@@ -180,4 +183,16 @@ const COntainer = styled.div`
 
 const CArd = styled(Card)`
   padding: 30px 30px 30px 30px;
+`;
+
+const A = styled.a`
+  display: inline-block;
+  margin: 0 9px 8px 0;
+  padding: 9px;
+  line-height: 1;
+  text-decoration: none;
+  color: #0000ee;
+  background-color: #fff;
+  border: 1px solid #0000ee;
+  border-radius: 32px;
 `;
