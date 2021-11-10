@@ -1,5 +1,5 @@
 import App from "../components/App";
-import Link from "next/link";
+import Link from "next/Link";
 import Head from "next/Head";
 import PopularBusinesses from "../components/PopularBusinesses";
 import Filter from "../components/Filetr";
