@@ -1,6 +1,6 @@
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
-import Link from "next/Link";
+import Link from "next/link";
 import { auth, db, signOut, storage } from "../../../firebase";
 import App from "../../../components/App";
 import styled from "styled-components";
