@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import { ContactsOutlined, LinkedCamera } from "@material-ui/icons";
-import Link from "next/Link";
+import Link from "next/link";
 import App from "./App";
 
 export default function BusinessData() {
