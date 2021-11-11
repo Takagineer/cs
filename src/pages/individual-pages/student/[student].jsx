@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import App from "../../../components/App";
 import { db, signOut } from "../../../firebase";
 import styled from "styled-components";
-import Link from "next/Link";
+import Link from "next/link.js";
 import {
   Button,
   Card,

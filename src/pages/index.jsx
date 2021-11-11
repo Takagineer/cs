@@ -1,6 +1,6 @@
 import App from "../components/App";
 import Link from "next/link";
-import Head from "next/Head";
+import Head from "next/head";
 import PopularBusinesses from "../components/PopularBusinesses";
 import Filter from "../components/Filetr";
 import RankingBusiness from "../components/NewBusiness";
@@ -12,7 +12,6 @@ export default function Home() {
         <title>トップページ</title>
       </Head>
       <PopularBusinesses />
-      <br />
       <br />
       <br />
       <br />
