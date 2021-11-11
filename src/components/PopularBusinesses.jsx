@@ -22,6 +22,6 @@ export default function PopularBusinesses() {
 }
 
 const COntainer = styled.div`
-  height: 360px;
+  height: 620px;
   padding: 100px 0 0 40px;
 `;
