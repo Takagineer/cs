@@ -12,7 +12,7 @@ import {
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import React, { useState } from "react";
 import styled from "styled-components";
-import Link from "next/Link";
+import Link from "next/link";
 
 const useStyles = makeStyles({
   bullet: {
