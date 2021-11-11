@@ -26,10 +26,9 @@ const Header = ({ pathname }) => (
 export default Header;
 
 const FOoter = styled.footer`
-  bottom: 0;
-  width: 100%;
+  width: 100vw;
 `;
 
 const APpBar = styled(AppBar)`
-  border-radius: 10px;
+  width: 100%;
 `;
