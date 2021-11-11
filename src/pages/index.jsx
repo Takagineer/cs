@@ -13,13 +13,6 @@ export default function Home() {
       </Head>
       <PopularBusinesses />
       <Filter />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </App>
   );
 }
