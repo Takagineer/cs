@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 export default function BusinessCard(props) {
   const [likeCount, setLikeCount] = useState(0);
   // const [favo, setFavo] = useState(false);
-  const { id, companyName, image, business, location, skills } = props;
+  const { id, companyName, image, business, location, skills, reward } = props;
 
   // const handleClick = () => {
   //   if (favo === false) {
@@ -61,8 +61,13 @@ export default function BusinessCard(props) {
               <Typography gutterBottom variant="h6" component="div">
                 {business}
               </Typography>
+              <br />
               <Typography variant="body2" color="text.secondary">
                 {location}
+              </Typography>
+              <br />
+              <Typography variant="body2" color="text.secondary">
+                {`${reward}/月`}
               </Typography>
               <br />
             </CardContent>
