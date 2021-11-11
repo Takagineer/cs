@@ -51,7 +51,7 @@ export default function Content() {
         >
           <Grid container spacing={2}>
             <SwiperSlide>
-              <Grid item xs={11}>
+              <Grid item xs={20}>
                 <BusinessCard
                   id={businessInfo[0].businessId}
                   image={businessInfo[0].imageURL}
@@ -65,7 +65,7 @@ export default function Content() {
               </Grid>
             </SwiperSlide>
             <SwiperSlide>
-              <Grid item xs={11}>
+              <Grid item xs={20}>
                 <BusinessCard
                   id={businessInfo[1].businessId}
                   image={businessInfo[1].imageURL}
@@ -79,7 +79,7 @@ export default function Content() {
               </Grid>
             </SwiperSlide>
             <SwiperSlide>
-              <Grid item xs={11}>
+              <Grid item xs={20}>
                 <BusinessCard
                   id={businessInfo[2].businessId}
                   image={businessInfo[2].imageURL}
@@ -104,5 +104,5 @@ export default function Content() {
 }
 
 const SWiperSlide = styled(SwiperSlide)`
-  height: 500px;
+  height: 400px;
 `;

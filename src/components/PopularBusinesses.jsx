@@ -10,7 +10,7 @@ export default function PopularBusinesses() {
         <Grid container direction="column">
           <Grid item container>
             <Grid sm={2} />
-            <Grid xs={12} sm={9}>
+            <Grid xs={12} sm={13}>
               <Content />
             </Grid>
             <Grid sm={3} />
@@ -22,6 +22,6 @@ export default function PopularBusinesses() {
 }
 
 const COntainer = styled.div`
-  height: 360px;
-  padding: 100px 0 0 40px;
+  height: 620px;
+  padding-top: 100px;
 `;

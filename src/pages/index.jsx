@@ -12,24 +12,7 @@ export default function Home() {
         <title>トップページ</title>
       </Head>
       <PopularBusinesses />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <Filter />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </App>
   );
 }
