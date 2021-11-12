@@ -40,8 +40,9 @@ export default function Content() {
       ) : (
         <Swiper
           style={{
-            "--swiper-navigation-color": "#2ca9e1",
-            "--swiper-pagination-color": "#2ca9e1",
+            "--swiper-navigation-color": "#808080",
+            "--swiper-navigation-background-color": "#black",
+            "--swiper-pagination-color": "#808080",
           }}
           loop={true}
           spaceBetween={10}
@@ -51,7 +52,7 @@ export default function Content() {
         >
           <Grid container spacing={2}>
             <SwiperSlide>
-              <Grid item xs={20}>
+              <Grid item xs={12}>
                 <BusinessCard
                   id={businessInfo[0].businessId}
                   image={businessInfo[0].imageURL}
@@ -65,7 +66,7 @@ export default function Content() {
               </Grid>
             </SwiperSlide>
             <SwiperSlide>
-              <Grid item xs={20}>
+              <Grid item xs={12}>
                 <BusinessCard
                   id={businessInfo[1].businessId}
                   image={businessInfo[1].imageURL}
@@ -79,7 +80,7 @@ export default function Content() {
               </Grid>
             </SwiperSlide>
             <SwiperSlide>
-              <Grid item xs={20}>
+              <Grid item xs={12}>
                 <BusinessCard
                   id={businessInfo[2].businessId}
                   image={businessInfo[2].imageURL}
@@ -97,12 +98,6 @@ export default function Content() {
         </Swiper>
       )}
       <br />
-      <br />
-      <br />
     </>
   );
 }
-
-const SWiperSlide = styled(SwiperSlide)`
-  height: 400px;
-`;
