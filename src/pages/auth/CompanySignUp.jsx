@@ -90,6 +90,10 @@ export default function CompanySignUp() {
                 value={companySignUpPhoneNumber}
                 onChange={companySignUpPhoneNumberValue}
               />
+              <br />
+              <br />
+              <br />
+              <br />
               <Button
                 type="submit"
                 fullWidth
@@ -108,12 +112,7 @@ export default function CompanySignUp() {
           <company />
         )}
 
-        {"    "}
-        <Link href="/">
-          <Button variant="contained" color="primary">
-            トップページへ
-          </Button>
-        </Link>
+        <br />
       </App>
     </>
   );
