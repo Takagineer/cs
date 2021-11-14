@@ -99,11 +99,6 @@ export default function Login() {
         <br />
         <br />
         <br />
-        <Link href="/">
-          <Button variant="contained" color="primary" onClick={signOut}>
-            トップページへ
-          </Button>
-        </Link>
       </App>
     </>
   );
