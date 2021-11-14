@@ -175,7 +175,7 @@ export default function BusinessData() {
 }
 
 const CArd = styled(Card)`
-  padding: 30px 30px 30px 30px;
+  padding: 30px;
 `;
 
 const A = styled.a`

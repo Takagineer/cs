@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -10,6 +10,7 @@ import NewBusiness from "./NewBusiness";
 import FavoBusiness from "./FavoBusiness";
 import ApplyBusiness from "./ApplyBusiness";
 import RewardBusiness from "./RewardBusiness";
+import { db } from "../firebase";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -57,7 +58,7 @@ function LinkTab(props) {
 }
 
 export default function Filter() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -73,23 +74,19 @@ export default function Filter() {
           aria-label="nav tabs example"
         >
           <LinkTab label="新着順" href="/drafts" {...a11yProps(0)} />
-          <LinkTab label="いいね数" href="/trash" {...a11yProps(1)} />
-          <LinkTab label="応募数順" href="/spam" {...a11yProps(2)} />
-          <LinkTab label="報酬順" href="/spam" {...a11yProps(3)} />
+          <LinkTab label="報酬額" href="/spam" {...a11yProps(1)} />
+          {/* <LinkTab label="応募数順" href="/trash" {...a11yProps(2)} /> */}
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <NewBusiness />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <FavoBusiness />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <ApplyBusiness />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
         <RewardBusiness />
       </TabPanel>
+      {/* <TabPanel value={value} index={2}>
+        <ApplyBusiness />
+      </TabPanel> */}
     </div>
   );
 }
