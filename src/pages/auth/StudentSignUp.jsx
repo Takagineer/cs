@@ -216,12 +216,6 @@ export default function SignUp() {
       ) : (
         <student />
       )}
-
-      <Link href="/">
-        <Button variant="contained" color="primary" onClick={signOut}>
-          トップページへ
-        </Button>
-      </Link>
       {"    "}
       <br />
       <br />
