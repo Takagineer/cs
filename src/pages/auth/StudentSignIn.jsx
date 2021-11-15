@@ -41,62 +41,59 @@ export default function Login() {
   return (
     <>
       <App>
-        {auth.currentUser === null ? (
-          <Container component="main" maxWidth="xs">
-            <div>
-              <br />
-              <br />
-              <br />
-              <br />
-              <h1>学生様用ログインページ</h1>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={signInEmail}
-                onChange={signInEmailValue}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={signInPassword}
-                onChange={signInPasswordValue}
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                onClick={signIn}
-              >
-                Sign In
-              </Button>
-            </div>
-          </Container>
-        ) : (
-          <student />
-        )}
-
-        {"    "}
-        <Link href="/">
-          <Button variant="contained" color="primary" onClick={signOut}>
-            トップページへ
+        <COntainer component="main" maxWidth="xs">
+          <br />
+          <br />
+          <br />
+          <br />
+          <h1>学生様用ログインページ</h1>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={signInEmail}
+            onChange={signInEmailValue}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={signInPassword}
+            onChange={signInPasswordValue}
+          />
+          <br />
+          <br />
+          <br />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={signIn}
+          >
+            Sign In
           </Button>
-        </Link>
+          <br />
+          <br />
+          <br />
+        </COntainer>
       </App>
     </>
   );
 }
+
+const COntainer = styled(Container)`
+  height: 0%;
+`;

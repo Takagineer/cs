@@ -17,6 +17,7 @@ export default function RankingBusinessReward() {
       });
       setRewardBusinessData(_rewardBusinesses);
     });
+
   return (
     <>
       <COntainer>
