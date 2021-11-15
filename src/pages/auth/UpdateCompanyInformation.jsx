@@ -3,6 +3,7 @@ import App from "../../components/App";
 import styled from "styled-components";
 import { Button, TextField } from "@material-ui/core";
 import { auth, db } from "../../firebase";
+import router from "next/router";
 
 export default function UpdateCompanyInformation() {
   const [updateCompanyCompanyName, setUpdateCompanyCompanyName] = useState();
@@ -13,13 +14,15 @@ export default function UpdateCompanyInformation() {
     setUpdateCompanyPhoneNumber(e.target.value);
 
   const updateCompanyInformation = async () => {
-    await db.collection("Companies").doc(auth.currentUser.uid).update({
-      companyName: updateCompanyCompanyName,
-      phoneNumber: updateCompanyPhoneNumber,
-    });
-    setUpdateCompanyCompanyName("");
-    setUpdateCompanyPhoneNumber("");
+    await db.collection("Companies").doc(auth.currentUser.uid).set(
+      {
+        companyName: updateCompanyCompanyName,
+        phoneNumber: updateCompanyPhoneNumber,
+      },
+      { merge: true }
+    );
     alert("更新しました");
+    await router.push(`/individual-pages/company/${auth.currentUser.uid}`);
   };
 
   return (
