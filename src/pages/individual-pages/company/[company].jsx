@@ -186,7 +186,7 @@ export default function company() {
                       </Link>
                       <CardActions>
                         <br />
-                        <IconButton
+                        {/* <IconButton
                           aria-label="settings"
                           onClick={() => {
                             handleClickFavo(business);
@@ -197,7 +197,7 @@ export default function company() {
                           ) : (
                             <FavoriteTwoToneIcon color="secondary" />
                           )}
-                        </IconButton>
+                        </IconButton> */}
                       </CardActions>
                     </CArd>
                     <br />
