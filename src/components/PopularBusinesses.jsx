@@ -9,7 +9,7 @@ export default function PopularBusinesses() {
       <COntainer>
         <Grid container direction="column">
           <Grid item container>
-            <Grid sm={2} />
+            <Grid sm={1} />
             <Grid xs={12} sm={9}>
               <Content />
             </Grid>
