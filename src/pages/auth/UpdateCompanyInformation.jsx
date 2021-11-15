@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import App from "../../components/App";
 import styled from "styled-components";
 import { Button, TextField } from "@material-ui/core";
-import { auth, db, updateEmail, updatePassword } from "../../firebase";
+import { auth, db } from "../../firebase";
 
 export default function UpdateCompanyInformation() {
   const [updateCompanyCompanyName, setUpdateCompanyCompanyName] = useState();
