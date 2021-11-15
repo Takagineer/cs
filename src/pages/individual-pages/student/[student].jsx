@@ -95,6 +95,14 @@ export default function student() {
           ""
         ) : (
           <>
+            <br />
+            <Link href="../../auth/UpdateStudentInformation">
+              <Button variant="contained" color="primary">
+                登録情報編変更
+              </Button>
+            </Link>
+            <br />
+            <br />
             <H2>応募している業務</H2>
             {studentBusinessInfo.map((business) => {
               return (
