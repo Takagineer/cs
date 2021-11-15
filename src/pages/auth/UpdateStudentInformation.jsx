@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import App from "../../components/App";
 import styled from "styled-components";
 import { Button, TextField } from "@material-ui/core";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
+import { auth, db } from "../../firebase";
+import router from "next/router";
 
 export default function UpdateStudentInformation() {
-  const [updateStudentFirstName, setStudentFirstName] = useState();
-  const [updateStudentLastName, setStudentLastName] = useState();
-  const [updateStudentAge, setStudentAge] = useState();
+  const [updateStudentFirstName, setUpdateStudentFirstName] = useState();
+  const [updateStudentLastName, setUpdateStudentLastName] = useState();
+  const [updateStudentAge, setUpdateStudentAge] = useState();
   const [updateStudentIntroduction, setUpdateStudentIntroduction] = useState();
   const [updateStudentUniversity, setUpdateStudentUniversity] = useState();
   const [updateStudentYear, setUpdateStudentYear] = useState();
@@ -16,22 +18,22 @@ export default function UpdateStudentInformation() {
   const [updateStudentLocation, setUpdateStudentLocation] = useState();
 
   const updateStudentFirstNameValue = (e) => {
-    setStudentFirstName(e.target.values);
+    setUpdateStudentFirstName(e.target.value);
   };
   const updateStudentLastNameValue = (e) => {
-    setStudentLastName(e.target.values);
+    setUpdateStudentLastName(e.target.value);
   };
   const updateStudentAgeValue = (e) => {
-    setStudentAge(e.target.values);
+    setUpdateStudentAge(e.target.value);
   };
   const updateStudentIntroductionValue = (e) => {
-    setUpdateStudentIntroduction(e.target.values);
+    setUpdateStudentIntroduction(e.target.value);
   };
   const updateStudentUniversityValue = (e) => {
-    setUpdateStudentUniversity(e.target.values);
+    setUpdateStudentUniversity(e.target.value);
   };
   const updateStudentYearValue = (e) => {
-    setUpdateStudentYear(e.target.values);
+    setUpdateStudentYear(e.target.value);
   };
   const updateStudentSkillValue = (value) => {
     setUpdateStudentSkill(value);
@@ -40,9 +42,51 @@ export default function UpdateStudentInformation() {
     setUpdateStudentLocation(value);
   };
 
-  const updateCompanyInformation = () => {
-    console.log("更新をかけます");
+  const getStudentInformation = async () => {
+    const userInformation = await db
+      .collection("Students")
+      .doc(auth.currentUser.uid)
+      .get();
+
+    setUpdateStudentFirstName(userInformation.data().firstName);
+    setUpdateStudentLastName(userInformation.data().lastName);
+    setUpdateStudentAge(userInformation.data().age);
+    setUpdateStudentIntroduction(userInformation.data().introduction);
+    setUpdateStudentUniversity(userInformation.data().university);
+    setUpdateStudentYear(userInformation.data().year);
+    setUpdateStudentSkill(userInformation.data().skill);
+    setUpdateStudentLocation(userInformation.data().location);
   };
+
+  const updateStudentInformation = async () => {
+    const newUpdateStudentSkill = updateStudentSkill.map((skill) => {
+      if ("__isNew__" in skill) {
+        delete skill.__isNew__;
+        return skill;
+      } else {
+        return skill;
+      }
+    });
+    await db.collection("Students").doc(auth.currentUser.uid).set(
+      {
+        firstName: updateStudentFirstName,
+        lastName: updateStudentLastName,
+        age: updateStudentAge,
+        introduction: updateStudentIntroduction,
+        university: updateStudentUniversity,
+        year: updateStudentYear,
+        skill: newUpdateStudentSkill,
+        location: updateStudentLocation,
+      },
+      { merge: true }
+    );
+    alert("データの更新をしました");
+    await router.push(`/individual-pages/student/${auth.currentUser.uid}`);
+  };
+
+  useEffect(() => {
+    getStudentInformation();
+  }, []);
 
   return (
     <>
@@ -58,6 +102,7 @@ export default function UpdateStudentInformation() {
               label="First Name"
               value={updateStudentFirstName}
               onChange={updateStudentFirstNameValue}
+              focused
             />
             <TextField
               variant="outlined"
@@ -66,6 +111,7 @@ export default function UpdateStudentInformation() {
               label="Last Name"
               value={updateStudentLastName}
               onChange={updateStudentLastNameValue}
+              focused
             />
             <TextField
               type="number"
@@ -75,6 +121,7 @@ export default function UpdateStudentInformation() {
               label="年齢"
               value={updateStudentAge}
               onChange={updateStudentAgeValue}
+              focused
             />
             <TextField
               variant="outlined"
@@ -86,6 +133,7 @@ export default function UpdateStudentInformation() {
               rows="6"
               value={updateStudentIntroduction}
               onChange={updateStudentIntroductionValue}
+              focused
             />
             <TextField
               variant="outlined"
@@ -95,6 +143,7 @@ export default function UpdateStudentInformation() {
               autoFocus
               value={updateStudentUniversity}
               onChange={updateStudentUniversityValue}
+              focused
             />
             <TextField
               type="number"
@@ -105,6 +154,7 @@ export default function UpdateStudentInformation() {
               autoFocus
               value={updateStudentYear}
               onChange={updateStudentYearValue}
+              focused
             />
             <CReatableSelect
               placeholder="スキル/資格"
@@ -126,7 +176,7 @@ export default function UpdateStudentInformation() {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={updateCompanyInformation}
+              onClick={updateStudentInformation}
             >
               更新
             </Button>
