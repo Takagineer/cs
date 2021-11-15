@@ -45,51 +45,49 @@ export default function Login() {
     <>
       <App>
         <Container component="main" maxWidth="xs">
-          <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <h1>企業様用ログインページ</h1>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={companySignInEmail}
-              onChange={companySignInEmailValue}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={companySignInPassword}
-              onChange={companySignInPasswordValue}
-            />
-            <br />
-            <br />
-            <br />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={companySignIn}
-            >
-              Sign In
-            </Button>
-          </div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <h1>企業様用ログインページ</h1>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={companySignInEmail}
+            onChange={companySignInEmailValue}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={companySignInPassword}
+            onChange={companySignInPasswordValue}
+          />
+          <br />
+          <br />
+          <br />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={companySignIn}
+          >
+            Sign In
+          </Button>
         </Container>
 
         <br />

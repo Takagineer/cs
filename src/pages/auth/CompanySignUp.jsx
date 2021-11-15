@@ -48,69 +48,62 @@ export default function CompanySignUp() {
   return (
     <>
       <App>
-        {auth.currentUser === null ? (
-          <Container component="main" maxWidth="xs">
-            <div>
-              <br />
-              <br />
-              <br />
-              <h1>企業様新規登録ページ</h1>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                label="Email Address"
-                autoFocus
-                value={companySignUpEmail}
-                onChange={companySignUpEmailValue}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                label="Password"
-                type="password"
-                value={companySignUpPassword}
-                onChange={companySignUpPasswordValue}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                label="Company Name"
-                value={companySignUpCompanyName}
-                onChange={companySignUpCompanyNameValue}
-              />
-              <TextField
-                type="tel"
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                label="Phone Number"
-                value={companySignUpPhoneNumber}
-                onChange={companySignUpPhoneNumberValue}
-              />
-              <br />
-              <br />
-              <br />
-              <br />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                onClick={companySignUp}
-              >
-                Sign Up
-              </Button>
-              <br />
-              <br />
-              <br />
-            </div>
-          </Container>
-        ) : (
-          <company />
-        )}
+        <Container component="main" maxWidth="xs">
+          <br />
+          <br />
+          <br />
+          <h1>企業様新規登録ページ</h1>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            label="Email Address"
+            autoFocus
+            value={companySignUpEmail}
+            onChange={companySignUpEmailValue}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            label="Password"
+            type="password"
+            value={companySignUpPassword}
+            onChange={companySignUpPasswordValue}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            label="Company Name"
+            value={companySignUpCompanyName}
+            onChange={companySignUpCompanyNameValue}
+          />
+          <TextField
+            type="tel"
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            label="Phone Number"
+            value={companySignUpPhoneNumber}
+            onChange={companySignUpPhoneNumberValue}
+          />
+          <br />
+          <br />
+          <br />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={companySignUp}
+          >
+            Sign Up
+          </Button>
+          <br />
+          <br />
+          <br />
+        </Container>
 
         <br />
       </App>

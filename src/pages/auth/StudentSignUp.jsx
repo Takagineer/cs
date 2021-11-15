@@ -101,123 +101,113 @@ export default function SignUp() {
 
   return (
     <App>
-      {auth.currentUser === null ? (
-        <Container component="main" maxWidth="xs">
-          <div>
-            <br />
-            <br />
-            <br />
-            <h1>学生様新規登録ページ</h1>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Email Address"
-              autoFocus
-              value={studentSignUpEmail}
-              onChange={studentSignUpEmailValue}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Password"
-              type="password"
-              value={studentSignUpPassword}
-              onChange={studentSignUpPasswordValue}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="First Name"
-              value={studentSignUpFirstName}
-              onChange={studentSignUpFirstNameValue}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Last Name"
-              value={studentSignUpLastName}
-              onChange={studentSignUpLastNameValue}
-            />
-            <TextField
-              type="number"
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="年齢"
-              value={studentSignUpAge}
-              onChange={studentSignUpAgeValue}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="自己紹介文"
-              autoFocus
-              multiline
-              rows="6"
-              value={studentSignUpIntroduction}
-              onChange={studentSignUpIntroductionValue}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="大学"
-              autoFocus
-              value={studentSignUpUniversity}
-              onChange={studentSignUpUniversityValue}
-            />
-            <TextField
-              type="number"
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="学年"
-              autoFocus
-              value={studentSignUpYear}
-              onChange={studentSignUpYearValue}
-            />
-            <CReatableSelect
-              placeholder="スキル/資格"
-              isMulti
-              value={studentSignUpSkill}
-              onChange={studentSignUpSkillValue}
-              options={skillList}
-            />
-            <SElect
-              placeholder="お住まいの都道府県"
-              value={studentSignUpLocation}
-              onChange={studentSignUpLocationValue}
-              options={prefecture}
-            />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={studentSignUp}
-            >
-              Sign Up
-            </Button>
-            <br />
-            <br />
-            <br />
-          </div>
-        </Container>
-      ) : (
-        <student />
-      )}
-      {"    "}
-      <br />
+      <Container component="main" maxWidth="xs">
+        <br />
+        <br />
+        <br />
+        <h1>学生様新規登録ページ</h1>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="Email Address"
+          autoFocus
+          value={studentSignUpEmail}
+          onChange={studentSignUpEmailValue}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="Password"
+          type="password"
+          value={studentSignUpPassword}
+          onChange={studentSignUpPasswordValue}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="First Name"
+          value={studentSignUpFirstName}
+          onChange={studentSignUpFirstNameValue}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="Last Name"
+          value={studentSignUpLastName}
+          onChange={studentSignUpLastNameValue}
+        />
+        <TextField
+          type="number"
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="年齢"
+          value={studentSignUpAge}
+          onChange={studentSignUpAgeValue}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="自己紹介文"
+          autoFocus
+          multiline
+          rows="6"
+          value={studentSignUpIntroduction}
+          onChange={studentSignUpIntroductionValue}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="大学"
+          autoFocus
+          value={studentSignUpUniversity}
+          onChange={studentSignUpUniversityValue}
+        />
+        <TextField
+          type="number"
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="学年"
+          autoFocus
+          value={studentSignUpYear}
+          onChange={studentSignUpYearValue}
+        />
+        <CReatableSelect
+          placeholder="スキル/資格"
+          isMulti
+          value={studentSignUpSkill}
+          onChange={studentSignUpSkillValue}
+          options={skillList}
+        />
+        <SElect
+          placeholder="お住まいの都道府県"
+          value={studentSignUpLocation}
+          onChange={studentSignUpLocationValue}
+          options={prefecture}
+        />
+        <br />
+        <br />
+        <br />
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={studentSignUp}
+        >
+          Sign Up
+        </Button>
+        <br />
+        <br />
+        <br />
+      </Container>
       <br />
       <br />
       <br />
