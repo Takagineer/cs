@@ -45,10 +45,6 @@ export default function RankingBusinessPopular() {
     getApplyBusinessInfo();
   }, []);
 
-  useEffect(() => {
-    console.log("検知", applyBusinessInfo);
-  }, [applyBusinessInfo]);
-
   return (
     <>
       <COntainer>
