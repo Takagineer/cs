@@ -75,7 +75,7 @@ export default function Filter() {
         >
           <LinkTab label="新着順" href="/drafts" {...a11yProps(0)} />
           <LinkTab label="報酬額" href="/spam" {...a11yProps(1)} />
-          {/* <LinkTab label="応募数順" href="/trash" {...a11yProps(2)} /> */}
+          <LinkTab label="応募のある業務" href="/trash" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -84,9 +84,9 @@ export default function Filter() {
       <TabPanel value={value} index={1}>
         <RewardBusiness />
       </TabPanel>
-      {/* <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={2}>
         <ApplyBusiness />
-      </TabPanel> */}
+      </TabPanel>
     </div>
   );
 }

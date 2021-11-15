@@ -36,11 +36,13 @@ export default function company() {
   };
 
   const getCompanyBusinessInformation = async () => {
+    const _companyBusinessInfo = [];
+    const _businessInfoWithSub = [];
+
     const businessInfo = await db
       .collection("Businesses")
       .where("companyId", "==", router.query.company)
       .get();
-    const _companyBusinessInfo = [];
     businessInfo.forEach((doc) => {
       _companyBusinessInfo.push({
         businessId: doc.id,
@@ -48,8 +50,7 @@ export default function company() {
       });
     });
 
-    const _businessInfoWithSub = [];
-    _companyBusinessInfo.map(async (business) => {
+    for (const business of _companyBusinessInfo) {
       const subCollection = await db
         .collection("Businesses")
         .doc(business.businessId)
@@ -60,8 +61,8 @@ export default function company() {
         ...business,
         sub: subCollection.size,
       });
-      setCompanyBusinessInfo(_businessInfoWithSub);
-    });
+    }
+    setCompanyBusinessInfo(_businessInfoWithSub);
   };
 
   useEffect(() => {
@@ -185,7 +186,7 @@ export default function company() {
                       </Link>
                       <CardActions>
                         <br />
-                        <IconButton
+                        {/* <IconButton
                           aria-label="settings"
                           onClick={() => {
                             handleClickFavo(business);
@@ -196,7 +197,7 @@ export default function company() {
                           ) : (
                             <FavoriteTwoToneIcon color="secondary" />
                           )}
-                        </IconButton>
+                        </IconButton> */}
                       </CardActions>
                     </CArd>
                     <br />
