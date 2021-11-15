@@ -2,6 +2,8 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import router from "next/router";
+import Router from "next/router";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -23,6 +25,7 @@ export const signUpWithEmailAndPassword = async (email, password) => {
     const user = firebase
       .auth()
       .createUserWithEmailAndPassword(email, password);
+    await router.push("/");
     return user;
   } catch (error) {
     alert("errorです");
@@ -38,6 +41,7 @@ export const signInWithEmailAndPassword = async (email, password) => {
       .signInWithEmailAndPassword(email, password);
     await firebase.auth().currentUser.sendEmailVerification;
     alert("サインイン成功");
+    await router.push("/");
     return user;
   } catch (error) {
     alert("サインイン失敗");
