@@ -12,6 +12,7 @@ import {
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import BusinessData from "./BusinessData";
 import Link from "next/link";
+import Loading from "../pages/Loading";
 
 export default function RankingBusiness() {
   // const { newBusinessInfo } = props;
@@ -59,7 +60,7 @@ export default function RankingBusiness() {
       <COntainer>
         {/* <BusinessData /> */}
         {newBusinessInfo === undefined ? (
-          "お待ちください"
+          <Loading />
         ) : (
           <>
             {newBusinessInfo.map((business, index) => {

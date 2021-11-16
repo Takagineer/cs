@@ -174,16 +174,22 @@ export default function business() {
               <TAble>
                 <tbody>
                   <tr>
-                    <td colSpan="2">
-                      {businessInfo.imageURL && (
-                        <Image
-                          src={businessInfo.imageURL}
-                          width={600}
-                          height={300}
-                          objectFit="contain"
-                        />
-                      )}
-                    </td>
+                    {businessInfo.imageURL === undefined ? (
+                      <Loading />
+                    ) : (
+                      <>
+                        <td colSpan="2">
+                          {businessInfo.imageURL && (
+                            <Image
+                              src={businessInfo.imageURL}
+                              width={600}
+                              height={300}
+                              objectFit="contain"
+                            />
+                          )}
+                        </td>
+                      </>
+                    )}
                   </tr>
                   <tr>
                     <TH>会社名</TH>

@@ -66,7 +66,7 @@ export default function student() {
     <App>
       <COntainer>
         {studentInfo === undefined ? (
-          ""
+          <Loading />
         ) : (
           <TAble>
             <tbody>
@@ -92,7 +92,7 @@ export default function student() {
         )}
 
         {studentBusinessInfo === undefined ? (
-          ""
+          <Loading />
         ) : (
           <>
             <br />

@@ -8,6 +8,7 @@ import "swiper/components/thumbs/thumbs.min.css";
 import SwiperCore, { Navigation, Thumbs } from "swiper/core";
 import { db } from "../firebase";
 import styled from "styled-components";
+import Loading from "../pages/Loading";
 
 SwiperCore.use([Navigation, Thumbs]);
 
@@ -36,7 +37,7 @@ export default function Content() {
       {businessInfo[0] === undefined &&
       businessInfo[1] === undefined &&
       businessInfo[2] === undefined ? (
-        "お待ちください"
+        <Loading />
       ) : (
         <Swiper
           style={{

@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Link from "next/link";
+import Loading from "../pages/Loading";
 
 export default function RankingBusinessPopular() {
   const [applyBusinessInfo, setApplyBusinessInfo] = useState();
@@ -49,7 +50,7 @@ export default function RankingBusinessPopular() {
     <>
       <COntainer>
         {applyBusinessInfo === undefined ? (
-          "しばらくお待ちください"
+          <Loading />
         ) : (
           <>
             {applyBusinessInfo.map((info) => {
