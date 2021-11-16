@@ -82,7 +82,7 @@ export default function company() {
       <App>
         <COntainer>
           {companyInfo === undefined ? (
-            ""
+            <Loading />
           ) : (
             <>
               <H2>登録情報</H2>

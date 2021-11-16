@@ -109,7 +109,7 @@ export default function Header({ pathname }) {
                 >
                   <Link
                     href={{
-                      pathname: "individual-pages/company/[company]",
+                      pathname: "/individual-pages/company/[company]",
                       query: { company: auth.currentUser.uid },
                     }}
                   >
@@ -157,7 +157,7 @@ export default function Header({ pathname }) {
                 >
                   <Link
                     href={{
-                      pathname: "individual-pages/student/[student]",
+                      pathname: "/individual-pages/student/[student]",
                       query: { student: auth.currentUser.uid },
                     }}
                   >
