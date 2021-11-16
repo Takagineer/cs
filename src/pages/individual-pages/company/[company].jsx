@@ -76,6 +76,20 @@ export default function company() {
   if (!loading) {
     return <Loading />;
   }
+  const onClickDelete = (index) => {
+    console.log("削除する", index);
+    const newBusinessInfo = [...companyBusinessInfo];
+    // console.log("業務データの情報", ...companyBusinessInfo);
+    // console.log("業務データの情報一つ目", companyBusinessInfo[0]);
+    // console.log("業務データの情報二つ目", companyBusinessInfo[1]);
+    // console.log("業務データの情報三つ目", companyBusinessInfo[2]);
+    console.log(
+      "業務データの情報、クリックしたもの",
+      companyBusinessInfo[index]
+    );
+    // newBusinessInfo.splice(index,1)
+    // setCompanyBusinessInfo(newBusinessInfo)
+  };
 
   return (
     <>
@@ -130,7 +144,7 @@ export default function company() {
           ) : (
             <>
               <H2>募集している業務</H2>
-              {companyBusinessInfo.map((business) => {
+              {companyBusinessInfo.map((business, index) => {
                 return (
                   <>
                     <CArd
@@ -187,6 +201,7 @@ export default function company() {
                       {business.skill.map((skill) => {
                         return <A key={skill.label}>{skill.label}</A>;
                       })}
+                      <button onClick={() => onClickDelete(index)}>削除</button>
                       <CardActions>
                         <br />
                         {/* <IconButton
