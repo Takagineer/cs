@@ -94,11 +94,16 @@ export default function ChildModal(props) {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 200 }}>
+        <Box sx={{ ...style, width: 300 }}>
           {studentData === undefined ? (
             "お待ちください"
           ) : (
             <>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
               <H2 id="child-modal-title">
                 {studentData.firstName} {studentData.lastName}
               </H2>
@@ -162,7 +167,7 @@ const A = styled.a`
 
 const H2 = styled.h2`
   border-bottom: solid 2px #fb5144;
-  padding: 100px 0 20px 20px;
+  padding: 0px 20px 20px;
 `;
 
 const P = styled.p`
