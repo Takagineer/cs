@@ -6,6 +6,7 @@ import App from "../../../components/App";
 import styled from "styled-components";
 import Loading from "../../Loading";
 import {
+  Box,
   Button,
   Card,
   CardActionArea,
@@ -13,6 +14,7 @@ import {
   CardContent,
   CardMedia,
   IconButton,
+  Modal,
   Typography,
 } from "@material-ui/core";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
@@ -25,7 +27,20 @@ export default function company() {
   const [companyInfo, setCompanyInfo] = useState();
   const [companyBusinessInfo, setCompanyBusinessInfo] = useState();
   const [companyBusinessImageUrl, setCompanyBusinessImageUrl] = useState([]);
-  const [exists, setExists] = useState(false);
+  // const [exists, setExists] = useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
   const getCompanyInformation = async () => {
     const info = await db
@@ -76,13 +91,20 @@ export default function company() {
   if (!loading) {
     return <Loading />;
   }
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const onClickDelete = (index) => {
+    setOpen(true);
+
     console.log("削除する", index);
     const newBusinessInfo = [...companyBusinessInfo];
     // console.log("業務データの情報", ...companyBusinessInfo);
     // console.log("業務データの情報一つ目", companyBusinessInfo[0]);
     // console.log("業務データの情報二つ目", companyBusinessInfo[1]);
     // console.log("業務データの情報三つ目", companyBusinessInfo[2]);
+
     console.log(
       "業務データの情報、クリックしたもの",
       companyBusinessInfo[index]
@@ -201,7 +223,45 @@ export default function company() {
                       {business.skill.map((skill) => {
                         return <A key={skill.label}>{skill.label}</A>;
                       })}
-                      <button onClick={() => onClickDelete(index)}>削除</button>
+                      {/* <button onClick={() => onClickDelete(index)}>削除</button> */}
+                      <Button
+                        color="secondary"
+                        variant="contained"
+                        onClick={handleOpen}
+                      >
+                        削除
+                      </Button>
+                      <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={style}>
+                          <Typography
+                            id="modal-modal-title"
+                            variant="h6"
+                            component="h2"
+                          >
+                            求人票を削除します。 よろしいですか？
+                          </Typography>
+                          <Typography
+                            id="modal-modal-description"
+                            sx={{ mt: 2 }}
+                          >
+                            ※消去された求人は元に戻せません。
+                            応募を締め切る際には、業務のページより応募状況を変更することをお勧めします。
+                          </Typography>
+
+                          <Button
+                            color="secondary"
+                            variant="contained"
+                            onClick={() => onClickDelete(index)}
+                          >
+                            消去します
+                          </Button>
+                        </Box>
+                      </Modal>
                       <CardActions>
                         <br />
                         {/* <IconButton
