@@ -294,13 +294,18 @@ export default function business() {
             ""
           )}
           <br />
-
           {logInUser === "学生" && isApplied === false ? (
             <Button variant="contained" color="primary" onClick={applyWork}>
               応募
             </Button>
           ) : (
-            <div>応募しています。企業からのご連絡をお待ちください。</div>
+            <>
+              {logInUser === "学生" && isApplied === true ? (
+                <div>応募しています。企業からのご連絡をお待ちください。</div>
+              ) : (
+                ""
+              )}
+            </>
           )}
         </COntainer>
       </App>
