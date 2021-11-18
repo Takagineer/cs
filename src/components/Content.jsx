@@ -37,7 +37,7 @@ export default function Content() {
       {businessInfo[0] === undefined &&
       businessInfo[1] === undefined &&
       businessInfo[2] === undefined ? (
-        <Loading />
+        ""
       ) : (
         <Swiper
           style={{
