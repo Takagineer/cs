@@ -180,7 +180,7 @@ const CArd = styled(Card)`
 
 const A = styled.a`
   display: inline-block;
-  margin: 0 9px 8px 0;
+  margin: 3px 9px 8px 0;
   padding: 9px;
   line-height: 1;
   text-decoration: none;
