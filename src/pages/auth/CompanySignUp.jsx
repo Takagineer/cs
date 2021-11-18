@@ -53,24 +53,26 @@ export default function CompanySignUp() {
           <br />
           <br />
           <h1>企業様新規登録ページ</h1>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            label="Email Address"
-            autoFocus
-            value={companySignUpEmail}
-            onChange={companySignUpEmailValue}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            label="Password"
-            type="password"
-            value={companySignUpPassword}
-            onChange={companySignUpPasswordValue}
-          />
+          <form>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="Email Address"
+              autoFocus
+              value={companySignUpEmail}
+              onChange={companySignUpEmailValue}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="Password"
+              type="password"
+              value={companySignUpPassword}
+              onChange={companySignUpPasswordValue}
+            />
+          </form>
           <TextField
             variant="outlined"
             margin="normal"
