@@ -118,7 +118,7 @@ export default function RankingBusiness() {
 }
 
 const COntainer = styled.div`
-  padding: 0 0 0 20px;
+  padding: 0 0 40px 20px;
 `;
 
 const UL = styled.ul`
