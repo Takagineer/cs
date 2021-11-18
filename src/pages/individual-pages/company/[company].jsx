@@ -6,6 +6,7 @@ import App from "../../../components/App";
 import styled from "styled-components";
 import Loading from "../../Loading";
 import {
+  Box,
   Button,
   Card,
   CardActionArea,
@@ -13,10 +14,13 @@ import {
   CardContent,
   CardMedia,
   IconButton,
+  Modal,
   Typography,
 } from "@material-ui/core";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import Image from "next/image";
+import { normalizeConfig } from "next/dist/server/config-shared";
+import router from "next/router";
 
 export default function company() {
   const router = useRouter();
@@ -25,7 +29,20 @@ export default function company() {
   const [companyInfo, setCompanyInfo] = useState();
   const [companyBusinessInfo, setCompanyBusinessInfo] = useState();
   const [companyBusinessImageUrl, setCompanyBusinessImageUrl] = useState([]);
-  const [exists, setExists] = useState(false);
+  // const [exists, setExists] = useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
   const getCompanyInformation = async () => {
     const info = await db
@@ -76,6 +93,19 @@ export default function company() {
   if (!loading) {
     return <Loading />;
   }
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const onClickDelete = async (index) => {
+    setOpen(true);
+    await db
+      .collection("Businesses")
+      .doc(companyBusinessInfo[index].businessId)
+      .delete();
+    alert("削除しました");
+    router.push("/");
+  };
 
   return (
     <>
@@ -130,7 +160,7 @@ export default function company() {
           ) : (
             <>
               <H2>募集している業務</H2>
-              {companyBusinessInfo.map((business) => {
+              {companyBusinessInfo.map((business, index) => {
                 return (
                   <>
                     <CArd
@@ -184,6 +214,21 @@ export default function company() {
                           </CardContent>
                         </CardActionArea>
                       </Link>
+                      {business.skill.map((skill) => {
+                        return <A key={skill.label}>{skill.label}</A>;
+                      })}
+
+                      {business.sub === 0 ? (
+                        <Button
+                          onClick={() => onClickDelete(index)}
+                          variant="contained"
+                          color="secondary"
+                        >
+                          削除
+                        </Button>
+                      ) : (
+                        ""
+                      )}
                       <CardActions>
                         <br />
                         {/* <IconButton
@@ -270,4 +315,16 @@ const CArd = styled(Card)`
   padding: 30px 30px 30px 30px;
   border-radius: 20px;
   margin: 20px 40px 20px 10px;
+`;
+
+const A = styled.a`
+  display: inline-block;
+  margin: 3px 9px 8px 0;
+  padding: 9px;
+  line-height: 1;
+  text-decoration: none;
+  color: #0000ee;
+  background-color: #fff;
+  border: 1px solid #0000ee;
+  border-radius: 32px;
 `;
