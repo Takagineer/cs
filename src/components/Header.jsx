@@ -64,7 +64,7 @@ export default function Header({ pathname }) {
 
   return (
     <HEader>
-      <APpBar position="static">
+      <AppBar position="static">
         <Toolbar>
           <Link href="/">
             <Typography variant="h6">C×S</Typography>
@@ -172,7 +172,7 @@ export default function Header({ pathname }) {
             )}
           </HEaderRight>
         </Toolbar>
-      </APpBar>
+      </AppBar>
     </HEader>
   );
 }
@@ -194,8 +194,4 @@ const BUtton = styled(Button)`
   background: (0, 0%, 61.96%);
   font-size: 18px;
   justify-content: right;
-`;
-
-const APpBar = styled(AppBar)`
-  height: 60px;
 `;
