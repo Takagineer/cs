@@ -30,7 +30,7 @@
     "swiper": "^6.8.2"
   },
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.13.2",
+    "babel-plugin-styled-components": "^1.13.3",
     "firebase-functions-test": "^0.2.3",
     "firebase-tools": "^9.3.0"
   },

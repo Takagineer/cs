@@ -101,6 +101,7 @@ export default function BusinessCard(props) {
 const CArd = styled(Card)`
   padding: 30px;
   height: 530px;
+  margin-top: 60px;
 `;
 
 const A = styled.a`
