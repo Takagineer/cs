@@ -97,7 +97,6 @@ export default function company() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
   const onClickDelete = async (index) => {
     setOpen(true);
     await db
@@ -219,7 +218,6 @@ export default function company() {
                         return <A key={skill.label}>{skill.label}</A>;
                       })}
 
-
                       {business.sub === 0 ? (
                         <Button
                           onClick={() => onClickDelete(index)}
@@ -229,7 +227,7 @@ export default function company() {
                           削除
                         </Button>
                       ) : (
-                        ""
+                        "応募があります！求人詳細ページより確認してください！"
                       )}
 
                       <CardActions>
