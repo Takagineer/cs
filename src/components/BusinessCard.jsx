@@ -99,7 +99,7 @@ export default function BusinessCard(props) {
 }
 
 const CArd = styled(Card)`
-  padding: 100px 30px 30px 30px;
+  padding: 30px;
   height: 530px;
 `;
 
