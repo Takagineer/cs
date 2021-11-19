@@ -147,6 +147,7 @@ export default function CompanyBusinesses() {
               onChange={detailValue}
             />
             <TextField
+              type="number"
               variant="outlined"
               margin="normal"
               fullWidth
@@ -214,6 +215,8 @@ export default function CompanyBusinesses() {
               トップページへ
             </Button>
           </Link>
+          <br />
+          <br />
         </Container>
       </App>
     </>
