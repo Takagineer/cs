@@ -73,7 +73,7 @@ export default function Filter() {
           onChange={handleChange}
           aria-label="nav tabs example"
         >
-          <LinkTab label="新着順" href="/drafts" {...a11yProps(0)} />
+          <LinkTab label="一覧表示" href="/drafts" {...a11yProps(0)} />
           <LinkTab label="報酬額" href="/spam" {...a11yProps(1)} />
           <LinkTab label="応募のある業務" href="/trash" {...a11yProps(2)} />
         </Tabs>
