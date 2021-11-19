@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CompanyBusinesses() {
   const [business, setBusiness] = useState("");
   const [detail, setDetail] = useState("");
-  const [reward, setReward] = useState("");
+  const [reward, setReward] = useState();
   const [number, setNumber] = useState("");
   const [location, setLocation] = useState("");
   const [skill, setSkill] = useState("");
@@ -57,7 +57,8 @@ export default function CompanyBusinesses() {
     setDetail(e.target.value);
   };
   const rewardValue = (e) => {
-    setReward(e.target.value);
+    const rewardNumber = Number(e.target.value);
+    setReward(rewardNumber);
   };
   const numberValue = (e) => {
     setNumber(e.target.value);
@@ -147,7 +148,6 @@ export default function CompanyBusinesses() {
               onChange={detailValue}
             />
             <TextField
-              type="number"
               variant="outlined"
               margin="normal"
               fullWidth
