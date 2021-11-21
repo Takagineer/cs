@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import {
   IconButton,
   Card,
@@ -8,6 +8,7 @@ import {
   CardMedia,
   CardContent,
   Typography,
+  CardActions,
 } from "@material-ui/core";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import BusinessData from "./BusinessData";
@@ -23,32 +24,82 @@ export default function RankingBusiness() {
   // const [favo, setFavo] = useState(false);
   // const [likeCount, setLikeCount] = useState();
 
-  // useEffect(() => {
-  //   const getNewBusinessData = db
-  //     .collection("Businesses")
-  //     .orderBy("timestamp")
-  //     .limit(10)
-  //     .onSnapshot((querySnapshot) => {
-  //       const _newBusinesses = querySnapshot.docs.map((doc) => {
-  //         return {
-  //           businessId: doc.id,
-  //           ...doc.data(),
-  //         };
-  //       });
-  //       setNewBusinessData(_newBusinesses);
-  //     });
-  // }, []);
-
   const allBusinessInfo = async () => {
-    const newBusiness = [];
+    const _newBusiness = [];
+    const _likedBusiness = [];
+
     const info = await db.collection("Businesses").get();
     info.forEach((doc) => {
-      newBusiness.push({
+      _newBusiness.push({
         businessId: doc.id,
         ...doc.data(),
       });
     });
-    setNewBusinessInfo(newBusiness);
+
+    for (const businessLiked of _newBusiness) {
+      const subCollection = await db
+        .collection("Businesses")
+        .doc(businessLiked.businessId)
+        .collection("isLiked")
+        .get();
+
+      _likedBusiness.push({
+        ...businessLiked,
+        likedSub: subCollection.size,
+      });
+    }
+    console.log(_likedBusiness);
+    setNewBusinessInfo(_likedBusiness);
+  };
+
+  const handleClickFavo = async (business) => {
+    const likedDocument = await db
+      .collection("Businesses")
+      .doc(business.businessId)
+      .collection("isLiked")
+      .where("userId", "==", auth.currentUser.uid)
+      .get();
+
+    const likedDocumentByStudent = await db
+      .collection("Students")
+      .doc(auth.currentUser.uid)
+      .collection("like")
+      .where("businessId", "==", business.businessId)
+      .get();
+
+    const zeroOrOne = likedDocument.size;
+
+    if (zeroOrOne === 0) {
+      await db
+        .collection("Businesses")
+        .doc(business.businessId)
+        .collection("isLiked")
+        .add({
+          userId: auth.currentUser.uid,
+        });
+      await db
+        .collection("Students")
+        .doc(auth.currentUser.uid)
+        .collection("like")
+        .add({
+          businessId: business.businessId,
+        });
+    } else {
+      likedDocument.forEach((doc) => {
+        db.collection("Businesses")
+          .doc(business.businessId)
+          .collection("isLiked")
+          .doc(doc.id)
+          .delete();
+      });
+      likedDocumentByStudent.forEach((doc) => {
+        db.collection("Students")
+          .doc(auth.currentUser.uid)
+          .collection("like")
+          .doc(doc.id)
+          .delete();
+      });
+    }
   };
 
   useEffect(() => {
@@ -58,7 +109,6 @@ export default function RankingBusiness() {
   return (
     <>
       <COntainer>
-        {/* <BusinessData /> */}
         {newBusinessInfo === undefined ? (
           <Loading />
         ) : (
@@ -105,6 +155,25 @@ export default function RankingBusiness() {
                     {business.skill.map((skill) => {
                       return <A key={skill.label}>{skill.label}</A>;
                     })}
+                    <br />
+                    <CardActions>
+                      <br />
+                      <IconButton
+                        aria-label="settings"
+                        onClick={() => {
+                          handleClickFavo(business);
+                        }}
+                      >
+                        {/* {business.favo === false ? (
+                          <FavoriteTwoToneIcon />
+                        ) : ( */}
+                        <FavoriteTwoToneIcon color="secondary" />
+                        {business.likedSub}
+                        {/* )} */}
+
+                        {/* {isLiked === true ? "あかい" : "くろい"} */}
+                      </IconButton>
+                    </CardActions>
                   </CArd>
                   <br />
                 </>
