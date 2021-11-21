@@ -48,7 +48,6 @@ export default function RankingBusiness() {
         likedSub: subCollection.size,
       });
     }
-    console.log(_likedBusiness);
     setNewBusinessInfo(_likedBusiness);
   };
 
