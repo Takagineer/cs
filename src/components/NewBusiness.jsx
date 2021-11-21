@@ -16,13 +16,7 @@ import Link from "next/link";
 import Loading from "../pages/Loading";
 
 export default function RankingBusiness() {
-  // const { newBusinessInfo } = props;
-  // console.log({ newBusinessInfoの値: newBusinessInfo });
   const [newBusinessInfo, setNewBusinessInfo] = useState();
-
-  // const [newBusinessData, setNewBusinessData] = useState([]);
-  // const [favo, setFavo] = useState(false);
-  // const [likeCount, setLikeCount] = useState();
 
   const allBusinessInfo = async () => {
     const _newBusiness = [];
@@ -36,16 +30,23 @@ export default function RankingBusiness() {
       });
     });
 
-    for (const businessLiked of _newBusiness) {
+    for (const business of _newBusiness) {
       const subCollection = await db
         .collection("Businesses")
-        .doc(businessLiked.businessId)
+        .doc(business.businessId)
         .collection("isLiked")
         .get();
 
+      const _subCollectionDocument = [];
+
+      subCollection.forEach((sub) => {
+        _subCollectionDocument.push(sub.data().userId);
+      });
+
       _likedBusiness.push({
-        ...businessLiked,
-        likedSub: subCollection.size,
+        ...business,
+        likedNumbers: subCollection.size,
+        isIn: _subCollectionDocument.includes(auth.currentUser.uid),
       });
     }
     setNewBusinessInfo(_likedBusiness);
@@ -163,14 +164,17 @@ export default function RankingBusiness() {
                           handleClickFavo(business);
                         }}
                       >
-                        {/* {business.favo === false ? (
-                          <FavoriteTwoToneIcon />
-                        ) : ( */}
-                        <FavoriteTwoToneIcon color="secondary" />
-                        {business.likedSub}
-                        {/* )} */}
-
-                        {/* {isLiked === true ? "あかい" : "くろい"} */}
+                        {business.isIn === false ? (
+                          <>
+                            <FavoriteTwoToneIcon />
+                            {business.likedNumbers}
+                          </>
+                        ) : (
+                          <>
+                            <FavoriteTwoToneIcon color="secondary" />
+                            {business.likedNumbers}
+                          </>
+                        )}
                       </IconButton>
                     </CardActions>
                   </CArd>
