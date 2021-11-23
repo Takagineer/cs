@@ -59,6 +59,7 @@ export default function RankingBusiness() {
       .collection("isLiked")
       .where("userId", "==", auth.currentUser.uid)
       .get();
+    //onSnapshot
 
     const likedDocumentByStudent = await db
       .collection("Students")
@@ -66,6 +67,7 @@ export default function RankingBusiness() {
       .collection("like")
       .where("businessId", "==", business.businessId)
       .get();
+    //onSnapshot
 
     const zeroOrOne = likedDocument.size;
 
