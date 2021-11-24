@@ -18,6 +18,7 @@ import Loading from "../pages/Loading";
 export default function RankingBusiness() {
   const [newBusinessInfo, setNewBusinessInfo] = useState();
 
+  //最初のレンダリング時に、業務データを取得し、取得したデータにサブコレクションのデータを業務データのオブジェクトに持たせる。
   const allBusinessInfo = async () => {
     const _newBusiness = [];
     const _likedBusiness = [];
@@ -51,21 +52,15 @@ export default function RankingBusiness() {
     }
     setNewBusinessInfo(_likedBusiness);
   };
+  //最初のレンダリング時に、業務データを取得し、取得したデータにサブコレクションのデータを業務データのオブジェクトに持たせる。
 
+  //クリックした際BusinessesコレクションにisLikedサブコレクションがあるか確認し、その中にログインしているユーザーのIDがなければデータを保存し、あればデータを削除する。
   const handleClickFavo = async (business) => {
     const likedDocument = await db
       .collection("Businesses")
       .doc(business.businessId)
       .collection("isLiked")
       .where("userId", "==", auth.currentUser.uid)
-      .get();
-    //onSnapshot
-
-    const likedDocumentByStudent = await db
-      .collection("Students")
-      .doc(auth.currentUser.uid)
-      .collection("like")
-      .where("businessId", "==", business.businessId)
       .get();
     //onSnapshot
 
@@ -79,25 +74,11 @@ export default function RankingBusiness() {
         .add({
           userId: auth.currentUser.uid,
         });
-      await db
-        .collection("Students")
-        .doc(auth.currentUser.uid)
-        .collection("like")
-        .add({
-          businessId: business.businessId,
-        });
     } else {
       likedDocument.forEach((doc) => {
         db.collection("Businesses")
           .doc(business.businessId)
           .collection("isLiked")
-          .doc(doc.id)
-          .delete();
-      });
-      likedDocumentByStudent.forEach((doc) => {
-        db.collection("Students")
-          .doc(auth.currentUser.uid)
-          .collection("like")
           .doc(doc.id)
           .delete();
       });
@@ -166,17 +147,17 @@ export default function RankingBusiness() {
                           handleClickFavo(business);
                         }}
                       >
-                        {business.isIn === false ? (
-                          <>
-                            <FavoriteTwoToneIcon />
-                            {business.likedNumbers}
-                          </>
-                        ) : (
+                        {/* {business.isIn === false ? ( */}
+                        <>
+                          <FavoriteTwoToneIcon />
+                          {business.likedNumbers}
+                        </>
+                        {/* ) : (
                           <>
                             <FavoriteTwoToneIcon color="secondary" />
                             {business.likedNumbers}
                           </>
-                        )}
+                        )} */}
                       </IconButton>
                     </CardActions>
                   </CArd>
