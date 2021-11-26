@@ -14,6 +14,7 @@ import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import BusinessData from "./BusinessData";
 import Link from "next/link";
 import Loading from "../pages/Loading";
+import { constSelector } from "recoil";
 
 export default function RankingBusiness() {
   const [newBusinessInfo, setNewBusinessInfo] = useState();
@@ -37,51 +38,46 @@ export default function RankingBusiness() {
         .doc(business.businessId)
         .collection("isLiked")
         .get();
+      // .onSnapshot((querySnapshot) => {
+      //   console.log("作り直し");
+      //   const _subCollectionDocument = [];
+      //   querySnapshot.forEach((sub) => {
+      //     _subCollectionDocument.push(sub.data().userId);
+      //   });
+      //   _likedBusiness.push({
+      //     ...business,
+      //     likedNumbers: querySnapshot.size,
+      //     isIn: _subCollectionDocument.includes(auth.currentUser.uid),
+      //   });
+      // });
+      //onSnapshotにする。いいねをした際に、isLikedサブコレクションに変更→検知してもう一度業務データのオブジェクトを再生成する。
 
       const _subCollectionDocument = [];
 
       subCollection.forEach((sub) => {
         _subCollectionDocument.push(sub.data().userId);
       });
-
       _likedBusiness.push({
         ...business,
         likedNumbers: subCollection.size,
         isIn: _subCollectionDocument.includes(auth.currentUser.uid),
       });
     }
+    console.log(_likedBusiness);
     setNewBusinessInfo(_likedBusiness);
   };
-  //最初のレンダリング時に、業務データを取得し、取得したデータにサブコレクションのデータを業務データのオブジェクトに持たせる。
 
-  //クリックした際BusinessesコレクションにisLikedサブコレクションがあるか確認し、その中にログインしているユーザーのIDがなければデータを保存し、あればデータを削除する。
   const handleClickFavo = async (business) => {
-    const likedDocument = await db
-      .collection("Businesses")
-      .doc(business.businessId)
-      .collection("isLiked")
-      .where("userId", "==", auth.currentUser.uid)
-      .get();
-    //onSnapshot
+    // unsubscribe();
+    //onSnapshotを使用して変更を検知した後、動作を注視する際にはunsubscribe()を使用する。
+    const businessIndex = newBusinessInfo.findIndex((doc) => {
+      return doc.businessId === business.businessId;
+    });
 
-    const zeroOrOne = likedDocument.size;
-
-    if (zeroOrOne === 0) {
-      await db
-        .collection("Businesses")
-        .doc(business.businessId)
-        .collection("isLiked")
-        .add({
-          userId: auth.currentUser.uid,
-        });
+    if (newBusinessInfo[businessIndex].isIn === false) {
+      console.log("いいねをする処理");
     } else {
-      likedDocument.forEach((doc) => {
-        db.collection("Businesses")
-          .doc(business.businessId)
-          .collection("isLiked")
-          .doc(doc.id)
-          .delete();
-      });
+      console.log("いいねを削除する処理");
     }
   };
 
@@ -147,17 +143,17 @@ export default function RankingBusiness() {
                           handleClickFavo(business);
                         }}
                       >
-                        {/* {business.isIn === false ? ( */}
-                        <>
-                          <FavoriteTwoToneIcon />
-                          {business.likedNumbers}
-                        </>
-                        {/* ) : (
+                        {business.isIn === false ? (
+                          <>
+                            <FavoriteTwoToneIcon />
+                            {business.likedNumbers}
+                          </>
+                        ) : (
                           <>
                             <FavoriteTwoToneIcon color="secondary" />
                             {business.likedNumbers}
                           </>
-                        )} */}
+                        )}
                       </IconButton>
                     </CardActions>
                   </CArd>
