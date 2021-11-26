@@ -76,8 +76,12 @@ export default function RankingBusiness() {
 
     if (newBusinessInfo[businessIndex].isIn === false) {
       console.log("いいねをする処理");
+      // setNewBusinessInfo(!newBusinessInfo[businessIndex].isIn);
+      console.log(newBusinessInfo);
     } else {
       console.log("いいねを削除する処理");
+      // setNewBusinessInfo(!newBusinessInfo[businessIndex].isIn);
+      console.log(newBusinessInfo);
     }
   };
 
