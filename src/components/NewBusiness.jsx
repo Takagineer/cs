@@ -52,6 +52,26 @@ export default function RankingBusiness() {
       // });
       //onSnapshotにする。いいねをした際に、isLikedサブコレクションに変更→検知してもう一度業務データのオブジェクトを再生成する。
 
+      //onSnapshot~~~
+      // for (const business of _newBusiness) {
+      //   const subCollection = await db
+      //     .collection("Businesses")
+      //     .doc(business.businessId)
+      //     .collection("isLiked")
+      // .onSnapshot((querySnapshot) => {
+      //   console.log("作り直し");
+      //   const _subCollectionDocument = [];
+      //   querySnapshot.forEach((sub) => {
+      //     _subCollectionDocument.push(sub.data().userId);
+      //   });
+      //   _likedBusiness.push({
+      //     ...business,
+      //     likedNumbers: querySnapshot.size,
+      //     isIn: _subCollectionDocument.includes(auth.currentUser.uid),
+      //   });
+      // });
+      //onSnapshot~~~
+
       const _subCollectionDocument = [];
 
       subCollection.forEach((sub) => {
@@ -76,11 +96,9 @@ export default function RankingBusiness() {
 
     if (newBusinessInfo[businessIndex].isIn === false) {
       console.log("いいねをする処理");
-      // setNewBusinessInfo(!newBusinessInfo[businessIndex].isIn);
       console.log(newBusinessInfo);
     } else {
       console.log("いいねを削除する処理");
-      // setNewBusinessInfo(!newBusinessInfo[businessIndex].isIn);
       console.log(newBusinessInfo);
     }
   };
