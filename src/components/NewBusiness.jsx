@@ -20,10 +20,8 @@ import BusinessInformation from "./BusinessInformation";
 export default function RankingBusiness() {
   const [newBusinessInfo, setNewBusinessInfo] = useState();
 
-  //最初のレンダリング時に、業務データを取得し、取得したデータにサブコレクションのデータを業務データのオブジェクトに持たせる。
   const allBusinessInfo = async () => {
     const _likedBusiness = [];
-
     const info = await db.collection("Businesses").get();
     info.forEach((doc) => {
       _likedBusiness.push({
