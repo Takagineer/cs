@@ -22,28 +22,15 @@ export default function RankingBusiness() {
 
   //最初のレンダリング時に、業務データを取得し、取得したデータにサブコレクションのデータを業務データのオブジェクトに持たせる。
   const allBusinessInfo = async () => {
-    const _newBusiness = [];
     const _likedBusiness = [];
 
     const info = await db.collection("Businesses").get();
     info.forEach((doc) => {
-      _newBusiness.push({
+      _likedBusiness.push({
         businessId: doc.id,
         ...doc.data(),
       });
     });
-
-    for (const business of _newBusiness) {
-      const subCollection = await db
-        .collection("Businesses")
-        .doc(business.businessId)
-        .collection("isLiked")
-        .get();
-
-      _likedBusiness.push({
-        ...business,
-      });
-    }
     setNewBusinessInfo(_likedBusiness);
   };
 
