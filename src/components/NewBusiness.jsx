@@ -15,6 +15,7 @@ import BusinessData from "./BusinessData";
 import Link from "next/link";
 import Loading from "../pages/Loading";
 import { constSelector } from "recoil";
+import BusinessInformation from "./BusinessInformation";
 
 export default function RankingBusiness() {
   const [newBusinessInfo, setNewBusinessInfo] = useState();
@@ -38,69 +39,12 @@ export default function RankingBusiness() {
         .doc(business.businessId)
         .collection("isLiked")
         .get();
-      // .onSnapshot((querySnapshot) => {
-      //   console.log("作り直し");
-      //   const _subCollectionDocument = [];
-      //   querySnapshot.forEach((sub) => {
-      //     _subCollectionDocument.push(sub.data().userId);
-      //   });
-      //   _likedBusiness.push({
-      //     ...business,
-      //     likedNumbers: querySnapshot.size,
-      //     isIn: _subCollectionDocument.includes(auth.currentUser.uid),
-      //   });
-      // });
-      //onSnapshotにする。いいねをした際に、isLikedサブコレクションに変更→検知してもう一度業務データのオブジェクトを再生成する。
 
-      //onSnapshot~~~
-      // for (const business of _newBusiness) {
-      //   const subCollection = await db
-      //     .collection("Businesses")
-      //     .doc(business.businessId)
-      //     .collection("isLiked")
-      // .onSnapshot((querySnapshot) => {
-      //   console.log("作り直し");
-      //   const _subCollectionDocument = [];
-      //   querySnapshot.forEach((sub) => {
-      //     _subCollectionDocument.push(sub.data().userId);
-      //   });
-      //   _likedBusiness.push({
-      //     ...business,
-      //     likedNumbers: querySnapshot.size,
-      //     isIn: _subCollectionDocument.includes(auth.currentUser.uid),
-      //   });
-      // });
-      //onSnapshot~~~
-
-      const _subCollectionDocument = [];
-
-      subCollection.forEach((sub) => {
-        _subCollectionDocument.push(sub.data().userId);
-      });
       _likedBusiness.push({
         ...business,
-        likedNumbers: subCollection.size,
-        isIn: _subCollectionDocument.includes(auth.currentUser.uid),
       });
     }
-    console.log(_likedBusiness);
     setNewBusinessInfo(_likedBusiness);
-  };
-
-  const handleClickFavo = async (business) => {
-    // unsubscribe();
-    //onSnapshotを使用して変更を検知した後、動作を注視する際にはunsubscribe()を使用する。
-    const businessIndex = newBusinessInfo.findIndex((doc) => {
-      return doc.businessId === business.businessId;
-    });
-
-    if (newBusinessInfo[businessIndex].isIn === false) {
-      console.log("いいねをする処理");
-      console.log(newBusinessInfo);
-    } else {
-      console.log("いいねを削除する処理");
-      console.log(newBusinessInfo);
-    }
   };
 
   useEffect(() => {
@@ -115,73 +59,7 @@ export default function RankingBusiness() {
         ) : (
           <>
             {newBusinessInfo.map((business, index) => {
-              return (
-                <>
-                  <CArd sx={{ maxWidth: 345 }} key={business.businessId}>
-                    <Link
-                      href={{
-                        pathname: "individual-pages/business/[business]",
-                        query: { business: business.businessId },
-                      }}
-                    >
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          height="300"
-                          image={business.imageURL}
-                          alt="green iguana"
-                        />
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="div">
-                            {business.companyName}
-                          </Typography>
-                          <Typography gutterBottom variant="h6" component="div">
-                            {business.business}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {business.message}
-                          </Typography>
-                          <br />
-                          <Typography variant="body2" color="text.secondary">
-                            {business.location}
-                          </Typography>
-                          <br />
-                          <Typography variant="body2" color="text.secondary">
-                            {`${business.reward}/月`}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Link>
-
-                    {business.skill.map((skill) => {
-                      return <A key={skill.label}>{skill.label}</A>;
-                    })}
-                    <br />
-                    <CardActions>
-                      <br />
-                      <IconButton
-                        aria-label="settings"
-                        onClick={() => {
-                          handleClickFavo(business);
-                        }}
-                      >
-                        {business.isIn === false ? (
-                          <>
-                            <FavoriteTwoToneIcon />
-                            {business.likedNumbers}
-                          </>
-                        ) : (
-                          <>
-                            <FavoriteTwoToneIcon color="secondary" />
-                            {business.likedNumbers}
-                          </>
-                        )}
-                      </IconButton>
-                    </CardActions>
-                  </CArd>
-                  <br />
-                </>
-              );
+              return <BusinessInformation data={newBusinessInfo[index]} />;
             })}
           </>
         )}
