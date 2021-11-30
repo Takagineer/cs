@@ -15,11 +15,8 @@ import { auth, db } from "../firebase";
 
 function BusinessInformation(props) {
   const { data } = props;
-  const [In, setIn] = useState();
   const [likedUser, setLikedUser] = useState();
-
   //業務一件一件に付随する、likeしているユーザーの取得及びstateでの管理をする。
-
   const getUser = () => {
     db.collection("Businesses")
       .doc(data.businessId)
