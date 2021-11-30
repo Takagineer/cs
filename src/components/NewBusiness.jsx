@@ -56,31 +56,3 @@ export default function RankingBusiness() {
 const COntainer = styled.div`
   padding: 0 0 40px 20px;
 `;
-
-const UL = styled.ul`
-  list-style: none;
-`;
-
-const LI = styled.li`
-  padding: 10px 20px;
-  margin: 10px;
-  border-radius: 20px;
-  border: solid 5px #fdeff2;
-  background-color: #f5b1aa;
-`;
-
-const CArd = styled(Card)`
-  padding: 30px 30px 30px 30px;
-`;
-
-const A = styled.a`
-  display: inline-block;
-  margin: 0 9px 8px 0;
-  padding: 9px;
-  line-height: 1;
-  text-decoration: none;
-  color: #0000ee;
-  background-color: #fff;
-  border: 1px solid #0000ee;
-  border-radius: 32px;
-`;
