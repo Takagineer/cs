@@ -15,7 +15,7 @@ import Loading from "../pages/Loading";
 export default function RankingBusinessPopular() {
   const [applyBusinessInfo, setApplyBusinessInfo] = useState();
 
-  const getApplyBusinessInfo = async () => {
+  const allBusinessInfo = async () => {
     const _applyInfo = [];
     const _appliedBusinessInfo = [];
 
@@ -43,7 +43,7 @@ export default function RankingBusinessPopular() {
   };
 
   useEffect(() => {
-    getApplyBusinessInfo();
+    allBusinessInfo();
   }, []);
 
   return (
