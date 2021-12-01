@@ -16,33 +16,6 @@ import BusinessInformation from "./BusinessInformation";
 export default function RankingBusinessPopular() {
   const [applyBusinessInfo, setApplyBusinessInfo] = useState();
 
-  // const allBusinessInfo = async () => {
-  //   const _applyInfo = [];
-  //   const _appliedBusinessInfo = [];
-
-  //   const applyInfo = await db.collection("Businesses").get();
-  //   applyInfo.forEach((doc) => {
-  //     _applyInfo.push({
-  //       businessId: doc.id,
-  //       ...doc.data(),
-  //     });
-  //   });
-
-  //   for (const business of _applyInfo) {
-  //     const subCollection = await db
-  //       .collection("Businesses")
-  //       .doc(business.businessId)
-  //       .collection("isApplied")
-  //       .get();
-  //     _appliedBusinessInfo.push({
-  //       business,
-  //       sub: subCollection.size,
-  //     });
-  //   }
-
-  //   setApplyBusinessInfo(_appliedBusinessInfo);
-  // };
-
   const allBusinessInfo = async () => {
     const _applyInfo = [];
     const _appliedBusinessInfo = [];
