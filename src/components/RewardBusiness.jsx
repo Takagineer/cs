@@ -41,7 +41,7 @@ export default function RankingBusinessReward() {
     <>
       <COntainer>
         {rewardBusinessInfo === undefined ? (
-          "ロード中"
+          <Loading />
         ) : (
           <>
             {rewardBusinessInfo.map((business, index) => {
