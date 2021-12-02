@@ -15,5 +15,5 @@ export default function PopularBusinesses() {
 
 const COntainer = styled.div`
   height: 500px;
-  padding: 90px;
+  padding: 100px;
 `;
