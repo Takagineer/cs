@@ -31,28 +31,31 @@ function BusinessInformation(props) {
   };
 
   const handleClickFavo = async () => {
-    const isIn = likedUser.find((iAm) => iAm === auth.currentUser.uid);
-
-    if (!isIn) {
-      await db
-        .collection("Businesses")
-        .doc(data.businessId)
-        .collection("isLiked")
-        .add({
-          userId: auth.currentUser.uid,
-        });
+    if (auth.currentUser === null) {
+      alert("新規登録か、ログインしてください");
     } else {
-      await db
-        .collection("Businesses")
-        .doc(data.businessId)
-        .collection("isLiked")
-        .where("userId", "==", auth.currentUser.uid)
-        .get()
-        .then((sub) => {
-          sub.forEach((doc) => {
-            doc.ref.delete();
+      const isIn = likedUser.find((iAm) => iAm === auth.currentUser.uid);
+      if (!isIn) {
+        await db
+          .collection("Businesses")
+          .doc(data.businessId)
+          .collection("isLiked")
+          .add({
+            userId: auth.currentUser.uid,
           });
-        });
+      } else {
+        await db
+          .collection("Businesses")
+          .doc(data.businessId)
+          .collection("isLiked")
+          .where("userId", "==", auth.currentUser.uid)
+          .get()
+          .then((sub) => {
+            sub.forEach((doc) => {
+              doc.ref.delete();
+            });
+          });
+      }
     }
   };
 
