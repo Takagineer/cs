@@ -9,6 +9,7 @@ import SwiperCore, { Navigation, Thumbs } from "swiper/core";
 import { db } from "../firebase";
 import styled from "styled-components";
 import Loading from "../pages/Loading";
+import SwiperBusinessInformation from "./SwiperBusinessInformation";
 
 SwiperCore.use([Navigation, Thumbs]);
 
@@ -34,71 +35,39 @@ export default function Content() {
 
   return (
     <>
-      {businessInfo[0] === undefined &&
-      businessInfo[1] === undefined &&
-      businessInfo[2] === undefined ? (
-        ""
+      {businessInfo === undefined ? (
+        <Loading />
       ) : (
-        <Swiper
+        <SWiper
           style={{
             "--swiper-navigation-color": "#808080",
             "--swiper-navigation-background-color": "#black",
             "--swiper-pagination-color": "#808080",
           }}
+          sliderPerView
           loop={true}
-          spaceBetween={10}
+          spaceBetween={30}
+          slidesPerView={1.3}
           navigation={true}
           thumbs={{ swiper: thumbsSwiper }}
           className="mySwiper2"
         >
-          <Grid container spacing={2}>
-            <SwiperSlide>
-              <Grid item xs={12}>
-                <BusinessCard
-                  id={businessInfo[0].businessId}
-                  image={businessInfo[0].imageURL}
-                  companyName={businessInfo[0].companyName}
-                  business={businessInfo[0].business}
-                  message={businessInfo[0].message}
-                  location={businessInfo[0].location}
-                  reward={businessInfo[0].reward}
-                  skills={businessInfo[0].skill}
-                />
-              </Grid>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Grid item xs={12}>
-                <BusinessCard
-                  id={businessInfo[1].businessId}
-                  image={businessInfo[1].imageURL}
-                  companyName={businessInfo[1].companyName}
-                  business={businessInfo[1].business}
-                  message={businessInfo[1].message}
-                  location={businessInfo[1].location}
-                  reward={businessInfo[1].reward}
-                  skills={businessInfo[1].skill}
-                />
-              </Grid>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Grid item xs={12}>
-                <BusinessCard
-                  id={businessInfo[2].businessId}
-                  image={businessInfo[2].imageURL}
-                  companyName={businessInfo[2].companyName}
-                  business={businessInfo[2].business}
-                  message={businessInfo[2].message}
-                  location={businessInfo[2].location}
-                  reward={businessInfo[2].reward}
-                  skills={businessInfo[2].skill}
-                />
-              </Grid>
-            </SwiperSlide>
-          </Grid>
+          {businessInfo.map((business, index) => {
+            return (
+              <SwiperSlide key={business.businessId}>
+                <SwiperBusinessInformation data={businessInfo[index]} />
+              </SwiperSlide>
+            );
+          })}
           <br />
-        </Swiper>
+        </SWiper>
       )}
       <br />
     </>
   );
 }
+
+const SWiper = styled(Swiper)`
+  width: 100%;
+  padding-top: 20px;
+`;
