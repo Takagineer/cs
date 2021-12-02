@@ -111,17 +111,24 @@ function BusinessInformation(props) {
               handleClickFavo(data);
             }}
           >
-            {likedUser && likedUser.includes(auth.currentUser.uid) ? (
+            {auth.currentUser === null ? (
               <>
-                <FavoriteTwoToneIcon color="secondary" />
-
+                <FavoriteTwoToneIcon />
                 {likedUser && likedUser.length}
               </>
             ) : (
               <>
-                <FavoriteTwoToneIcon />
-
-                {likedUser && likedUser.length}
+                {likedUser && likedUser.includes(auth.currentUser.uid) ? (
+                  <>
+                    <FavoriteTwoToneIcon color="secondary" />
+                    {likedUser && likedUser.length}
+                  </>
+                ) : (
+                  <>
+                    <FavoriteTwoToneIcon />
+                    {likedUser && likedUser.length}
+                  </>
+                )}
               </>
             )}
           </IconButton>
