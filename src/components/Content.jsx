@@ -69,4 +69,5 @@ export default function Content() {
 
 const SWiper = styled(Swiper)`
   width: 100%;
+  padding-top: 20px;
 `;
