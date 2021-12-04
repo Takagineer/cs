@@ -5,7 +5,7 @@ CompanyとStudentの交わる場所、という意味からこの名前にしま
 
 
 ## URL
-https://cs-mhpqixxel-takagineer.vercel.app/
+https://cs-8379k5238-takagineer.vercel.app/
 
 ## 概要
 このサイトは、企業が求人を出し、学生が応募することができる求人サイトです。
