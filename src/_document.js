@@ -8,7 +8,7 @@ import Document, {
   DocumentInitialProps,
 } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
-import theme from "../src/theme";
+import theme from "./theme";
 import createEmotionCache from "../src/createEmotionCache";
 import { ServerStyleSheet } from "styled-components";
 

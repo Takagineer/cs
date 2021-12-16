@@ -26,8 +26,8 @@ export default function company() {
   const router = useRouter();
   const isReady = router.isReady;
   const [loading, setLoading] = useState(false);
-  const [companyInfo, setCompanyInfo] = useState();
-  const [companyBusinessInfo, setCompanyBusinessInfo] = useState();
+  const [companyInfo, setCompanyInfo] = useState<any>();
+  const [companyBusinessInfo, setCompanyBusinessInfo] = useState<any>();
   const [companyBusinessImageUrl, setCompanyBusinessImageUrl] = useState([]);
   // const [exists, setExists] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -44,17 +44,19 @@ export default function company() {
     p: 4,
   };
 
+  const queryCompany:any = router.query.company
+
   const getCompanyInformation = async () => {
     const info = await db
       .collection("Companies")
-      .doc(router.query.company)
+      .doc(queryCompany)
       .get();
-    setCompanyInfo(info.data());
+    setCompanyInfo(info.data() as any);
   };
 
   const getCompanyBusinessInformation = async () => {
     const _companyBusinessInfo = [];
-    const _businessInfoWithSub = [];
+    const _businessInfoWithSub:any = [];
 
     const businessInfo = await db
       .collection("Businesses")
@@ -200,15 +202,21 @@ export default function company() {
                             >
                               {business.business}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" 
+                            // color="text.secondary"
+                            >
                               {business.message}
                             </Typography>
                             <br />
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" 
+                            // color="text.secondary"
+                            >
                               {business.location}
                             </Typography>
                             <br />
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" 
+                            // color="text.secondary"
+                            >
                               {`${business.reward}/月`}
                             </Typography>
                           </CardContent>

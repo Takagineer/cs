@@ -23,21 +23,23 @@ export default function student() {
   const router = useRouter();
   const isReady = router.isReady;
   const [loading, setLoading] = useState(false);
-  const [studentInfo, setStudentInfo] = useState();
+  const [studentInfo, setStudentInfo] = useState<any>();
   const [studentBusinessInfo, setStudentBusinessInfo] = useState([]);
+
+  const queryStudent:any = router.query.student
 
   const getStudentInformation = async () => {
     const info = await db
       .collection("Students")
-      .doc(router.query.student)
+      .doc(queryStudent)
       .get();
-    setStudentInfo(info.data());
+    setStudentInfo(info.data()as any);
   };
 
   const getStudentAppliedBusinessData = async () => {
     const appliedBusinessInfo = await db
       .collection("Students")
-      .doc(router.query.student)
+      .doc(queryStudent)
       .collection("apply")
       .get();
     const _appliedBusinessInfo = [];

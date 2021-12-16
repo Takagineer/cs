@@ -19,12 +19,12 @@ const useStyles = makeStyles((theme) => ({
 export default function CompanyBusinesses() {
   const [business, setBusiness] = useState("");
   const [detail, setDetail] = useState("");
-  const [reward, setReward] = useState();
+  const [reward, setReward] = useState<number>(0);
   const [number, setNumber] = useState("");
   const [location, setLocation] = useState("");
-  const [skill, setSkill] = useState("");
+  const [skill, setSkill] = useState<any>("");
   const [message, setMessage] = useState("");
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState<any>([]);
   const [fileUrl, setFileUrl] = useState();
   const [applyStatus, setApplyStatus] = useState("");
   const router = useRouter();
@@ -112,7 +112,7 @@ export default function CompanyBusinesses() {
       alert("募集をかけました");
       setBusiness("");
       setDetail("");
-      setReward("");
+      setReward(0);
       setNumber("");
       setLocation("");
       setSkill("");
@@ -196,7 +196,9 @@ export default function CompanyBusinesses() {
             <br />
           </form>
 
-          <Button variant="contained" color="label">
+          <Button variant="contained"
+          //  color="label"
+           >
             <input type="file" onChange={handleImage} />
           </Button>
           <br />

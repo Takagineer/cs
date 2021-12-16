@@ -22,10 +22,10 @@ export default function business() {
   const router = useRouter();
   const isReady = router.isReady;
   const [loading, setLoading] = useState(false);
-  const [businessInfo, setBusinessInfo] = useState([]);
+  const [businessInfo, setBusinessInfo] = useState<any>([]);
   const [businessImageUrl, setBusinessImageUrl] = useState();
   const [businessStatus, setBusinessStatus] = useState("募集中");
-  const [logInUser, setLogInUser] = useState();
+  const [logInUser, setLogInUser] = useState<string>();
   const [isApplied, setIsApplied] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [studentId, setStudentId] = useState([]);
@@ -34,12 +34,14 @@ export default function business() {
     setOpen(false);
   };
 
+const queryBusiness:any = router.query.business
+
   const getBusinessInformation = async () => {
     const info = await db
       .collection("Businesses")
-      .doc(router.query.business)
+      .doc(queryBusiness)
       .get();
-    setBusinessInfo(info.data());
+    setBusinessInfo(info.data() as any);
   };
 
   const checkExistWhichCollection = async () => {
@@ -81,7 +83,7 @@ export default function business() {
   };
 
   const changeBusinessStatus = (e) => {
-    db.collection("Businesses").doc(router.query.business).set(
+    db.collection("Businesses").doc(queryBusiness).set(
       {
         applyStatus: businessStatus,
       },
@@ -93,7 +95,7 @@ export default function business() {
   const applyWork = async () => {
     const appliedData = await db
       .collection("Businesses")
-      .doc(router.query.business)
+      .doc(queryBusiness)
       .collection("isApplied")
       .where("studentId", "==", auth.currentUser.uid)
       .get();
@@ -102,7 +104,7 @@ export default function business() {
     if (zeroOrOne === 0) {
       await db
         .collection("Businesses")
-        .doc(router.query.business)
+        .doc(queryBusiness)
         .collection("isApplied")
         .doc(auth.currentUser.uid)
         .set(
@@ -117,7 +119,7 @@ export default function business() {
         .collection("Students")
         .doc(auth.currentUser.uid)
         .collection("apply")
-        .doc(router.query.business)
+        .doc(queryBusiness)
         .set(
           {
             businessId: router.query.business,
@@ -150,7 +152,7 @@ export default function business() {
     setOpen(true);
     const studentId = await db
       .collection("Businesses")
-      .doc(router.query.business)
+      .doc(queryBusiness)
       .collection("isApplied")
       .get();
     const _studentId = [];
@@ -178,7 +180,9 @@ export default function business() {
                       <Loading />
                     ) : (
                       <>
-                        <td colSpan="2">
+                        <td 
+                        colSpan={2}
+                        >
                           {businessInfo.imageURL && (
                             <Image
                               src={businessInfo.imageURL}
@@ -230,7 +234,9 @@ export default function business() {
             ""
           ) : businessInfo.companyId === auth.currentUser.uid ? (
             <>
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <FormControl
+              //  sx={{ m: 1, minWidth: 120 }}
+               >
                 <InputLabel id="demo-simple-select-helper-label">
                   募集状況
                 </InputLabel>
@@ -273,7 +279,7 @@ export default function business() {
               >
                 <Box
                   sx={{ ...style, width: 400 }}
-                  variant="contained"
+                  // variant="contained"
                   color="primary"
                 >
                   {studentId.map((student, index) => {
