@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 
-const Header = ({ pathname }) => (
+const Header = ({ pathname }:{pathname?:any}) => (
   <FOoter>
     <APpBar position="static">
       <Toolbar>

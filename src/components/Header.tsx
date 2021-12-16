@@ -15,7 +15,7 @@ import { auth, db } from "../firebase";
 import { useRecoilState } from "recoil";
 import { userState } from "../store/userState";
 
-export default function Header({ pathname }) {
+export default function Header({ pathname }:{pathname?:any}) {
   const [anchorElCompany, setAnchorElCompany] = useState(null);
   const [anchorElStudent, setAnchorElStudent] = useState(null);
   const [logInUser, setLogInUser] = useRecoilState(userState);
