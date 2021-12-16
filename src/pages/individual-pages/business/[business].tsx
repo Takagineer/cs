@@ -181,7 +181,7 @@ const queryBusiness:any = router.query.business
                     ) : (
                       <>
                         <td 
-                        // colSpan="2"
+                        colSpan={2}
                         >
                           {businessInfo.imageURL && (
                             <Image
